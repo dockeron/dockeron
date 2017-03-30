@@ -1,6 +1,11 @@
 # Dockeron
 
-For Electron + Vue.js try-out!
+[![Build Status](https://travis-ci.org/dockeron/dockeron.svg?branch=master)](https://travis-ci.org/dockeron/dockeron)
+[![Version npm](https://img.shields.io/npm/v/dockeron.svg)](https://www.npmjs.com/package/dockeron)
+[![Downloads npm](https://img.shields.io/npm/dt/dockeron.svg)](https://www.npmjs.com/package/dockeron)
+[![MIT license](https://img.shields.io/npm/l/dockeron.svg)](https://opensource.org/licenses/MIT)
+
+A dockeron project
 
 
 ## Build Setup
