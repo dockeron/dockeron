@@ -5,45 +5,42 @@
         <span v-else>Loading...</span>
     </Button>
     <br>
-    <Card v-for="c in containers" class="container-card">
-      <p slot="title" class="container-card-title">
-        Container: {{c.Names[0]}}
-        <Tag :color="stateToColor[c.State]" class="container-state-tag">{{c.State}}</Tag>
-      </p>
-      <p>Image: {{c.Image}}</p>
-      <p>Status: {{c.Status}}</p>
-      <Button type="primary" @click="moreIsOpened = true">More</Button>
-      <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
-      <Button type="success" @click="startContainer(c.Id)">Start</Button>
-      <Button type="error" @click="stopContainer(c.Id)">Stop</Button>
-      <Modal
-        v-model="moreIsOpened"
-        :title="c.Names[0]"
-        @on-ok="ok"
-        @on-cancel="cancel">
-          <pre>{{c}}</pre>
-      </Modal>
-    </Card>
+    <div v-if="hasFoundContainers">
+      <Card v-for="c in containers" class="container-card">
+        <p slot="title" class="container-card-title">
+          Container: {{c.Names[0]}}
+          <Tag :color="stateToColor[c.State]" class="container-state-tag">{{c.State}}</Tag>
+        </p>
+        <p>Image: {{c.Image}}</p>
+        <p>Status: {{c.Status}}</p>
+        <Button type="primary" @click="moreIsOpened = true">More</Button>
+        <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
+        <Button type="success" @click="startContainer(c.Id)">Start</Button>
+        <Button type="error" @click="stopContainer(c.Id)">Stop</Button>
+        <Modal
+          v-model="moreIsOpened"
+          :title="c.Names[0]"
+          @on-ok="ok"
+          @on-cancel="cancel">
+            <pre>{{c}}</pre>
+        </Modal>
+      </Card>
+    </div>
+    <div v-else>
+      <h4>No containers found.</h4>
+      <pre>{{error}}</pre>
+    </div>
   </div>
 </template>
 
 <script>
-  var Docker = require('dockerode')
-  var fs = require('fs')
-
-  var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock'
-  var stats = fs.statSync(socket)
-
-  if (!stats.isSocket()) {
-    throw new Error('Are you sure the docker is running?')
-  }
-
-  var docker = new Docker({ socketPath: socket })
+  import docker from '../../js/docker'
 
   export default {
     data () {
       return {
         containers: [],
+        hasFoundContainers: false,
         error: '',
         stateToColor: {
           created: 'blue',
@@ -55,6 +52,11 @@
         },
         moreIsOpened: false,
         loadingContainers: false
+      }
+    },
+    watch: {
+      containers: function (newContainers) {
+        this.hasFoundContainers = typeof newContainers !== 'undefined' && newContainers !== null && newContainers.length > 0
       }
     },
     methods: {
@@ -137,11 +139,11 @@
         docker.listContainers(queries, function (err, containers) {
           if (!err) {
             console.log(containers)
-            self.containers = containers
           } else {
             console.log(err)
-            self.error = err
           }
+          self.containers = containers
+          self.error = err
         })
       }
     },

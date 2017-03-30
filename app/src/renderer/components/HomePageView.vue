@@ -42,6 +42,7 @@
 
 <script>
   import ContainersView from './HomePageView/ContainersView'
+  
   export default {
     name: 'home-page',
     components: {

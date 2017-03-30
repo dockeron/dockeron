@@ -6,6 +6,7 @@
   "dependencies": {
     "dockerode": "^2.4.2",
     "iview": "^2.0.0-rc.7",
+    "q": "^1.5.0",
     "vue": "^2.2.6",
     "vue-electron": "^1.0.6",
     "vue-resource": "^1.0.3",
