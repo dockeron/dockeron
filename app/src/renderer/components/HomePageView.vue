@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" :theme="theme" active-name="home-menu-active">
+    <Menu mode="horizontal" theme="light" active-name="home-menu-active">
       <Menu-item name="home-menu-1">
         <Icon type="ios-paper"></Icon>
         Containers
@@ -23,11 +23,6 @@
         <Icon type="settings"></Icon>
         Settings
       </Menu-item>
-      <Radio-group v-model="theme" class="theme-choice" :style="themeColor">
-        <Radio label="light"></Radio>
-        <Radio label="dark"></Radio>
-        <Radio label="primary"></Radio>
-      </Radio-group>
     </Menu>
     <div class="layout-content">
       <div class="layout-content-main">
@@ -42,16 +37,11 @@
 
 <script>
   import ContainersView from './HomePageView/ContainersView'
-  
+
   export default {
     name: 'home-page',
     components: {
       ContainersView
-    },
-    data () {
-      return {
-        theme: 'light'
-      }
     },
     computed: {
       themeColor: function () {
@@ -87,17 +77,5 @@
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
-  }
-
-  .theme-choice {
-    position: absolute;
-    right: 3px;
-    color: #fff;
-  }
-
-  @media (max-width: 690px) {
-    .theme-choice {
-      display: none;
-    }
   }
 </style>

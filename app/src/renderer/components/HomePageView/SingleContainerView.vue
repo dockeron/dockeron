@@ -1,7 +1,23 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" theme="light" active-name="single-container-menu-active" class="single-container-menu">
-      <Button type="ghost" shape="circle" icon="chevron-left" @click="goHome" class="go-home-button"></Button>
+    <Menu
+        mode="horizontal"
+        theme="light"
+        active-name="single-container-menu-active"
+        class="single-container-menu">
+      <Button
+          type="ghost"
+          shape="circle"
+          icon="chevron-left"
+          @click="goHome"
+          class="go-home-button">
+      </Button>
+      <control-panel
+          :container-id="containerId"
+          @container-data-refreshed="refreshContainerData"
+          class="control-panel">
+      </control-panel>
+      <Tag :color="stateToColor[status]" class="container-state-tag">{{status}}</Tag>
     </Menu>
     <div class="layout-content">
       <div class="layout-content-main">
@@ -16,13 +32,35 @@
 </template>
 
 <script>
-  import docker from '../../js/docker'
+  import ControlPanel from './ControlPanel'
 
   export default {
+    components: {
+      ControlPanel
+    },
     data () {
       return {
         containerId: '',
-        containerData: {}
+        containerData: {},
+        stateToColor: {
+          created: 'blue',
+          restarting: 'yellow',
+          running: 'green',
+          paused: 'yellow',
+          exited: 'red',
+          dead: 'red'
+        },
+        status: 'exited'
+      }
+    },
+    watch: {
+      containerData: function (newContainerData) {
+        try {
+          this.status = newContainerData.State.Status
+        } catch (e) {
+          console.log(e)
+          this.status = 'exited'
+        }
       }
     },
     methods: {
@@ -34,23 +72,12 @@
       loadContainerId () {
         this.containerId = this.$route.params.containerId
       },
-      inspectContainer () {
-        var self = this
-        var container = docker.getContainer(this.containerId)
-
-        container.inspect(function (err, data) {
-          if (!err) {
-            console.log(data)
-            self.containerData = data
-          } else {
-            console.log(err)
-          }
-        })
+      refreshContainerData (newData) {
+        this.containerData = newData
       }
     },
     created () {
       this.loadContainerId()
-      this.inspectContainer()
     }
   }
 </script>
@@ -93,6 +120,21 @@
   .go-home-button {
     position: absolute;
     left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .container-control-button {
+    margin-left: 20px;
+  }
+
+  .control-panel {
+    margin-left: 20px;
+  }
+
+  .container-state-tag {
+    position: absolute;
+    right: 3px;
     top: 50%;
     transform: translateY(-50%);
   }
