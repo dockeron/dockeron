@@ -1,33 +1,37 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" theme="light" active-name="home-menu-containers" @on-select="onSelect">
-      <Menu-item name="home-menu-containers">
-        <Icon type="ios-paper"></Icon>
-        <router-link to="/containers" name="containers-view">Containers</router-link>
-      </Menu-item>
-      <Menu-item name="home-menu-images">
-        <Icon type="ios-people"></Icon>
-        <router-link to="/images" name="images-view">Images</router-link>
-      </Menu-item>
-      <Submenu name="home-menu-dockerhub">
-        <template slot="title">
-          <Icon type="stats-bars"></Icon>
-          Docker Hub
-        </template>
-        <Menu-item name="home-menu-3-1">Top Stars</Menu-item>
-        <Menu-item name="home-menu-3-2">Top Pulls</Menu-item>
-        <Menu-item name="home-menu-3-4">Login</Menu-item>
-        <Menu-item name="home-menu-3-3">Search</Menu-item>
-      </Submenu>
-      <Menu-item name="home-menu-settings">
-        <Icon type="settings"></Icon>
-        Settings
-      </Menu-item>
-    </Menu>
+    <div class="layout-menu">
+      <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onSelect">
+        <Menu-item name="home-menu-containers">
+          <Icon type="ios-paper"></Icon>
+          <router-link to="/containers">Containers</router-link>
+        </Menu-item>
+        <Menu-item name="home-menu-images">
+          <Icon type="ios-people"></Icon>
+          <router-link to="/images">Images</router-link>
+        </Menu-item>
+        <Menu-item name="home-menu-plugins">
+          <Icon type="ios-people"></Icon>
+          Plugins
+        </Menu-item>
+        <Submenu name="home-menu-dockerhub">
+          <template slot="title">
+            <Icon type="stats-bars"></Icon>
+            Docker Hub
+          </template>
+          <Menu-item name="home-menu-3-1">Top Stars</Menu-item>
+          <Menu-item name="home-menu-3-2">Top Pulls</Menu-item>
+          <Menu-item name="home-menu-3-4">Login</Menu-item>
+          <Menu-item name="home-menu-3-3">Search</Menu-item>
+        </Submenu>
+        <Menu-item name="home-menu-settings">
+          <Icon type="settings"></Icon>
+          Settings
+        </Menu-item>
+      </Menu>
+    </div>
     <div class="layout-content">
-      <div class="layout-content-main">
-        <router-view></router-view>
-      </div>
+      <router-view></router-view>
     </div>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
@@ -77,13 +81,6 @@
 
   .layout-content {
     min-height: 200px;
-    /*margin: 15px;*/
-    /*overflow: hidden;*/
-    /*background: #fff;*/
-    /*border-radius: 4px;*/
-  }
-
-  .layout-content-main {
     padding: 10px;
   }
 
@@ -92,4 +89,15 @@
     padding: 10px 0 20px;
     color: #9ea7b4;
   }
+
+  @media (max-width: 613px) {
+    Menu {
+      height: 120px;
+    }
+
+    Menu-item {
+      height: 50%;
+    }
+  }
+
 </style>
