@@ -58,15 +58,6 @@
         this.activeMenuName = newActiveMenuName
       }
     }
-    // ,
-    // watch: {
-    // '$route': {
-    //     deep: true,
-    //     handler: function (to, from) {
-    //         this.pageKey = to.path;
-    //     }
-    // }
-    // }
   }
 </script>
 
