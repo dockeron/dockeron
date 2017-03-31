@@ -5,6 +5,11 @@ export default [
     component: require('components/HomePageView'),
     children: [
       {
+        path: '/',
+        name: 'containers-view',
+        component: require('components/HomePageView/ContainersView')
+      },
+      {
         path: 'containers',
         name: 'containers-view',
         component: require('components/HomePageView/ContainersView')
