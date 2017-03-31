@@ -18,20 +18,12 @@
         </p>
         <p>Image: {{c.Image}}</p>
         <p>Status: {{c.Status}}</p>
-        <Button type="primary" @click="moreIsOpened = true">More</Button>
         <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
         <container-control-panel
             :container-id="c.Id"
             @container-data-refreshed="function (newData) { loadContainers() }"
             class="control-panel">
         </container-control-panel>
-        <Modal
-          v-model="moreIsOpened"
-          :title="c.Names[0]"
-          @on-ok="ok"
-          @on-cancel="cancel">
-            <pre>{{c}}</pre>
-        </Modal>
       </Card>
     </div>
     <div v-else>
@@ -63,7 +55,6 @@
           exited: 'red',
           dead: 'red'
         },
-        moreIsOpened: false,
         loadingContainers: false
       }
     },
@@ -73,12 +64,6 @@
       }
     },
     methods: {
-      ok () {
-        console.log('Open More.')
-      },
-      cancel () {
-        console.log('Close More.')
-      },
       refreshContainers () {
         // this.info('Start loading containers.')
         this.loadingContainers = true

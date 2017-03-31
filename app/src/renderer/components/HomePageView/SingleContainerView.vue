@@ -20,10 +20,7 @@
       <Tag :color="stateToColor[status]" class="container-state-tag">{{status}}</Tag>
     </Menu>
     <div class="layout-content">
-      <div class="layout-content-main">
-        <!--  -->
-        <pre>{{containerData}}</pre>
-      </div>
+      <pre>{{containerData}}</pre>
     </div>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
@@ -93,18 +90,6 @@
 
   .layout-content {
     min-height: 200px;
-    /*margin: 15px;*/
-    /*overflow: hidden;*/
-    /*overflow-y: scroll;
-    max-height: 100vh;*/
-    /*background: #fff;*/
-    /*border-radius: 4px;*/
-  }
-
-  .layout-content-main {
-    padding: 10px;
-    /*overflow-y: scroll;
-    max-height: 100vh;*/
   }
 
   .layout-copy {
