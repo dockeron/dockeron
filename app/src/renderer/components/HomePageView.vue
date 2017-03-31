@@ -4,11 +4,11 @@
       <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onSelect">
         <Menu-item name="home-menu-containers">
           <Icon type="ios-paper"></Icon>
-          Containers
+          <router-link to="/containers">Containers</router-link>
         </Menu-item>
         <Menu-item name="home-menu-images">
           <Icon type="ios-people"></Icon>
-          Images
+          <router-link to="/images">Images</router-link>
         </Menu-item>
         <Menu-item name="home-menu-plugins">
           <Icon type="ios-people"></Icon>
@@ -31,15 +31,7 @@
       </Menu>
     </div>
     <div class="layout-content">
-      <div v-if="activeMenuName === 'home-menu-containers'">
-        <containers-view></containers-view>
-      </div>
-      <div v-else-if="activeMenuName === 'home-menu-images'">
-        <images-view></images-view>
-      </div>
-      <div v-else>
-        Not A/B/C
-      </div>
+      <router-view></router-view>
     </div>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
