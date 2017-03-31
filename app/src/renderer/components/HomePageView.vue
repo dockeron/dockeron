@@ -1,14 +1,15 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" :theme="theme" active-name="home-menu-active">
-      <Menu-item name="home-menu-1">
+    <Menu mode="horizontal" :theme="theme" active-name="home-menu-1" :active-key="pageKey" @on-select="onSelect">
+      <Menu-item name="home-menu-1" v-link="{path: '/contianers'}" key="contianers">
         <Icon type="ios-paper"></Icon>
         Containers
       </Menu-item>
-      <Menu-item name="home-menu-2">
+      <Menu-item name="home-menu-2" v-link="{path: '/images'}" key="images">
         <Icon type="ios-people"></Icon>
         Images
       </Menu-item>
+      <!-- <Submenu name="home-menu-3" v-link="{path: '/docker-hub'}"> -->
       <Submenu name="home-menu-3">
         <template slot="title">
           <Icon type="stats-bars"></Icon>
@@ -19,7 +20,8 @@
         <Menu-item name="home-menu-3-4">Login</Menu-item>
         <Menu-item name="home-menu-3-3">Search</Menu-item>
       </Submenu>
-      <Menu-item name="home-menu-4">
+      <Menu-item name="home-menue-4">
+      <!-- <Menu-item name="home-menue-4" v-link="{path: '/settings'}"> -->
         <Icon type="settings"></Icon>
         Settings
       </Menu-item>
@@ -31,7 +33,8 @@
     </Menu>
     <div class="layout-content">
       <div class="layout-content-main">
-        <containers-view></containers-view>
+        <router-view></router-view>
+        <!-- <containers-view></containers-view> -->
       </div>
     </div>
     <div class="layout-copy">
@@ -42,7 +45,7 @@
 
 <script>
   import ContainersView from './HomePageView/ContainersView'
-  
+
   export default {
     name: 'home-page',
     components: {
@@ -53,12 +56,26 @@
         theme: 'light'
       }
     },
+    methods: {
+      onSelect: function (menuItem) {
+        console.log('set active ' + menuItem)
+      }
+    },
     computed: {
       themeColor: function () {
-        console.log('changed')
+        console.log('theme changed')
         return (this.theme === 'light') ? 'color: #657180' : 'color: #fff'
       }
     }
+    // ,
+    // watch: {
+    // '$route': {
+    //     deep: true,
+    //     handler: function (to, from) {
+    //         this.pageKey = to.path;
+    //     }
+    // }
+    // }
   }
 </script>
 

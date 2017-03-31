@@ -10,6 +10,11 @@ export default [
     component: require('components/HomePageView/SingleContainerView')
   },
   {
+    path: '/containers',
+    name: 'containers-view',
+    component: require('components/HomePageView/ContainersView')
+  },
+  {
     path: '*',
     redirect: '/'
   }
