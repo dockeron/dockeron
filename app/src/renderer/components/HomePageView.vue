@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <div class="layout-menu">
-      <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onSelect">
+      <Menu mode="horizontal" active-name="home-menu-containers">
         <Menu-item name="home-menu-containers">
           <Icon type="ios-paper"></Icon>
           <router-link to="/containers">Containers</router-link>
@@ -48,16 +48,6 @@
     components: {
       ContainersView,
       ImagesView
-    },
-    data () {
-      return {
-        activeMenuName: 'home-menu-containers'
-      }
-    },
-    methods: {
-      onSelect (newActiveMenuName) {
-        this.activeMenuName = newActiveMenuName
-      }
     }
   }
 </script>
@@ -80,6 +70,10 @@
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
+  }
+
+  a {
+    color: inherit;
   }
 
   @media (max-width: 613px) {
