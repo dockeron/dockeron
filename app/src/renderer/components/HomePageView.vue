@@ -1,15 +1,15 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" theme="light" active-name="home-menu-active">
-      <Menu-item name="home-menu-1">
+    <Menu mode="horizontal" theme="light" active-name="home-menu-containers" @on-select="onSelect">
+      <Menu-item name="home-menu-containers">
         <Icon type="ios-paper"></Icon>
         Containers
       </Menu-item>
-      <Menu-item name="home-menu-2">
+      <Menu-item name="home-menu-images">
         <Icon type="ios-people"></Icon>
         Images
       </Menu-item>
-      <Submenu name="home-menu-3">
+      <Submenu name="home-menu-dockerhub">
         <template slot="title">
           <Icon type="stats-bars"></Icon>
           Docker Hub
@@ -19,14 +19,22 @@
         <Menu-item name="home-menu-3-4">Login</Menu-item>
         <Menu-item name="home-menu-3-3">Search</Menu-item>
       </Submenu>
-      <Menu-item name="home-menu-4">
+      <Menu-item name="home-menu-settings">
         <Icon type="settings"></Icon>
         Settings
       </Menu-item>
     </Menu>
     <div class="layout-content">
       <div class="layout-content-main">
-        <containers-view></containers-view>
+        <div v-if="activeMenuName === 'home-menu-containers'">
+          <containers-view></containers-view>
+        </div>
+        <div v-else-if="activeMenuName === 'home-menu-images'">
+          <images-view></images-view>
+        </div>
+        <div v-else>
+          Not A/B/C
+        </div>
       </div>
     </div>
     <div class="layout-copy">
@@ -37,16 +45,22 @@
 
 <script>
   import ContainersView from './HomePageView/ContainersView'
+  import ImagesView from './HomePageView/ImagesView'
 
   export default {
     name: 'home-page',
     components: {
-      ContainersView
+      ContainersView,
+      ImagesView
     },
-    computed: {
-      themeColor: function () {
-        console.log('changed')
-        return (this.theme === 'light') ? 'color: #657180' : 'color: #fff'
+    data () {
+      return {
+        activeMenuName: 'home-menu-containers'
+      }
+    },
+    methods: {
+      onSelect (newActiveMenuName) {
+        this.activeMenuName = newActiveMenuName
       }
     }
   }

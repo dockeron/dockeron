@@ -12,11 +12,11 @@
           @click="goHome"
           class="go-home-button">
       </Button>
-      <control-panel
+      <container-control-panel
           :container-id="containerId"
           @container-data-refreshed="refreshContainerData"
           class="control-panel">
-      </control-panel>
+      </container-control-panel>
       <Tag :color="stateToColor[status]" class="container-state-tag">{{status}}</Tag>
     </Menu>
     <div class="layout-content">
@@ -32,11 +32,11 @@
 </template>
 
 <script>
-  import ControlPanel from './ControlPanel'
+  import ContainerControlPanel from './ContainerControlPanel'
 
   export default {
     components: {
-      ControlPanel
+      ContainerControlPanel
     },
     data () {
       return {

@@ -6,8 +6,13 @@ export default [
   },
   {
     path: '/container/:containerId',
-    name: 'single-container',
+    name: 'single-container-view',
     component: require('components/HomePageView/SingleContainerView')
+  },
+  {
+    path: '/images',
+    name: 'images-view',
+    component: require('components/HomePageView/ImagesView')
   },
   {
     path: '*',

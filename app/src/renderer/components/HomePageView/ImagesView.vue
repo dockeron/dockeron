@@ -20,11 +20,11 @@
         <p>Status: {{c.Status}}</p>
         <Button type="primary" @click="moreIsOpened = true">More</Button>
         <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
-        <container-control-panel
+        <control-panel
             :container-id="c.Id"
             @container-data-refreshed="function (newData) { loadContainers() }"
             class="control-panel">
-        </container-control-panel>
+        </control-panel>
         <Modal
           v-model="moreIsOpened"
           :title="c.Names[0]"
@@ -35,7 +35,7 @@
       </Card>
     </div>
     <div v-else>
-      <h4>No containers found.</h4>
+      <h4>No containers found.AAA</h4>
       <pre>{{error}}</pre>
     </div>
   </div>
@@ -89,7 +89,7 @@
       inspectContainer (containerId) {
         console.log('Inspect: ', containerId)
         this.$router.push({
-          name: 'single-container-view',
+          name: 'single-container',
           params: { containerId: containerId }
         })
       },
