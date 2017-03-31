@@ -5,11 +5,6 @@ export default [
     component: require('components/HomePageView'),
     children: [
       {
-        path: '',
-        name: 'containers-view',
-        component: require('components/HomePageView/ContainersView')
-      },
-      {
         path: 'containers',
         name: 'containers-view',
         component: require('components/HomePageView/ContainersView')
@@ -18,6 +13,10 @@ export default [
         path: 'images',
         name: 'images-view',
         component: require('components/HomePageView/ImagesView')
+      },
+      {
+        path: '*',
+        redirect: 'containers'
       }
     ]
   },
