@@ -1,8 +1,13 @@
 <template>
   <div>
-    <Button type="primary" :loading="loadingContainers" icon="ios-loop-strong" @click="refreshContainers" class="refresh-button">
-        <span v-if="!loadingContainers">Refresh</span>
-        <span v-else>Loading...</span>
+    <Button
+        type="primary"
+        :loading="loadingContainers"
+        icon="ios-loop-strong"
+        @click="refreshContainers"
+        class="refresh-button">
+      <span v-if="!loadingContainers">Refresh</span>
+      <span v-else>Loading...</span>
     </Button>
     <br>
     <div v-if="hasFoundContainers">
@@ -15,8 +20,11 @@
         <p>Status: {{c.Status}}</p>
         <Button type="primary" @click="moreIsOpened = true">More</Button>
         <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
-        <Button type="success" @click="startContainer(c.Id)">Start</Button>
-        <Button type="error" @click="stopContainer(c.Id)">Stop</Button>
+        <container-control-panel
+            :container-id="c.Id"
+            @container-data-refreshed="function (newData) { loadContainers() }"
+            class="control-panel">
+        </container-control-panel>
         <Modal
           v-model="moreIsOpened"
           :title="c.Names[0]"
@@ -34,9 +42,14 @@
 </template>
 
 <script>
+  import ContainerControlPanel from './ContainerControlPanel'
+
   import docker from '../../js/docker'
 
   export default {
+    components: {
+      ContainerControlPanel
+    },
     data () {
       return {
         containers: [],
@@ -76,32 +89,8 @@
       inspectContainer (containerId) {
         console.log('Inspect: ', containerId)
         this.$router.push({
-          name: 'single-container',
+          name: 'single-container-view',
           params: { containerId: containerId }
-        })
-      },
-      startContainer (containerId) {
-        console.log('Start: ', containerId)
-        var container = docker.getContainer(containerId)
-
-        container.start(function (err, data) {
-          if (!err) {
-            console.log(data)
-          } else {
-            console.log(err)
-          }
-        })
-      },
-      stopContainer (containerId) {
-        console.log('Stop: ', containerId)
-        var container = docker.getContainer(containerId)
-
-        container.stop(function (err, data) {
-          if (!err) {
-            console.log(data)
-          } else {
-            console.log(err)
-          }
         })
       },
       info (content) {
@@ -166,6 +155,10 @@
 
   .refresh-button {
     display: block;
+  }
+
+  .control-panel {
+    display: inline-block;
   }
 
   .container-state-tag {

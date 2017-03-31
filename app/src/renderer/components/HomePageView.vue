@@ -3,11 +3,11 @@
     <Menu mode="horizontal" theme="light" active-name="home-menu-containers" @on-select="onSelect">
       <Menu-item name="home-menu-containers">
         <Icon type="ios-paper"></Icon>
-        Containers
+        <router-link to="/containers" name="containers-view">Containers</router-link>
       </Menu-item>
       <Menu-item name="home-menu-images">
         <Icon type="ios-people"></Icon>
-        Images
+        <router-link to="/images" name="images-view">Images</router-link>
       </Menu-item>
       <Submenu name="home-menu-dockerhub">
         <template slot="title">
@@ -26,16 +26,7 @@
     </Menu>
     <div class="layout-content">
       <div class="layout-content-main">
-        <!-- <router-view></router-view> -->
-        <div v-if="activeMenuName === 'home-menu-containers'">
-          <containers-view></containers-view>
-        </div>
-        <div v-else-if="activeMenuName === 'home-menu-images'">
-          <images-view></images-view>
-        </div>
-        <div v-else>
-          Not A/B/C
-        </div>
+        <router-view></router-view>
       </div>
     </div>
     <div class="layout-copy">
