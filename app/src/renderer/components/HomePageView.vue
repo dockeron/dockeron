@@ -19,10 +19,10 @@
             <Icon type="stats-bars"></Icon>
             Docker Hub
           </template>
-          <Menu-item name="home-menu-3-1">Top Stars</Menu-item>
-          <Menu-item name="home-menu-3-2">Top Pulls</Menu-item>
-          <Menu-item name="home-menu-3-4">Login</Menu-item>
-          <Menu-item name="home-menu-3-3">Search</Menu-item>
+          <Menu-item name="home-menu-dockerhub-topstars">Top Stars</Menu-item>
+          <Menu-item name="home-menu-dockerhub-toppulls">Top Pulls</Menu-item>
+          <Menu-item name="home-menu-dockerhub-login">Login</Menu-item>
+          <Menu-item name="home-menu-dockerhub-search">Search</Menu-item>
         </Submenu>
         <Menu-item name="home-menu-settings">
           <Icon type="settings"></Icon>
