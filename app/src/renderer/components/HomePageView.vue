@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <div class="layout-menu">
-      <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onSelect">
+      <Menu mode="horizontal" active-name="home-menu-containers">
         <Menu-item name="home-menu-containers">
           <Icon type="ios-paper"></Icon>
           <router-link to="/containers">Containers</router-link>
@@ -19,10 +19,10 @@
             <Icon type="stats-bars"></Icon>
             Docker Hub
           </template>
-          <Menu-item name="home-menu-3-1">Top Stars</Menu-item>
-          <Menu-item name="home-menu-3-2">Top Pulls</Menu-item>
-          <Menu-item name="home-menu-3-4">Login</Menu-item>
-          <Menu-item name="home-menu-3-3">Search</Menu-item>
+          <Menu-item name="home-menu-dockerhub-topstars">Top Stars</Menu-item>
+          <Menu-item name="home-menu-dockerhub-toppulls">Top Pulls</Menu-item>
+          <Menu-item name="home-menu-dockerhub-login">Login</Menu-item>
+          <Menu-item name="home-menu-dockerhub-search">Search</Menu-item>
         </Submenu>
         <Menu-item name="home-menu-settings">
           <Icon type="settings"></Icon>
@@ -42,21 +42,12 @@
 <script>
   import ContainersView from './HomePageView/ContainersView'
   import ImagesView from './HomePageView/ImagesView'
+
   export default {
     name: 'home-page',
     components: {
       ContainersView,
       ImagesView
-    },
-    data () {
-      return {
-        activeMenuName: 'home-menu-containers'
-      }
-    },
-    methods: {
-      onSelect (newActiveMenuName) {
-        this.activeMenuName = newActiveMenuName
-      }
     }
   }
 </script>
@@ -79,6 +70,10 @@
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
+  }
+
+  a {
+    color: inherit;
   }
 
   @media (max-width: 613px) {
