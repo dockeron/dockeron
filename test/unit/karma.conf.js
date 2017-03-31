@@ -12,6 +12,9 @@ let webpackConfig = merge(baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"testing"'
+    }),
+    new webpack.DefinePlugin({
+      '#! /usr/bin/env node': '""'
     })
   ]
 })
