@@ -6,10 +6,11 @@
 [![MIT license](https://img.shields.io/npm/l/dockeron.svg)](https://opensource.org/licenses/MIT)
 [![Code Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+*In development process.*
 
-A dockeron project
+A dockeron project, built on Electron + Vue.js for Docker.
 
 
 ---
 
-This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue).

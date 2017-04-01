@@ -20,7 +20,11 @@
 
   export default {
     props: {
-      containerId: String
+      containerId: String,
+      initialize: {
+        type: Boolean,
+        default: false
+      }
     },
     methods: {
       startContainer (containerId, callback) {
@@ -65,7 +69,9 @@
       }
     },
     created () {
-      this.inspectContainer()
+      if (this.initialize) {
+        this.inspectContainer()
+      }
     }
   }
 </script>

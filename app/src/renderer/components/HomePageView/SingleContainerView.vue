@@ -14,6 +14,7 @@
       </Button>
       <container-control-panel
           :container-id="containerId"
+          :initialize="true"
           @container-data-refreshed="refreshContainerData"
           class="container-control-panel">
       </container-control-panel>
