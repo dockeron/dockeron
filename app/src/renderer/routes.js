@@ -27,6 +27,11 @@ export default [
     component: require('components/HomePageView/SingleContainerView')
   },
   {
+    path: '/images/:imageId',
+    name: 'single-image-view',
+    component: require('components/HomePageView/SingleImageView')
+  },
+  {
     path: '*',
     redirect: '/'
   }

@@ -11,16 +11,18 @@
     </Button>
     <br>
     <div v-if="hasFoundContainers">
-      <Card v-for="c in containers" class="container-card">
+      <Card v-for="container in containers" class="container-card">
         <p slot="title" class="container-card-title">
-          {{c.Names[0]}}
-          <Tag :color="stateToColor[c.State]" class="container-state-tag">{{c.State}}</Tag>
+          {{container.Names[0]}}
+          <Tag :color="stateToColor[container.State]" class="container-state-tag">
+            {{container.State}}
+          </Tag>
         </p>
-        <p>Image: {{c.Image}}</p>
-        <p>Status: {{c.Status}}</p>
-        <Button type="primary" @click="inspectContainer(c.Id)">Inspect</Button>
+        <p>Image: {{container.Image}}</p>
+        <p>Status: {{container.Status}}</p>
+        <Button type="primary" @click="inspectContainer(container.Id)">Inspect</Button>
         <container-control-panel
-            :container-id="c.Id"
+            :container-id="container.Id"
             @container-data-refreshed="function (newData) { loadContainers() }"
             class="control-panel">
         </container-control-panel>

@@ -3,8 +3,8 @@
     <Menu
         mode="horizontal"
         theme="light"
-        active-name="single-container-menu-active"
-        class="single-container-menu">
+        active-name="single-image-menu-active"
+        class="single-image-menu">
       <Button
           type="ghost"
           shape="circle"
@@ -12,15 +12,14 @@
           @click="goHome"
           class="go-home-button">
       </Button>
-      <container-control-panel
-          :container-id="containerId"
-          @container-data-refreshed="refreshContainerData"
-          class="container-control-panel">
-      </container-control-panel>
-      <Tag :color="stateToColor[status]" class="container-state-tag">{{status}}</Tag>
+      <image-control-panel
+          :image-id="imageId"
+          @image-data-refreshed="refreshImageData"
+          class="image-control-panel">
+      </image-control-panel>
     </Menu>
     <div class="layout-content">
-      <pre>{{containerData}}</pre>
+      <pre>{{imageData}}</pre>
     </div>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
@@ -29,16 +28,16 @@
 </template>
 
 <script>
-  import ContainerControlPanel from './ContainerControlPanel'
+  import ImageControlPanel from './ImageControlPanel'
 
   export default {
     components: {
-      ContainerControlPanel
+      ImageControlPanel
     },
     data () {
       return {
-        containerId: '',
-        containerData: {},
+        imageId: '',
+        imageData: {},
         stateToColor: {
           created: 'blue',
           restarting: 'yellow',
@@ -50,31 +49,21 @@
         status: 'exited'
       }
     },
-    watch: {
-      containerData: function (newContainerData) {
-        try {
-          this.status = newContainerData.State.Status
-        } catch (e) {
-          console.log(e)
-          this.status = 'exited'
-        }
-      }
-    },
     methods: {
       goHome () {
         this.$router.push({
           name: 'home-page'
         })
       },
-      loadContainerId () {
-        this.containerId = this.$route.params.containerId
+      loadImageId () {
+        this.imageId = this.$route.params.imageId
       },
-      refreshContainerData (newData) {
-        this.containerData = newData
+      refreshImageData (newData) {
+        this.imageData = newData
       }
     },
     created () {
-      this.loadContainerId()
+      this.loadImageId()
     }
   }
 </script>
@@ -109,14 +98,7 @@
     transform: translateY(-50%);
   }
 
-  .container-control-panel {
+  .image-control-panel {
     margin-left: 20px;
-  }
-
-  .container-state-tag {
-    position: absolute;
-    right: 3px;
-    top: 50%;
-    transform: translateY(-50%);
   }
 </style>

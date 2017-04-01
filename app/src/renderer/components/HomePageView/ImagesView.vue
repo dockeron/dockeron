@@ -18,10 +18,11 @@
         Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
         <p> Size: {{formatBytes(image.Size)}}</p>
         <p> Created: {{getDateTime(image.Created)}}</p>
+        <Button type="primary" @click="inspectImage(image.Id)">Inspect</Button>
       </Card>
     </div>
     <div v-else>
-      <h4>No images found.</h4>
+      <h4>No images found.</h4
       <pre>{{error}}</pre>
     </div>
   </div>
@@ -55,6 +56,13 @@
         this.loadImages()
         // this.info('Finish loading images.')
         this.loadingImages = false
+      },
+      inspectImage (imageId) {
+        console.log('Goto single-image-view: ', imageId)
+        this.$router.push({
+          name: 'single-image-view',
+          params: { imageId: imageId }
+        })
       },
       loadImages () {
         var self = this
