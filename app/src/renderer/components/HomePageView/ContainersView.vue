@@ -46,7 +46,7 @@
       return {
         containers: [],
         hasFoundContainers: false,
-        error: '',
+        error: {},
         stateToColor: {
           created: 'blue',
           restarting: 'yellow',
@@ -65,6 +65,7 @@
     },
     methods: {
       refreshContainers () {
+        // TODO (fluency03): figure out how to use notifications.
         // this.info('Start loading containers.')
         this.loadingContainers = true
         this.loadContainers()
@@ -72,7 +73,7 @@
         this.loadingContainers = false
       },
       inspectContainer (containerId) {
-        console.log('Inspect: ', containerId)
+        console.log('Goto single-container-view: ', containerId)
         this.$router.push({
           name: 'single-container-view',
           params: { containerId: containerId }
@@ -110,15 +111,21 @@
           size: true
         }
 
-        docker.listContainers(queries, function (err, containers) {
-          if (!err) {
-            console.log(containers)
-          } else {
-            console.log(err)
-          }
+        function updateContainers (containers) {
+          console.log('listContainers: ', containers)
           self.containers = containers
+          self.error = {}
+        }
+
+        function updateError (err) {
+          console.log('listContainers: ', err)
+          self.containers = []
           self.error = err
-        })
+        }
+
+        docker.listContainers(queries)
+          .then(updateContainers)
+          .catch(updateError)
       }
     },
     created () {
