@@ -1,7 +1,7 @@
 {
   "name": "dockeron",
-  "version": "0.0.0",
-  "description": "An dockeron project",
+  "version": "0.0.3",
+  "description": "A dockeron project",
   "scripts": {
     "build": "npm run pack && build",
     "build:dir": "npm run pack && build --dir",
@@ -49,7 +49,18 @@
       ]
     }
   },
-  "author": "Greg Holguin <simulatedgreg@gmail.com>",
+  "contributors": [
+    {
+      "name": "Chang Liu",
+      "email": "fluency.03@gmail.com",
+      "url": "fluency03.com"
+    },
+    {
+      "name": "Pingping Lin",
+      "email": "luckylin2014@gmail.com",
+      "url": "pingping-lin.com"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.8.0",

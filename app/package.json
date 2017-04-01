@@ -1,7 +1,7 @@
 {
   "name": "dockeron",
   "version": "0.0.0",
-  "description": "An dockeron project",
+  "description": "A dockeron project",
   "main": "./dist/main.js",
   "dependencies": {
     "dockerode": "^2.4.2",
