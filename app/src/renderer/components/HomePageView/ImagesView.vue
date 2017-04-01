@@ -71,15 +71,21 @@
           all: false
         }
 
-        docker.listImages(queries, function (err, images) {
-          if (!err) {
-            console.log('listImages', images)
-          } else {
-            console.log(err)
-          }
+        function updateImages (images) {
+          console.log('listImages: ', images)
           self.images = images
+          self.error = {}
+        }
+
+        function updateError (err) {
+          console.log('listImages: ', err)
+          self.images = []
           self.error = err
-        })
+        }
+
+        docker.listImages(queries)
+          .then(updateImages)
+          .catch(updateError)
       },
       getImageName (repoTag) {
         return repoTag.slice(0, repoTag.indexOf(':'))
@@ -91,9 +97,11 @@
       },
       formatBytes (bytes) {
         if (bytes === 0) return '0 Bytes'
+
         const k = 1000
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         var i = Math.floor(Math.log(bytes) / Math.log(k))
+
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
       },
       getDateTime (seconds) {
