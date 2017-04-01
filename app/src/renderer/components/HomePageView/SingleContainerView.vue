@@ -63,7 +63,8 @@
     methods: {
       goHome () {
         this.$router.push({
-          name: 'home-page'
+          name: 'containers-view',
+          params: { activeMenu: 'home-menu-containers' }
         })
       },
       loadContainerId () {

@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <div class="layout-menu">
-      <Menu mode="horizontal" active-name="home-menu-containers">
+      <Menu mode="horizontal" :active-name="activeMenu">
         <Menu-item name="home-menu-containers">
           <Icon type="ios-paper"></Icon>
           <router-link to="/containers">Containers</router-link>
@@ -45,9 +45,26 @@
 
   export default {
     name: 'home-page',
+    data () {
+      return {
+        activeMenu: 'home-menu-containers',
+        routeToMenu: {
+          '/containers': 'home-menu-containers',
+          '/images': 'home-menu-images'
+        }
+      }
+    },
     components: {
       ContainersView,
       ImagesView
+    },
+    methods: {
+      loadActiveMenu () {
+        this.activeMenu = this.routeToMenu[this.$route.fullPath] || 'home-menu-containers'
+      }
+    },
+    created () {
+      this.loadActiveMenu()
     }
   }
 </script>

@@ -52,7 +52,8 @@
     methods: {
       goHome () {
         this.$router.push({
-          name: 'home-page'
+          name: 'images-view',
+          params: { activeMenu: 'home-menu-images' }
         })
       },
       loadImageId () {
