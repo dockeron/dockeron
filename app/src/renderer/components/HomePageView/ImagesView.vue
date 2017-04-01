@@ -118,7 +118,7 @@
   .image-card {
     width: 300px;
     display: inline-block;
-    margin-right: 10px;
+    margin: 5px 5px;
   }
 
   .image-card-title {

@@ -73,13 +73,12 @@
   .layout {
     background: #f5f7f9;
     position: relative;
-    overflow-y: scroll;
-    max-height: 100vh;
-    /*height: 100%;*/
   }
 
   .layout-content {
     min-height: 200px;
+    overflow-y: scroll;
+    max-height: 100vh;
     padding: 10px;
   }
 
