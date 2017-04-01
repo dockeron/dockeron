@@ -13,12 +13,12 @@
     <div v-if="hasFoundContainers">
       <Card v-for="c in containers" class="container-card">
         <p slot="title" class="container-card-title">
-          Container: {{c.Names[0]}}
+          {{c.Names[0]}}
           <Tag :color="stateToColor[c.State]" class="container-state-tag">{{c.State}}</Tag>
         </p>
         <p>Image: {{c.Image}}</p>
         <p>Status: {{c.Status}}</p>
-        <Button type="warning" @click="inspectContainer(c.Id)">Inspect</Button>
+        <Button type="primary" @click="inspectContainer(c.Id)">Inspect</Button>
         <container-control-panel
             :container-id="c.Id"
             @container-data-refreshed="function (newData) { loadContainers() }"
@@ -60,7 +60,11 @@
     },
     watch: {
       containers: function (newContainers) {
-        this.hasFoundContainers = typeof newContainers !== 'undefined' && newContainers !== null && newContainers.length > 0
+        this.hasFoundContainers = (
+          typeof newContainers !== 'undefined' &&
+          newContainers !== null &&
+          newContainers.length > 0
+        )
       }
     },
     methods: {

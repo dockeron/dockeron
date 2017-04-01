@@ -13,7 +13,7 @@
     <div v-if="hasFoundImages">
       <Card v-for="image in images" class="image-card">
         <p slot="title" class="image-card-title">
-          Images: {{getImageName(image.RepoTags[0])}}
+          {{getImageName(image.RepoTags[0])}}
         </p>
         Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
         <p> Size: {{formatBytes(image.Size)}}</p>
@@ -41,7 +41,11 @@
     },
     watch: {
       images: function (newImages) {
-        this.hasFoundImages = typeof newImages !== 'undefined' && newImages !== null && newImages.length > 0
+        this.hasFoundImages = (
+          typeof newImages !== 'undefined' &&
+          newImages !== null &&
+          newImages.length > 0
+        )
       }
     },
     methods: {
@@ -54,13 +58,14 @@
       },
       loadImages () {
         var self = this
+
         var queries = {
-          all: true,
-          size: true
+          all: false
         }
+
         docker.listImages(queries, function (err, images) {
           if (!err) {
-            console.log(images)
+            console.log('listImages', images)
           } else {
             console.log(err)
           }
@@ -72,11 +77,9 @@
         return repoTag.slice(0, repoTag.indexOf(':'))
       },
       getTags (repoTags) {
-        var tags = []
-        repoTags.forEach(function (repoTag) {
-          tags.push(repoTag.slice(repoTag.indexOf(':') + 1))
+        return repoTags.map(function (repoTag) {
+          return repoTag.slice(repoTag.indexOf(':') + 1)
         })
-        return tags
       },
       formatBytes (bytes) {
         if (bytes === 0) return '0 Bytes'
