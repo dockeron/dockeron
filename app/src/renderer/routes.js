@@ -6,7 +6,7 @@ export default [
     children: [
       {
         path: '',
-        name: 'containers-view',
+        name: 'default',
         component: require('components/HomePageView/ContainersView')
       },
       {

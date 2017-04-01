@@ -27,41 +27,41 @@
         console.log('Start: ', containerId)
         var container = docker.getContainer(containerId)
 
-        container.start(function (err, data) {
-          if (!err) {
-            console.log('data: ', data)
-          } else {
-            console.log('err: ', err)
-          }
-          callback()
-        })
+        container.start()
+          .then(function (data) {
+            console.log('Started!')
+            callback()
+          })
+          .catch(console.warn)
       },
       stopContainer (containerId, callback) {
         console.log('Stop: ', containerId)
         var container = docker.getContainer(containerId)
 
-        container.stop(function (err, data) {
-          if (!err) {
-            console.log('data: ', data)
-          } else {
-            console.log('err: ', err)
-          }
-          callback()
-        })
+        container.stop()
+          .then(function (data) {
+            console.log('Stopped!')
+            callback()
+          })
+          .catch(console.warn)
       },
       inspectContainer () {
         var self = this
         var container = docker.getContainer(self.containerId)
 
-        container.inspect(function (err, data) {
-          if (!err) {
-            console.log('data: ', data)
-            self.$emit('container-data-refreshed', data)
-          } else {
-            console.log('err: ', err)
-            self.$emit('container-data-errored', err)
-          }
-        })
+        function containerRefreshed (data) {
+          console.log('inspect: ', data)
+          self.$emit('container-data-refreshed', data)
+        }
+
+        function containerErrored (err) {
+          console.log('inspect: ', err)
+          self.$emit('container-data-errored', err)
+        }
+
+        container.inspect()
+          .then(containerRefreshed)
+          .catch(containerErrored)
       }
     },
     created () {
