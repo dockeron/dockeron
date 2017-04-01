@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <div class="layout-menu">
-      <Menu mode="horizontal" :active-name="activeMenu">
+      <Menu mode="horizontal" :active-name="activeMenu" @on-select="onMenuSelect">
         <Menu-item name="home-menu-containers">
           <Icon type="ios-paper"></Icon>
           <router-link to="/containers">Containers</router-link>
@@ -24,15 +24,30 @@
           <Menu-item name="home-menu-dockerhub-login">Login</Menu-item>
           <Menu-item name="home-menu-dockerhub-search">Search</Menu-item>
         </Submenu>
-        <Menu-item name="home-menu-settings">
-          <Icon type="settings"></Icon>
-          Settings
-        </Menu-item>
+        <Submenu name="home-menu-settings">
+          <template slot="title">
+            <Icon type="settings"></Icon>
+            Settings
+          </template>
+          <Menu-item name="home-menu-settings-info"s>Info</Menu-item>
+          <Menu-item name="home-menu-settings-version">Version</Menu-item>
+          <Menu-item name="home-menu-settings-config">Config</Menu-item>
+        </Submenu>
       </Menu>
     </div>
     <div class="layout-content">
       <router-view></router-view>
     </div>
+    <Modal
+        v-model="showInfo"
+        title="Info">
+      <pre>{{info}}</pre>
+    </Modal>
+    <Modal
+        v-model="showVersion"
+        title="Version">
+      <pre>{{version}}</pre>
+    </Modal>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
     </div>
@@ -43,6 +58,8 @@
   import ContainersView from './HomePageView/ContainersView'
   import ImagesView from './HomePageView/ImagesView'
 
+  import docker from '../js/docker'
+
   export default {
     name: 'home-page',
     data () {
@@ -51,7 +68,11 @@
         routeToMenu: {
           '/containers': 'home-menu-containers',
           '/images': 'home-menu-images'
-        }
+        },
+        info: {},
+        version: {},
+        showInfo: false,
+        showVersion: false
       }
     },
     components: {
@@ -59,11 +80,38 @@
       ImagesView
     },
     methods: {
+      onMenuSelect (selectedMenuName) {
+        if (selectedMenuName === 'home-menu-settings-info') {
+          this.showInfo = true
+        } else if (selectedMenuName === 'home-menu-settings-version') {
+          this.showVersion = true
+        } else {
+          console.log(selectedMenuName)
+        }
+      },
       loadActiveMenu () {
         this.activeMenu = this.routeToMenu[this.$route.fullPath] || 'home-menu-containers'
+      },
+      loadInfo () {
+        var self = this
+        docker.info().then(function (data) {
+          self.info = data
+        }, function (err) {
+          console.log(err)
+        })
+      },
+      loadVersion () {
+        var self = this
+        docker.version().then(function (data) {
+          self.version = data
+        }, function (err) {
+          console.log(err)
+        })
       }
     },
     created () {
+      this.loadInfo()
+      this.loadVersion()
       this.loadActiveMenu()
     }
   }
