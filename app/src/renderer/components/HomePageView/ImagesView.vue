@@ -1,11 +1,7 @@
 <template>
   <div>
-    <Button
-        type="primary"
-        :loading="loadingImages"
-        icon="refresh"
-        @click="refreshImages"
-        class="refresh-button">
+    <Button class="refresh-button" type="primary" icon="refresh"
+        :loading="loadingImages" @click="refreshImages">
       <span v-if="!loadingImages">Refresh</span>
       <span v-else>Loading...</span>
     </Button>
@@ -15,10 +11,14 @@
         <p slot="title" class="image-card-title">
           {{getImageName(image.RepoTags[0])}}
         </p>
-        Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
-        <p> Size: {{formatBytes(image.Size)}}</p>
-        <p> Created: {{getDateTime(image.Created)}}</p>
-        <Button type="primary" @click="inspectImage(image.Id)">Inspect</Button>
+        <p>
+          Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
+        </p>
+        <p>Size: {{formatBytes(image.Size)}}</p>
+        <p>Created: {{getDateTime(image.Created)}}</p>
+        <Button type="primary" @click="inspectImage(image.Id)">
+          Inspect
+        </Button>
       </Card>
     </div>
     <div v-else>

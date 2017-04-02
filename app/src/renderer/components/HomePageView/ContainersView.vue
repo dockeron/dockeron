@@ -1,26 +1,16 @@
 <template>
   <div>
-    <Button
-        type="primary"
-        :loading="loadingContainers"
-        icon="refresh"
-        @click="refreshContainers"
-        class="container-operation-button">
+    <Button class="container-operation-button" type="primary" icon="refresh"
+        :loading="loadingContainers" @click="refreshContainers">
       <span v-if="!loadingContainers">Refresh</span>
       <span v-else>Loading...</span>
     </Button>
-    <Button
-      type="primary"
-      icon="plus-round"
-      @click="containerCreateModal = true"
-      class="container-operation-button">
+    <Button class="container-operation-button" type="primary" icon="plus-round"
+        @click="containerCreateModal = true">
       Create
     </Button>
-    <Modal
-        v-model="containerCreateModal"
-        title="Create Container"
-        @on-ok="confirmCreation"
-        @on-cancel="resetCreation">
+    <Modal v-model="containerCreateModal" title="Create Container"
+        @on-ok="confirmCreation" @on-cancel="resetCreation">
       <container-creation-form ref="containerCreationForm"></container-creation-form>
     </Modal>
     <br>
@@ -28,7 +18,7 @@
       <Card v-for="container in containers" class="container-card">
         <p slot="title" class="container-card-title">
           {{container.Names[0]}}
-          <Tag :color="stateToColor[container.State]" class="container-state-tag">
+          <Tag class="container-state-tag" :color="stateToColor[container.State]">
             {{container.State}}
           </Tag>
         </p>
@@ -37,10 +27,8 @@
         <Button type="primary" @click="inspectContainer(container.Id)">
           Inspect
         </Button>
-        <container-control-panel
-            :container-id="container.Id"
-            @container-data-refreshed="function (newData) { loadContainers() }"
-            class="control-panel">
+        <container-control-panel class="control-panel" :container-id="container.Id"
+            @container-data-refreshed="function (newData) { loadContainers() }">
         </container-control-panel>
       </Card>
     </div>

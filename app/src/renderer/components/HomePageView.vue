@@ -38,14 +38,10 @@
     <div class="layout-content">
       <router-view></router-view>
     </div>
-    <Modal
-        v-model="showInfo"
-        title="Info">
+    <Modal v-model="showInfo" title="Info">
       <pre>{{info}}</pre>
     </Modal>
-    <Modal
-        v-model="showVersion"
-        title="Version">
+    <Modal v-model="showVersion" title="Version">
       <pre>{{version}}</pre>
     </Modal>
     <div class="layout-copy">

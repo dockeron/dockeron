@@ -1,24 +1,16 @@
 <template>
   <div class="layout">
-    <Menu
-        mode="horizontal"
-        theme="light"
-        active-name="single-container-menu-active"
-        class="single-container-menu">
-      <Button
-          type="ghost"
-          shape="circle"
-          icon="chevron-left"
-          @click="goHome"
-          class="go-home-button">
+    <Menu class="single-container-menu" mode="horizontal" active-name="menu-active">
+      <Button class="go-home-button" type="ghost" shape="circle" icon="chevron-left"
+          @click="goHome">
       </Button>
-      <container-control-panel
-          :container-id="containerId"
-          :initialize="true"
-          @container-data-refreshed="refreshContainerData"
-          class="container-control-panel">
+      <container-control-panel class="container-control-panel"
+          :container-id="containerId" :initialize="true"
+          @container-data-refreshed="refreshContainerData">
       </container-control-panel>
-      <Tag :color="stateToColor[status]" class="container-state-tag">{{status}}</Tag>
+      <Tag class="container-state-tag" :color="stateToColor[status]">
+        {{status}}
+      </Tag>
     </Menu>
     <div class="layout-content">
       <pre>{{containerData}}</pre>

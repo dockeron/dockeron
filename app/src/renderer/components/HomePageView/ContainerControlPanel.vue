@@ -1,15 +1,9 @@
 <template>
   <div>
-    <Button
-        type="success"
-        @click="startContainer()"
-        class="container-control-button">
+    <Button class="container-control-button" type="success" @click="startContainer()">
       Start
     </Button>
-    <Button
-        type="error"
-        @click="stopContainer()"
-        class="container-control-button">
+    <Button class="container-control-button" type="error" @click="stopContainer()">
       Stop
     </Button>
   </div>

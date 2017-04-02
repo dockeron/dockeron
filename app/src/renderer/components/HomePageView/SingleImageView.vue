@@ -1,21 +1,11 @@
 <template>
   <div class="layout">
-    <Menu
-        mode="horizontal"
-        theme="light"
-        active-name="single-image-menu-active"
-        class="single-image-menu">
-      <Button
-          type="ghost"
-          shape="circle"
-          icon="chevron-left"
-          @click="goHome"
-          class="go-home-button">
+    <Menu class="single-image-menu" mode="horizontal" active-name="menu-active">
+      <Button class="go-home-button" type="ghost" shape="circle" icon="chevron-left"
+          @click="goHome">
       </Button>
-      <image-control-panel
-          :image-id="imageId"
-          @image-data-refreshed="refreshImageData"
-          class="image-control-panel">
+      <image-control-panel class="image-control-panel" :image-id="imageId"
+          @image-data-refreshed="refreshImageData">
       </image-control-panel>
     </Menu>
     <div class="layout-content">
