@@ -5,7 +5,7 @@
           @click="goHome">
       </Button>
       <container-control-panel class="container-control-panel"
-          :container-id="containerId" :initialize="true"
+          :container-id="containerId" :initialize="true" :has-all-buttons="true"
           @container-data-refreshed="refreshContainerData">
       </container-control-panel>
       <Tag class="container-state-tag" :color="stateToColor[status]">
