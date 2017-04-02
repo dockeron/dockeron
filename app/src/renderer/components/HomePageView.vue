@@ -29,8 +29,13 @@
             <Icon type="settings"></Icon>
             Settings
           </template>
-          <Menu-item name="home-menu-settings-info"s>Info</Menu-item>
+          <Menu-item name="home-menu-settings-info">Info</Menu-item>
           <Menu-item name="home-menu-settings-version">Version</Menu-item>
+          <Menu-item name="home-menu-settings-ping">
+            <Tooltip :content="ping" placement="right">
+              Ping
+            </Tooltip>
+          </Menu-item>
           <Menu-item name="home-menu-settings-config">Config</Menu-item>
         </Submenu>
       </Menu>
@@ -67,6 +72,7 @@
         },
         info: {},
         version: {},
+        ping: '',
         showInfo: false,
         showVersion: false
       }
@@ -103,11 +109,21 @@
         }, function (err) {
           console.log(err)
         })
+      },
+      loadPing () {
+        var self = this
+        docker.ping().then(function (data) {
+          console.log('ping: ', data)
+          self.ping = data
+        }, function (err) {
+          console.log(err)
+        })
       }
     },
     created () {
       this.loadInfo()
       this.loadVersion()
+      this.loadPing()
       this.loadActiveMenu()
     }
   }
