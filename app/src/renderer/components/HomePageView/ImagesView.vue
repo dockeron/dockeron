@@ -3,7 +3,7 @@
     <Button
         type="primary"
         :loading="loadingImages"
-        icon="ios-loop-strong"
+        icon="refresh"
         @click="refreshImages"
         class="refresh-button">
       <span v-if="!loadingImages">Refresh</span>

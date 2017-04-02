@@ -3,12 +3,26 @@
     <Button
         type="primary"
         :loading="loadingContainers"
-        icon="ios-loop-strong"
+        icon="refresh"
         @click="refreshContainers"
-        class="refresh-button">
+        class="container-operation-button">
       <span v-if="!loadingContainers">Refresh</span>
       <span v-else>Loading...</span>
     </Button>
+    <Button
+      type="primary"
+      icon="plus-round"
+      @click="containerCreateModal = true"
+      class="container-operation-button">
+      Create
+    </Button>
+    <Modal
+        v-model="containerCreateModal"
+        title="Create Container"
+        @on-ok="confirmCreation"
+        @on-cancel="resetCreation">
+      <container-creation-form ref="containerCreationForm"></container-creation-form>
+    </Modal>
     <br>
     <div v-if="hasFoundContainers">
       <Card v-for="container in containers" class="container-card">
@@ -20,7 +34,9 @@
         </p>
         <p>Image: {{container.Image}}</p>
         <p>Status: {{container.Status}}</p>
-        <Button type="primary" @click="inspectContainer(container.Id)">Inspect</Button>
+        <Button type="primary" @click="inspectContainer(container.Id)">
+          Inspect
+        </Button>
         <container-control-panel
             :container-id="container.Id"
             @container-data-refreshed="function (newData) { loadContainers() }"
@@ -37,12 +53,14 @@
 
 <script>
   import ContainerControlPanel from './ContainerControlPanel'
+  import ContainerCreationForm from './ContainerCreationForm'
 
   import docker from '../../js/docker'
 
   export default {
     components: {
-      ContainerControlPanel
+      ContainerControlPanel,
+      ContainerCreationForm
     },
     data () {
       return {
@@ -57,7 +75,8 @@
           exited: 'red',
           dead: 'red'
         },
-        loadingContainers: false
+        loadingContainers: false,
+        containerCreateModal: false
       }
     },
     watch: {
@@ -70,6 +89,12 @@
       }
     },
     methods: {
+      confirmCreation () {
+        this.$refs.containerCreationForm.submit()
+      },
+      resetCreation () {
+        this.$refs.containerCreationForm.reset()
+      },
       refreshContainers () {
         // TODO (fluency03): figure out how to use notifications.
         // this.info('Start loading containers.')
@@ -149,10 +174,6 @@
 
   .container-card-title {
     height: 26px;
-  }
-
-  .refresh-button {
-    display: block;
   }
 
   .control-panel {

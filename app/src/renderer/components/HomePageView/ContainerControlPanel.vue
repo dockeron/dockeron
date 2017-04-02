@@ -2,13 +2,13 @@
   <div>
     <Button
         type="success"
-        @click="startContainer(containerId, inspectContainer)"
+        @click="startContainer()"
         class="container-control-button">
       Start
     </Button>
     <Button
         type="error"
-        @click="stopContainer(containerId, inspectContainer)"
+        @click="stopContainer()"
         class="container-control-button">
       Stop
     </Button>
@@ -27,25 +27,27 @@
       }
     },
     methods: {
-      startContainer (containerId, callback) {
-        console.log('Start: ', containerId)
-        var container = docker.getContainer(containerId)
+      startContainer () {
+        var self = this
+        console.log('Start: ', self.containerId)
+        var container = docker.getContainer(self.containerId)
 
         container.start()
           .then(function (data) {
             console.log('Started!')
-            callback()
+            self.inspectContainer()
           })
           .catch(console.warn)
       },
-      stopContainer (containerId, callback) {
-        console.log('Stop: ', containerId)
-        var container = docker.getContainer(containerId)
+      stopContainer () {
+        var self = this
+        console.log('Stop: ', self.containerId)
+        var container = docker.getContainer(self.containerId)
 
         container.stop()
           .then(function (data) {
             console.log('Stopped!')
-            callback()
+            self.inspectContainer()
           })
           .catch(console.warn)
       },
