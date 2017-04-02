@@ -1,19 +1,9 @@
 <template>
-  <div class="layout">
-    <Menu class="single-image-menu" mode="horizontal" active-name="menu-active">
-      <Button class="go-home-button" type="ghost" shape="circle" icon="chevron-left"
-          @click="goHome">
-      </Button>
-      <image-control-panel class="image-control-panel" :image-id="imageId"
-          @image-data-refreshed="refreshImageData">
-      </image-control-panel>
-    </Menu>
-    <div class="layout-content">
-      <pre>{{imageData}}</pre>
-    </div>
-    <div class="layout-copy">
-      2017-2018 &copy; Dockeron
-    </div>
+  <div>
+    <image-control-panel class="image-control-panel" :image-id="imageId"
+        @image-data-refreshed="refreshImageData">
+    </image-control-panel>
+    <pre>{{imageData}}</pre>
   </div>
 </template>
 
@@ -60,35 +50,6 @@
 </script>
 
 <style scoped>
-  .layout {
-    background: #f5f7f9;
-    position: relative;
-    overflow-y: scroll;
-    max-height: 100vh;
-    /*height: 100%;*/
-  }
-
-  .layout-content {
-    min-height: 200px;
-  }
-
-  .layout-copy {
-    text-align: center;
-    padding: 10px 0 20px;
-    color: #9ea7b4;
-  }
-
-  .single-container-menu {
-    padding-left: 35px;
-  }
-
-  .go-home-button {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
   .image-control-panel {
     margin-left: 20px;
   }
