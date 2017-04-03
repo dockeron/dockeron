@@ -84,11 +84,12 @@
         this.$refs.containerCreationForm.reset()
       },
       refreshContainers () {
-        // TODO (fluency03): figure out how to use notifications.
-        // this.info('Start loading containers.')
         this.loadingContainers = true
         this.loadContainers()
-        // this.info('Finish loading containers.')
+        /* eslint-disable no-new */
+        new Notification('Dockeron', {
+          body: 'Container List Refreshed!'
+        })
         this.loadingContainers = false
       },
       inspectContainer (containerId) {
@@ -96,30 +97,6 @@
         this.$router.push({
           name: 'single-container-view',
           params: { containerId: containerId }
-        })
-      },
-      info (content) {
-        this.$Notice.info({
-          title: content,
-          desc: ''
-        })
-      },
-      success (content) {
-        this.$Notice.success({
-          title: content,
-          desc: ''
-        })
-      },
-      warning (content) {
-        this.$Notice.warning({
-          title: content,
-          desc: ''
-        })
-      },
-      error (content) {
-        this.$Notice.error({
-          title: content,
-          desc: ''
         })
       },
       loadContainers () {

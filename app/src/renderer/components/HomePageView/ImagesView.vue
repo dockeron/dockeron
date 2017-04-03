@@ -51,10 +51,12 @@
     },
     methods: {
       refreshImages () {
-        // this.info('Start loading images.')
         this.loadingImages = true
         this.loadImages()
-        // this.info('Finish loading images.')
+        /* eslint-disable no-new */
+        new Notification('Dockeron', {
+          body: 'Image List Refreshed!'
+        })
         this.loadingImages = false
       },
       inspectImage (imageId) {

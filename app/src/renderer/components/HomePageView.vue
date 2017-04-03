@@ -31,11 +31,7 @@
           </template>
           <Menu-item name="home-menu-settings-info">Info</Menu-item>
           <Menu-item name="home-menu-settings-version">Version</Menu-item>
-          <Menu-item name="home-menu-settings-ping">
-            <Tooltip :content="ping" placement="right">
-              Ping
-            </Tooltip>
-          </Menu-item>
+          <Menu-item name="home-menu-settings-ping">Ping</Menu-item>
           <Menu-item name="home-menu-settings-config">Config</Menu-item>
         </Submenu>
       </Menu>
@@ -87,6 +83,11 @@
           this.showInfo = true
         } else if (selectedMenuName === 'home-menu-settings-version') {
           this.showVersion = true
+        } else if (selectedMenuName === 'home-menu-settings-ping') {
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'The network is ' + this.ping + ' !'
+          })
         } else {
           console.log(selectedMenuName)
         }
@@ -135,6 +136,15 @@
     position: relative;
   }
 
+  .layout-menu {
+    -webkit-app-region: drag;
+  }
+
+  .ivu-menu {
+    margin-top: 5px;
+    height: 55px;
+  }
+
   .layout-content {
     min-height: 200px;
     overflow-y: scroll;
@@ -152,13 +162,9 @@
     color: inherit;
   }
 
-  @media (max-width: 613px) {
-    Menu {
-      height: 120px;
-    }
-
-    Menu-item {
-      height: 50%;
+  @media (max-width: 637px) {
+    .ivu-menu {
+      display: inline-table;
     }
   }
 
