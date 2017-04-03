@@ -13,6 +13,15 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js",
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dockeron/dockeron.git"
+  },
+  "keywords": [
+    "electorn",
+    "vue.js",
+    "docker"
+  ],
   "build": {
     "productName": "ElectronVue",
     "appId": "org.simulatedgreg.electron-vue",
@@ -62,6 +71,9 @@
     }
   ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dockeron/dockeron/issues"
+  },
   "devDependencies": {
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
