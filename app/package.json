@@ -4,7 +4,7 @@
   "description": "A dockeron project",
   "main": "./dist/main.js",
   "dependencies": {
-    "dockerode": "^2.4.2",
+    "dockerode": "^2.4.3",
     "iview": "^2.0.0-rc.7",
     "q": "^1.5.0",
     "vue": "^2.2.6",
