@@ -14,16 +14,10 @@
           <Icon type="ios-people"></Icon>
           Plugins
         </Menu-item>
-        <Submenu name="home-menu-dockerhub">
-          <template slot="title">
-            <Icon type="stats-bars"></Icon>
-            Docker Hub
-          </template>
-          <Menu-item name="home-menu-dockerhub-topstars">Top Stars</Menu-item>
-          <Menu-item name="home-menu-dockerhub-toppulls">Top Pulls</Menu-item>
-          <Menu-item name="home-menu-dockerhub-login">Login</Menu-item>
-          <Menu-item name="home-menu-dockerhub-search">Search</Menu-item>
-        </Submenu>
+        <Menu-item name="home-menu-dockerhub">
+          <Icon type="stats-bars"></Icon>
+          <router-link to="/docker-hub">Docker Hub</router-link>
+        </Menu-item>
         <Submenu name="home-menu-settings">
           <template slot="title">
             <Icon type="settings"></Icon>
@@ -132,7 +126,8 @@
 
 <style scoped>
   .layout {
-    background: #f5f7f9;
+    /*background: #f5f7f9;*/
+    height: 100%;
     position: relative;
   }
 
