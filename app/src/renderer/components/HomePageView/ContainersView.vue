@@ -11,7 +11,9 @@
     </Button>
     <Modal v-model="containerCreateModal" title="Create Container"
         @on-ok="confirmCreation" @on-cancel="resetCreation">
-      <container-creation-form ref="containerCreationForm"></container-creation-form>
+      <container-creation-form ref="containerCreationForm" 
+          @new-container-created="function (newContainer) { loadContainers() }">
+      </container-creation-form>
     </Modal>
     <br>
     <div v-if="hasFoundContainers">
