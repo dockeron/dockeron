@@ -1,70 +1,129 @@
 <template>
   <div>
-    <Form :model="newContainer" :label-width="80">
+    <Form :model="defaultSettings" :label-width="80">
       <Form-item label="Image" required>
-        <Input v-model="newContainer.image" placeholder="Image Name"></Input>
+        <Input v-model="defaultSettings.Image" placeholder="Image Name"></Input>
       </Form-item>
       <Form-item label="Name">
-        <Input v-model="newContainer.name" placeholder="New name of your container"></Input>
-      </Form-item>
-      <Form-item label="Cmd">
-        <Input v-model="newContainer.Cmd" placeholder="Default: /bin/bash"></Input>
-      </Form-item>
-      <Form-item label="Tty" class="switch">
-        <i-switch v-model="newContainer.Tty" size="large">
-          <span slot="open">true</span>
-          <span slot="close">false</span>
-        </i-switch>
-      </Form-item>
-      <Form-item label="OpenStdin" class="switch">
-        <i-switch v-model="newContainer.OpenStdin" size="large">
-          <span slot="open">true</span>
-          <span slot="close">false</span>
-        </i-switch>
-      </Form-item>
-      <Form-item label="StdinOnce" class="switch">
-        <i-switch v-model="newContainer.StdinOnce" size="large">
-          <span slot="open">true</span>
-          <span slot="close">false</span>
-        </i-switch>
+        <Input v-model="defaultSettings.name" placeholder="New name of your container"></Input>
       </Form-item>
     </Form>
+    Advanced Settings:
+    <Button class="import-button" type="primary" @click="openFileDialog">
+      Import JSON
+    </Button>
+    <json-form class="advanced-settings-form" name="Demo" :label-width="80"
+        v-model="advancedSettings">
+    </json-form>
   </div>
 </template>
 
 <script>
-  // import docker from '../../js/docker'
+  // import JsonForm from 'vue-json-form'
+  import JsonForm from './JsonForm'
+  import docker from '../../js/docker'
+  import { ipcRenderer } from 'electron'
+  import fs from 'fs'
+  import path from 'path'
 
   export default {
+    components: {
+      JsonForm
+    },
     data () {
       return {
-        newContainer: {
+        defaultSettings: {
           Image: '',
-          name: '',
-          Cmd: '/bin/bash',
-          Tty: false,
-          OpenStdin: false,
-          StdinOnce: false
-        }
+          name: ''
+        },
+        importedSettings: {},
+        advancedSettings: {},
+        errorred: false
       }
     },
     methods: {
       submit () {
-        console.log('submit: ', this.newContainer)
+        var self = this
+        console.log('submit: ', this.defaultSettings)
+        console.log('submit: ', this.advancedSettings)
+
+        function newContainerCreated (container) {
+          console.log(container)
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'New Container Created!'
+          })
+          self.$emit('new-container-created', container)
+        }
+
+        function noContainerCreated (err) {
+          console.log(err)
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: err
+          })
+          self.$emit('no-container-created', err)
+        }
+
+        docker.createContainer(Object.assign(this.defaultSettings, this.advancedSettings))
+          .then(newContainerCreated)
+          .catch(noContainerCreated)
 
         this.reset()
       },
       reset () {
         console.log('reset')
-        this.newContainer = {
+        this.defaultSettings = {
           Image: '',
-          name: '',
-          Cmd: '/bin/bash',
-          Tty: false,
-          OpenStdin: false,
-          StdinOnce: false
+          name: ''
         }
+        this.advancedSettings = this.importedSettings
+      },
+      openFileDialog () {
+        ipcRenderer.send('open-file-dialog')
       }
+    },
+    created () {
+      var self = this
+      this.stringifiedSettings = JSON.stringify(this.importedSettings, null, 4)
+      ipcRenderer.on('selected-directory', function (event, filepaths) {
+        // console.log(filepaths)
+        if (filepaths.length === 1) {
+          var filepath = filepaths[0]
+          console.log(filepath)
+          try {
+            if (path.extname(filepath) === '.json') {
+              fs.readFile(filepath, (err, data) => {
+                if (err) {
+                  /* eslint-disable no-new */
+                  new Notification('Dockeron', {
+                    body: err
+                  })
+                }
+                var parsedJSON = JSON.parse(data)
+                console.log(parsedJSON)
+                self.importedSettings = parsedJSON
+                self.advancedSettings = self.importedSettings
+              })
+            } else {
+              /* eslint-disable no-new */
+              new Notification('Dockeron', {
+                body: 'Not a .json file!'
+              })
+            }
+          } catch (e) {
+            /* eslint-disable no-new */
+            new Notification('Dockeron', {
+              body: e
+            })
+          }
+        } else {
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'You should select and ONLY SELECT ONE file!'
+          })
+        }
+      })
     }
   }
 </script>
@@ -72,5 +131,11 @@
 <style scoped>
   .switch {
     display: inline-block;
+  }
+  .import-button {
+    display: inline-block;
+  }
+  .advanced-settings-form {
+    margin-top: 10px;
   }
 </style>

@@ -28,6 +28,11 @@ export default [
         path: '/images/:imageId',
         name: 'single-image-view',
         component: require('components/HomePageView/SingleImageView')
+      },
+      {
+        path: '/docker-hub',
+        name: 'docker-hub-view',
+        component: require('components/HomePageView/DockerHubView')
       }
     ]
   },
