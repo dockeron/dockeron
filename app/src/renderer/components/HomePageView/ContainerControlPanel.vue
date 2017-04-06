@@ -22,14 +22,41 @@
       <Button class="container-control-button" type="success" @click="inspectContainer">
         Refresh
       </Button>
+      <Button class="container-control-button" type="info" @click="getContainerLogs">
+        Logs
+      </Button>
+      <Button class="container-control-button" type="warning" @click="containerRenameModal = true">
+        Rename
+      </Button>
+      <Modal v-model="containerRenameModal" title="Rename Container" @on-ok="renameContainer">
+          <Input v-model="containerNewName" placeholder="New Name"></Input>
+      </Modal>
+      <Button class="container-control-button" type="success" @click="listTopProcesses">
+        Top
+      </Button>
+      <Modal v-model="topProcessesModal" title="Top Processes">
+        <container-top-processes-form ref="containerTopProcessesForm" v-bind:topResult="topResult"></container-top-processes-form>
+      </Modal>
     </div>
   </div>
 </template>
 
 <script>
   import docker from '../../js/docker'
+  import ContainerTopProcessesForm from './ContainerTopProcessesForm'
 
   export default {
+    components: {
+      ContainerTopProcessesForm
+    },
+    data () {
+      return {
+        topProcessesModal: false,
+        containerRenameModal: false,
+        topResult: {},
+        containerNewName: ''
+      }
+    },
     props: {
       containerId: String,
       initialize: {
@@ -129,6 +156,71 @@
         container.inspect()
           .then(containerRefreshed)
           .catch(containerErrored)
+      },
+      getContainerLogs () {
+        var self = this
+        console.log('get logs from container: ', self.containerId)
+        var container = docker.getContainer(self.containerId)
+        var logOpts = {
+          stdout: true,
+          stderr: true,
+          tail: 10
+        }
+        container.logs(logOpts)
+          .then(function (data) {
+            console.log('Display logs:')
+            console.log(data)
+            // console.log(JSON.stringify(JSON.decycle(data)))
+            console.log(data.statusCode)
+            console.log(data.statusMessage)
+          })
+          .catch(console.warn)
+      },
+      renameContainer () {
+        if (this.containerNewName === '') return
+        var self = this
+        var renamePara = {
+          name: self.containerNewName
+        }
+        var container = docker.getContainer(self.containerId)
+
+        function renameContainerFinshed (data) {
+          console.log('Rename: ' + self.containerId + ' to ' + renamePara.name)
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'Rename container to ' + renamePara.name + ' successful!'
+          })
+          self.containerNewName = ''
+          self.inspectContainer()
+        }
+
+        function renameContainerFailed (error) {
+          console.log(error)
+          var errorMsg = error.message
+          errorMsg = errorMsg.slice(errorMsg.indexOf(':') + 2)
+          self.containerNewName = ''
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: errorMsg
+          })
+        }
+
+        container.rename(renamePara)
+          .then(renameContainerFinshed)
+          .catch(renameContainerFailed)
+      },
+      listTopProcesses () {
+        var self = this
+        console.log('List top processes of: ' + self.containerId)
+        var container = docker.getContainer(self.containerId)
+
+        container.top()
+          .then(function (data) {
+            console.log(data)
+            self.topResult = data
+            self.topProcessesModal = true
+          })
+          .catch(console.warn)
       }
     },
     created () {
