@@ -6,14 +6,9 @@
           {{prop}}
           <p slot="content">
             <template v-for="(item, index) in value">
-              <setting-item :prop="index.toString()" :value="item"></setting-item>
+              <json-node :prop="index.toString()" :value="item"></json-node>
             </template>
-            <Button type="primary" shape="circle" icon="plus-round"
-                @click="add">
-            </Button>
-            <Button type="primary" shape="circle" icon="minus-round"
-                @click="reduce">
-            </Button>
+            <add-new-node :is-array="true" @add-new-node="add"></add-new-node>
           </p>
         </Panel>
       </Collapse>
@@ -33,7 +28,7 @@
     </div>
     <div v-else-if="isNumber(value)">
       <Form-item :label="prop" class="switch">
-        <Input v-model="value" :placeholder="value.toString()"></Input>
+        <Input-number v-model="value"></Input-number>
       </Form-item>
     </div>
     <div v-else-if="isObject(value)">
@@ -42,8 +37,9 @@
           {{prop}}
           <p slot="content">
             <template v-for="(subvalue, subprop) in value">
-              <setting-item :prop="subprop" :value="subvalue"></setting-item>
+              <json-node :prop="subprop" :value="subvalue"></json-node>
             </template>
+            <add-new-node @add-new-node="add"></add-new-node>
           </p>
         </Panel>
       </Collapse>
@@ -52,18 +48,33 @@
 </template>
 
 <script>
+  import AddNewNode from './AddNewNode'
+  import Vue from 'vue'
+
   export default {
-    name: 'setting-item',
+    name: 'json-node',
     props: ['prop', 'value'],
     components: {
-      'setting-item': this
+      'json-node': this,
+      'add-new-node': AddNewNode
     },
     methods: {
-      add () {
-        this.value.push('')
-      },
-      reduce () {
-        this.value.pop()
+      add (params) {
+        var name = params.name
+        var type = params.type
+        const nameToNew = {
+          Object: {},
+          Array: [],
+          String: '',
+          Number: 0,
+          Boolean: false
+        }
+        var newItem = nameToNew[type]
+        if (this.isArray(this.value)) {
+          this.value.push(newItem)
+        } else if (this.isObject(this.value)) {
+          Vue.set(this.value, name, newItem)
+        }
       },
       isString (value) {
         return typeof value === 'string'
@@ -93,5 +104,8 @@
   },
   Collapse {
     margin-bottom: 10px;
+  }
+  .import-button {
+    display: inline-block;
   }
 </style>

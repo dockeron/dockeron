@@ -12,14 +12,15 @@
     <Button class="import-button" type="primary" @click="openFileDialog">
       Import JSON
     </Button>
-    <Form class="advanced-settings-form" :label-width="80">
-      <setting-item prop="Advanced Settings" :value="advancedSettings"></setting-item>
-    </Form>
+    <json-form class="advanced-settings-form" name="Demo" :label-width="80"
+        v-model="advancedSettings">
+    </json-form>
   </div>
 </template>
 
 <script>
-  import SettingItem from './SettingItem'
+  // import JsonForm from 'vue-json-form'
+  import JsonForm from './JsonForm'
   import docker from '../../js/docker'
   import { ipcRenderer } from 'electron'
   import fs from 'fs'
@@ -27,7 +28,7 @@
 
   export default {
     components: {
-      SettingItem
+      JsonForm
     },
     data () {
       return {
