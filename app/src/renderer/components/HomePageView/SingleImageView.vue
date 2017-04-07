@@ -3,8 +3,8 @@
     <image-control-panel class="image-control-panel" :image-id="imageId"
         @image-data-refreshed="refreshImageData">
     </image-control-panel>
-    <tree-view :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}"></tree-view>
-    <!-- <pre>{{imageData}}</pre> -->
+    <tree-view class="tree-view" :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}">
+    </tree-view>
   </div>
 </template>
 

@@ -21,6 +21,7 @@
 
 <script>
   // import docker from '../../js/docker'
+  import dockerHubApi from 'docker-hub-api'
 
   export default {
     data () {
@@ -29,13 +30,34 @@
           username: '',
           password: ''
         },
-        auth: '',
-        error: {}
+        token: '',
+        error: ''
       }
     },
     methods: {
       login () {
-        //
+        var self = this
+
+        function loginSuccess (token) {
+          self.token = token
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'Login Success!'
+          })
+        }
+
+        function loginFailed (err) {
+          console.warn(err)
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: err
+          })
+          self.error = err
+        }
+
+        dockerHubApi.login(this.credentials.username, this.credentials.password)
+          .then(loginSuccess)
+          .catch(loginFailed)
       }
     }
   }

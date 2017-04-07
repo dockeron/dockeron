@@ -7,8 +7,8 @@
     <Tag class="container-state-tag" :color="stateToColor[status]">
       {{status}}
     </Tag>
-    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}"></tree-view>
-    <!-- <pre>{{containerData}}</pre> -->
+    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}">
+    </tree-view>
   </div>
 </template>
 
