@@ -8,11 +8,11 @@
         <Input v-model="defaultSettings.name" placeholder="New name of your container"></Input>
       </Form-item>
     </Form>
-    Advanced Settings:
+    <!-- Advanced Settings: -->
     <Button class="import-button" type="primary" @click="openFileDialog">
-      Import JSON
+      Import from JSON
     </Button>
-    <json-form class="advanced-settings-form" name="Demo" :label-width="80"
+    <json-form class="advanced-settings-form" name="Advanced Settings" :label-width="80"
         v-model="advancedSettings">
     </json-form>
   </div>
@@ -20,7 +20,7 @@
 
 <script>
   // import JsonForm from 'vue-json-form'
-  import JsonForm from './JsonForm'
+  import JsonForm from './JsonForm/JsonForm'
   import docker from '../../js/docker'
   import { ipcRenderer } from 'electron'
   import fs from 'fs'

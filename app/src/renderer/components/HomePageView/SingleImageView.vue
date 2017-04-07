@@ -3,16 +3,19 @@
     <image-control-panel class="image-control-panel" :image-id="imageId"
         @image-data-refreshed="refreshImageData">
     </image-control-panel>
-    <pre>{{imageData}}</pre>
+    <tree-view :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}"></tree-view>
+    <!-- <pre>{{imageData}}</pre> -->
   </div>
 </template>
 
 <script>
   import ImageControlPanel from './ImageControlPanel'
+  import TreeView from './TreeView/TreeView'
 
   export default {
     components: {
-      ImageControlPanel
+      ImageControlPanel,
+      TreeView
     },
     data () {
       return {

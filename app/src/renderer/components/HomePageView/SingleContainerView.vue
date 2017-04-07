@@ -1,22 +1,25 @@
 <template>
   <div>
-      <container-control-panel class="container-control-panel"
-          :container-id="containerId" :initialize="true" :has-all-buttons="true"
-          @container-data-refreshed="refreshContainerData">
-      </container-control-panel>
-      <Tag class="container-state-tag" :color="stateToColor[status]">
-        {{status}}
-      </Tag>
-    <pre>{{containerData}}</pre>
+    <container-control-panel class="container-control-panel"
+        :container-id="containerId" :initialize="true" :has-all-buttons="true"
+        @container-data-refreshed="refreshContainerData">
+    </container-control-panel>
+    <Tag class="container-state-tag" :color="stateToColor[status]">
+      {{status}}
+    </Tag>
+    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}"></tree-view>
+    <!-- <pre>{{containerData}}</pre> -->
   </div>
 </template>
 
 <script>
   import ContainerControlPanel from './ContainerControlPanel'
+  import TreeView from './TreeView/TreeView'
 
   export default {
     components: {
-      ContainerControlPanel
+      ContainerControlPanel,
+      TreeView
     },
     data () {
       return {

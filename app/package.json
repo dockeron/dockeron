@@ -9,6 +9,7 @@
     "q": "^1.5.0",
     "vue": "^2.2.6",
     "vue-electron": "^1.0.6",
+    "vue-json-tree-view": "^2.0.4",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.2",
     "vuex": "^2.1.1"
