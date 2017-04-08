@@ -9,8 +9,7 @@
         @click="imagePullModal = true">
       Pull
     </Button>
-    <Modal v-model="imagePullModal" title="Pull Image"
-        @on-ok="pullImage" @on-cancel="repoTag = ''">
+    <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
       Image Name (and Tag): <Input v-model="repoTag"></Input>
     </Modal>
     <br>

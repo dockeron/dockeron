@@ -35,21 +35,21 @@
         Top
       </Button>
       <Modal v-model="topProcessesModal" title="Top Processes">
-        <container-top-processes-form ref="containerTopProcessesForm" v-bind:topResult="topResult"></container-top-processes-form>
+        <tree-view :data="topResult" :options="{maxDepth: 1, rootObjectKey: 'Top'}"></tree-view>
       </Modal>
     </div>
   </div>
 </template>
 
 <script>
-  import ContainerTopProcessesForm from './ContainerTopProcessesForm'
+  import TreeView from './TreeView/TreeView'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
 
   export default {
     components: {
-      ContainerTopProcessesForm
+      TreeView
     },
     data () {
       return {

@@ -7,6 +7,7 @@
     <Tag class="container-state-tag" :color="stateToColor[status]">
       {{status}}
     </Tag>
+    <br>
     <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}">
     </tree-view>
   </div>
@@ -68,7 +69,7 @@
 
 <style scoped>
   .container-control-panel {
-    display: inline-block;
+    /*display: inline-block;*/
     margin-left: 20px;
   }
 

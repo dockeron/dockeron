@@ -8,7 +8,6 @@
         <Input v-model="defaultSettings.name" placeholder="New name of your container"></Input>
       </Form-item>
     </Form>
-    <!-- Advanced Settings: -->
     <Button class="import-button" type="primary" @click="openFileDialog">
       Import from JSON
     </Button>
