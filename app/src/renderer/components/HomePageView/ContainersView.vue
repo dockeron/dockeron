@@ -45,6 +45,7 @@
   import ContainerCreationForm from './ContainerCreationForm'
 
   import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     components: {
@@ -87,10 +88,7 @@
       refreshContainers () {
         this.loadingContainers = true
         this.loadContainers()
-        /* eslint-disable no-new */
-        new Notification('Dockeron', {
-          body: 'Container List Refreshed!'
-        })
+        notify('Container List Refreshed!')
         this.loadingContainers = false
       },
       inspectContainer (containerId) {

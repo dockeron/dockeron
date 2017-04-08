@@ -44,6 +44,7 @@
   import ImageControlPanel from './ImageControlPanel'
 
   import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     components: {
@@ -72,19 +73,13 @@
       refreshImages () {
         this.loadingImages = true
         this.loadImages()
-        /* eslint-disable no-new */
-        new Notification('Dockeron', {
-          body: 'Image List Refreshed!'
-        })
+        notify('Image List Refreshed!')
         this.loadingImages = false
       },
       pullImage () {
         var self = this
         function newImagePulled (info) {
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'New Image is Pulled!'
-          })
+          notify('New Image is Pulled!')
           self.refreshImages()
         }
 

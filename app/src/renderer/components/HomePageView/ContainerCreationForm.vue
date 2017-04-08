@@ -21,10 +21,12 @@
 <script>
   // import JsonForm from 'vue-json-form'
   import JsonForm from './JsonForm/JsonForm'
+
   import docker from '../../js/docker'
   import { ipcRenderer } from 'electron'
   import fs from 'fs'
   import path from 'path'
+  import notify from '../../js/notify'
 
   export default {
     components: {
@@ -48,20 +50,13 @@
         console.log('submit: ', this.advancedSettings)
 
         function newContainerCreated (container) {
-          console.log(container)
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'New Container Created!'
-          })
+          notify('New Container Created!')
           self.$emit('new-container-created', container)
         }
 
         function noContainerCreated (err) {
           console.log(err)
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: err
-          })
+          notify(err)
           self.$emit('no-container-created', err)
         }
 
@@ -95,10 +90,7 @@
             if (path.extname(filepath) === '.json') {
               fs.readFile(filepath, (err, data) => {
                 if (err) {
-                  /* eslint-disable no-new */
-                  new Notification('Dockeron', {
-                    body: err
-                  })
+                  notify(err)
                 }
                 var parsedJSON = JSON.parse(data)
                 console.log(parsedJSON)
@@ -106,22 +98,13 @@
                 self.advancedSettings = self.importedSettings
               })
             } else {
-              /* eslint-disable no-new */
-              new Notification('Dockeron', {
-                body: 'Not a .json file!'
-              })
+              notify('Not a .json file!')
             }
           } catch (e) {
-            /* eslint-disable no-new */
-            new Notification('Dockeron', {
-              body: e
-            })
+            notify(e)
           }
         } else {
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'You should select and ONLY SELECT ONE file!'
-          })
+          notify('You should select and ONLY SELECT ONE file!')
         }
       })
     }

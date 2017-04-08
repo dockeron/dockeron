@@ -20,8 +20,10 @@
 </template>
 
 <script>
-  // import docker from '../../js/docker'
   import dockerHubApi from 'docker-hub-api'
+
+  // import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     data () {
@@ -40,18 +42,12 @@
 
         function loginSuccess (token) {
           self.token = token
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'Login Success!'
-          })
+          notify('Login Success!')
         }
 
         function loginFailed (err) {
           console.warn(err)
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: err
-          })
+          notify(err)
           self.error = err
         }
 

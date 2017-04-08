@@ -42,8 +42,10 @@
 </template>
 
 <script>
-  import docker from '../../js/docker'
   import ContainerTopProcessesForm from './ContainerTopProcessesForm'
+
+  import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     components: {
@@ -186,10 +188,7 @@
 
         function renameContainerFinshed (data) {
           console.log('Rename: ' + self.containerId + ' to ' + renamePara.name)
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'Rename container to ' + renamePara.name + ' successful!'
-          })
+          notify('Rename container to ' + renamePara.name + ' successful!')
           self.containerNewName = ''
           self.inspectContainer()
         }
@@ -199,10 +198,7 @@
           var errorMsg = error.message
           errorMsg = errorMsg.slice(errorMsg.indexOf(':') + 2)
           self.containerNewName = ''
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: errorMsg
-          })
+          notify(errorMsg)
         }
 
         container.rename(renamePara)
