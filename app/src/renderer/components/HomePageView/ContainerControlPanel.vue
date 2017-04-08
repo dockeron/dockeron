@@ -29,7 +29,7 @@
         Rename
       </Button>
       <Modal v-model="containerRenameModal" title="Rename Container" @on-ok="renameContainer">
-          <Input v-model="containerNewName" placeholder="New Name"></Input>
+        <Input v-model="containerNewName" placeholder="New Name"></Input>
       </Modal>
       <Button class="container-control-button" type="success" @click="listTopProcesses">
         Top

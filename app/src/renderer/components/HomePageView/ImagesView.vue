@@ -5,6 +5,14 @@
       <span v-if="!loadingImages">Refresh</span>
       <span v-else>Loading...</span>
     </Button>
+    <Button class="container-operation-button" type="primary" icon="plus-round"
+        @click="imagePullModal = true">
+      Pull
+    </Button>
+    <Modal v-model="imagePullModal" title="Pull Image"
+        @on-ok="pullImage" @on-cancel="repoTag = ''">
+      Image Name (and Tag): <Input v-model="repoTag"></Input>
+    </Modal>
     <br>
     <div v-if="hasFoundImages">
       <Card v-for="image in images" class="image-card">
@@ -19,6 +27,10 @@
         <Button type="primary" @click="inspectImage(image.Id)">
           Inspect
         </Button>
+        <image-control-panel class="control-panel" :image-id="image.Id"
+            @image-data-refreshed="function (newData) { loadImages() }"
+            @image-removed="function (removed) { loadImages() }">
+        </image-control-panel>
       </Card>
     </div>
     <div v-else>
@@ -29,15 +41,22 @@
 </template>
 
 <script>
+  import ImageControlPanel from './ImageControlPanel'
+
   import docker from '../../js/docker'
 
   export default {
+    components: {
+      ImageControlPanel
+    },
     data () {
       return {
         images: [],
         hasFoundImages: false,
         error: '',
-        loadingImages: false
+        loadingImages: false,
+        imagePullModal: false,
+        repoTag: ''
       }
     },
     watch: {
@@ -58,6 +77,20 @@
           body: 'Image List Refreshed!'
         })
         this.loadingImages = false
+      },
+      pullImage () {
+        var self = this
+        function newImagePulled (info) {
+          /* eslint-disable no-new */
+          new Notification('Dockeron', {
+            body: 'New Image is Pulled!'
+          })
+          self.refreshImages()
+        }
+
+        docker.pull(this.repoTag)
+          .then(newImagePulled)
+          .catch(console.warn)
       },
       inspectImage (imageId) {
         console.log('Goto single-image-view: ', imageId)
@@ -123,11 +156,11 @@
     margin: 5px 5px;
   }
 
-  .image-card-title {
-    height: 26px;
+  .control-panel {
+    display: inline-block;
   }
 
-  .refresh-button {
-    display: block;
+  .image-card-title {
+    height: 26px;
   }
 </style>

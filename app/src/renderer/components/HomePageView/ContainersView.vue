@@ -1,12 +1,11 @@
 <template>
   <div>
-    <Button class="container-operation-button" type="primary" icon="refresh"
-        :loading="loadingContainers" @click="refreshContainers">
+    <Button type="primary" icon="refresh" :loading="loadingContainers"
+        @click="refreshContainers">
       <span v-if="!loadingContainers">Refresh</span>
       <span v-else>Loading...</span>
     </Button>
-    <Button class="container-operation-button" type="primary" icon="plus-round"
-        @click="containerCreateModal = true">
+    <Button type="primary" icon="plus-round" @click="containerCreateModal = true">
       Create
     </Button>
     <Modal v-model="containerCreateModal" title="Create Container"
