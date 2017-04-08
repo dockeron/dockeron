@@ -1,6 +1,6 @@
 <template>
   <div>
-    <image-control-panel class="image-control-panel" :image-id="imageId"
+    <image-control-panel class="image-control-panel" :image-id="imageId" v-model="imageData"
         @image-data-refreshed="refreshImageData" :initialize="true" :has-all-buttons="true">
     </image-control-panel>
     <br>

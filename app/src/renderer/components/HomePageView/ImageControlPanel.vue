@@ -57,90 +57,84 @@
         newTags: {
           repo: '',
           tag: ''
-        }
+        },
+        image: {}
       }
     },
     props: {
-      imageId: String,
-      initialize: {
-        type: Boolean,
-        default: false
-      },
-      hasAllButtons: false
+      imageId: '',
+      initialize: false,
+      hasAllButtons: false,
+      value: {}
     },
     methods: {
       removeImage () {
         var self = this
-        var image = docker.getImage(self.imageId)
 
-        image.remove()
-          .then(function (removed) {
-            self.removed = removed
-            self.removedImageModal = true
-            notify('Image has been removed!')
-            self.$emit('image-removed', removed)
-          })
-          .catch(console.warn)
+        function imageRemoved (removed) {
+          self.removed = removed
+          self.removedImageModal = true
+          notify('Image has been removed!')
+          self.$emit('image-removed', removed)
+        }
+
+        this.image.remove()
+          .then(imageRemoved)
+          .catch(notify)
       },
       goBackHome () {
         //
       },
       getImageHistory () {
         var self = this
-        var image = docker.getImage(self.imageId)
 
-        image.history()
+        this.image.history()
           .then(function (history) {
             self.history = history
             self.imageHistoryModal = true
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       pushImage () {
-        var self = this
-        var image = docker.getImage(self.imageId)
+        // var self = this
 
-        console.log(image)
+        // console.log(this.image)
         //
       },
       tagImage () {
         var self = this
-        var image = docker.getImage(self.imageId)
 
-        image.tag(this.newTags)
+        this.image.tag(this.newTags)
           .then(function (info) {
-            console.log(info)
             self.inspectImage()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       getImage () {
-        var self = this
-        var image = docker.getImage(self.imageId)
+        // var self = this
 
-        console.log(image)
+        // console.log(this.image)
         //
       },
       inspectImage () {
         var self = this
-        var image = docker.getImage(self.imageId)
 
         function imageRefreshed (data) {
-          console.log('inspect: ', data)
           self.$emit('image-data-refreshed', data)
         }
 
         function imageErrored (err) {
-          console.log('inspect: ', err)
+          notify(err)
           self.$emit('image-data-errored', err)
         }
 
-        image.inspect()
+        this.image.inspect()
           .then(imageRefreshed)
           .catch(imageErrored)
       }
     },
     created () {
+      this.image = docker.getImage(this.imageId)
       if (this.initialize) {
         this.inspectImage()
       }

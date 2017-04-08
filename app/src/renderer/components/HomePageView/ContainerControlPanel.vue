@@ -56,119 +56,101 @@
         topProcessesModal: false,
         containerRenameModal: false,
         topResult: {},
-        containerNewName: ''
+        containerNewName: '',
+        container: {}
       }
     },
     props: {
-      containerId: String,
-      initialize: {
-        type: Boolean,
-        default: false
-      },
-      hasAllButtons: false
+      containerId: '',
+      initialize: false,
+      hasAllButtons: false,
+      value: {}
     },
     methods: {
       startContainer () {
         var self = this
-        console.log('Start: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.start()
+        this.container.start()
           .then(function (data) {
-            console.log('Started!')
+            notify('Container ' + self.value.Name + ' started!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       stopContainer () {
         var self = this
-        console.log('Stop: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.stop()
+        this.container.stop()
           .then(function (data) {
-            console.log('Stopped!')
+            notify('Container ' + self.value.Name + ' stopped!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       pauseContainer () {
         var self = this
         console.log('Pause: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.pause()
+        this.container.pause()
           .then(function (data) {
-            console.log('Paused!')
+            notify('Container ' + self.value.Name + ' paused!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       unpauseContainer () {
         var self = this
-        console.log('Unpause: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
-        console.log(container)
 
-        container.unpause()
+        this.container.unpause()
           .then(function (data) {
-            console.log('Unpaused!')
+            notify('Container ' + self.value.Name + ' unpaused!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       restartContainer () {
         var self = this
-        console.log('Restart: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.restart()
+        this.container.restart()
           .then(function (data) {
-            console.log('Restarted!')
+            notify('Container ' + self.value.Name + ' restarted!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       killContainer () {
         var self = this
-        console.log('Kill: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.kill()
+        this.container.kill()
           .then(function (data) {
-            console.log('Killed!')
+            notify('Container ' + self.value.Name + ' killed!')
             self.inspectContainer()
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       inspectContainer () {
         var self = this
-        var container = docker.getContainer(self.containerId)
 
         function containerRefreshed (data) {
-          console.log('inspect: ', data)
           self.$emit('container-data-refreshed', data)
         }
 
         function containerErrored (err) {
-          console.log('inspect: ', err)
           self.$emit('container-data-errored', err)
         }
 
-        container.inspect()
+        this.container.inspect()
           .then(containerRefreshed)
           .catch(containerErrored)
       },
       getContainerLogs () {
-        var self = this
-        console.log('get logs from container: ', self.containerId)
-        var container = docker.getContainer(self.containerId)
         var logOpts = {
           stdout: true,
           stderr: true,
           tail: 10
         }
-        container.logs(logOpts)
+
+        this.container.logs(logOpts)
           .then(function (data) {
             console.log('Display logs:')
             console.log(data)
@@ -176,7 +158,7 @@
             console.log(data.statusCode)
             console.log(data.statusMessage)
           })
-          .catch(console.warn)
+          .catch(notify)
       },
       renameContainer () {
         if (this.containerNewName === '') return
@@ -184,42 +166,30 @@
         var renamePara = {
           name: self.containerNewName
         }
-        var container = docker.getContainer(self.containerId)
 
         function renameContainerFinshed (data) {
-          console.log('Rename: ' + self.containerId + ' to ' + renamePara.name)
           notify('Rename container to ' + renamePara.name + ' successful!')
           self.containerNewName = ''
           self.inspectContainer()
         }
 
-        function renameContainerFailed (error) {
-          console.log(error)
-          var errorMsg = error.message
-          errorMsg = errorMsg.slice(errorMsg.indexOf(':') + 2)
-          self.containerNewName = ''
-          notify(errorMsg)
-        }
-
-        container.rename(renamePara)
+        this.container.rename(renamePara)
           .then(renameContainerFinshed)
-          .catch(renameContainerFailed)
+          .catch(notify)
       },
       listTopProcesses () {
         var self = this
-        console.log('List top processes of: ' + self.containerId)
-        var container = docker.getContainer(self.containerId)
 
-        container.top()
+        this.container.top()
           .then(function (data) {
-            console.log(data)
             self.topResult = data
             self.topProcessesModal = true
           })
-          .catch(console.warn)
+          .catch(notify)
       }
     },
     created () {
+      this.container = docker.getContainer(this.containerId)
       if (this.initialize) {
         this.inspectContainer()
       }

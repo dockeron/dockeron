@@ -72,22 +72,21 @@
       refreshImages () {
         this.loadingImages = true
         this.loadImages()
-        notify('Image List Refreshed!')
+        notify('Image list refreshed!')
         this.loadingImages = false
       },
       pullImage () {
         var self = this
         function newImagePulled (info) {
-          notify('New Image is Pulled!')
+          notify('New image is pulled!')
           self.refreshImages()
         }
 
         docker.pull(this.repoTag)
           .then(newImagePulled)
-          .catch(console.warn)
+          .catch(notify)
       },
       inspectImage (imageId) {
-        console.log('Goto single-image-view: ', imageId)
         this.$router.push({
           name: 'single-image-view',
           params: { imageId: imageId }
@@ -101,15 +100,14 @@
         }
 
         function updateImages (images) {
-          console.log('listImages: ', images)
           self.images = images
           self.error = {}
         }
 
         function updateError (err) {
-          console.log('listImages: ', err)
           self.images = []
           self.error = err
+          notify(err)
         }
 
         docker.listImages(queries)

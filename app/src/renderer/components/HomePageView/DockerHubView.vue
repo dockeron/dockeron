@@ -42,12 +42,13 @@
 
         function loginSuccess (token) {
           self.token = token
-          notify('Login Success!')
+          self.error = ''
+          notify('Login success!')
         }
 
         function loginFailed (err) {
-          console.warn(err)
           notify(err)
+          self.token = ''
           self.error = err
         }
 

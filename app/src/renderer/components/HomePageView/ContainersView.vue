@@ -88,11 +88,10 @@
       refreshContainers () {
         this.loadingContainers = true
         this.loadContainers()
-        notify('Container List Refreshed!')
+        notify('Container list refreshed!')
         this.loadingContainers = false
       },
       inspectContainer (containerId) {
-        console.log('Goto single-container-view: ', containerId)
         this.$router.push({
           name: 'single-container-view',
           params: { containerId: containerId }
@@ -107,15 +106,14 @@
         }
 
         function updateContainers (containers) {
-          console.log('listContainers: ', containers)
           self.containers = containers
           self.error = {}
         }
 
         function updateError (err) {
-          console.log('listContainers: ', err)
           self.containers = []
           self.error = err
+          notify(err)
         }
 
         docker.listContainers(queries)

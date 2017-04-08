@@ -54,7 +54,6 @@
         }
 
         function noContainerCreated (err) {
-          console.log(err)
           notify(err)
           self.$emit('no-container-created', err)
         }
@@ -66,7 +65,6 @@
         this.reset()
       },
       reset () {
-        console.log('reset')
         this.defaultSettings = {
           Image: '',
           name: ''
@@ -84,7 +82,6 @@
         // console.log(filepaths)
         if (filepaths.length === 1) {
           var filepath = filepaths[0]
-          console.log(filepath)
           try {
             if (path.extname(filepath) === '.json') {
               fs.readFile(filepath, (err, data) => {
@@ -92,7 +89,6 @@
                   notify(err)
                 }
                 var parsedJSON = JSON.parse(data)
-                console.log(parsedJSON)
                 self.importedSettings = parsedJSON
                 self.advancedSettings = self.importedSettings
               })

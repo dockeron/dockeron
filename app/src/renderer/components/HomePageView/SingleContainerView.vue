@@ -1,6 +1,6 @@
 <template>
   <div>
-    <container-control-panel class="container-control-panel"
+    <container-control-panel class="container-control-panel" v-model="containerData"
         :container-id="containerId" :initialize="true" :has-all-buttons="true"
         @container-data-refreshed="refreshContainerData">
     </container-control-panel>
