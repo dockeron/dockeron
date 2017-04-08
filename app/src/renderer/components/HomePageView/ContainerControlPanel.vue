@@ -25,6 +25,9 @@
       <Button class="container-control-button" type="info" @click="getContainerLogs">
         Logs
       </Button>
+      <Modal v-model="logsModal" title="Logs">
+        <pre class="logs">{{logs}}</pre>
+      </Modal>
       <Button class="container-control-button" type="warning" @click="containerRenameModal = true">
         Rename
       </Button>
@@ -55,6 +58,8 @@
       return {
         topProcessesModal: false,
         containerRenameModal: false,
+        logsModal: false,
+        logs: '',
         topResult: {},
         containerNewName: '',
         container: {}
@@ -155,6 +160,7 @@
           .catch(refreshErrored)
       },
       getContainerLogs () {
+        var self = this
         var logOpts = {
           stdout: true,
           stderr: true,
@@ -162,11 +168,12 @@
         }
 
         function containerLogsGot (data) {
-          console.log('Display logs:')
-          console.log(data)
-          // console.log(JSON.stringify(JSON.decycle(data)))
-          console.log(data.statusCode)
-          console.log(data.statusMessage)
+          data.setEncoding('utf8')
+
+          data.on('data', function (logs) {
+            self.logsModal = true
+            self.logs = logs
+          })
         }
 
         this.container.logs(logOpts)
@@ -215,5 +222,9 @@
 <style scoped>
   .additional-buttons {
     display: inline-block;
+  }
+
+  .logs {
+    white-space: pre-wrap;
   }
 </style>

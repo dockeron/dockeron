@@ -155,10 +155,9 @@
 
         var searchFilters = {}
         this.selectedFilters.forEach(function (filter) {
-          searchFilters[filter] = self.searchFilters[filter]
+          searchFilters[filter] = [self.searchFilters[filter].toString()]
         })
-
-        console.log(searchFilters)
+        searchParams['filters'] = JSON.stringify(searchFilters)
 
         function imagesSearched (images) {
           self.searchedImages = images
