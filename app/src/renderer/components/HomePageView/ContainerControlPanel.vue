@@ -70,62 +70,73 @@
       startContainer () {
         var self = this
 
+        function containerStarted (data) {
+          notify('Container ' + self.value.Name + ' started!')
+          self.inspectContainer()
+        }
+
         this.container.start()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' started!')
-            self.inspectContainer()
-          })
+          .then(containerStarted)
           .catch(notify)
       },
       stopContainer () {
         var self = this
 
+        function containerStopped (data) {
+          notify('Container ' + self.value.Name + ' stopped!')
+          self.inspectContainer()
+        }
+
         this.container.stop()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' stopped!')
-            self.inspectContainer()
-          })
+          .then(containerStopped)
           .catch(notify)
       },
       pauseContainer () {
         var self = this
-        console.log('Pause: ', self.containerId)
+
+        function containerPaused (data) {
+          notify('Container ' + self.value.Name + ' paused!')
+          self.inspectContainer()
+        }
 
         this.container.pause()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' paused!')
-            self.inspectContainer()
-          })
+          .then(containerPaused)
           .catch(notify)
       },
       unpauseContainer () {
         var self = this
 
+        function containerUnpaused (data) {
+          notify('Container ' + self.value.Name + ' unpaused!')
+          self.inspectContainer()
+        }
+
         this.container.unpause()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' unpaused!')
-            self.inspectContainer()
-          })
+          .then(containerUnpaused)
           .catch(notify)
       },
       restartContainer () {
         var self = this
 
+        function containerRestarted (data) {
+          notify('Container ' + self.value.Name + ' restarted!')
+          self.inspectContainer()
+        }
+
         this.container.restart()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' restarted!')
-            self.inspectContainer()
-          })
+          .then(containerRestarted)
           .catch(notify)
       },
       killContainer () {
         var self = this
 
+        function containerKilled (data) {
+          notify('Container ' + self.value.Name + ' killed!')
+          self.inspectContainer()
+        }
+
         this.container.kill()
-          .then(function (data) {
-            notify('Container ' + self.value.Name + ' killed!')
-            self.inspectContainer()
-          })
+          .then(containerKilled)
           .catch(notify)
       },
       inspectContainer () {
@@ -135,13 +146,13 @@
           self.$emit('container-data-refreshed', data)
         }
 
-        function containerErrored (err) {
+        function refreshErrored (err) {
           self.$emit('container-data-errored', err)
         }
 
         this.container.inspect()
           .then(containerRefreshed)
-          .catch(containerErrored)
+          .catch(refreshErrored)
       },
       getContainerLogs () {
         var logOpts = {
@@ -150,41 +161,45 @@
           tail: 10
         }
 
+        function containerLogsGot (data) {
+          console.log('Display logs:')
+          console.log(data)
+          // console.log(JSON.stringify(JSON.decycle(data)))
+          console.log(data.statusCode)
+          console.log(data.statusMessage)
+        }
+
         this.container.logs(logOpts)
-          .then(function (data) {
-            console.log('Display logs:')
-            console.log(data)
-            // console.log(JSON.stringify(JSON.decycle(data)))
-            console.log(data.statusCode)
-            console.log(data.statusMessage)
-          })
+          .then(containerLogsGot)
           .catch(notify)
       },
       renameContainer () {
         if (this.containerNewName === '') return
         var self = this
-        var renamePara = {
+        var renameParams = {
           name: self.containerNewName
         }
 
-        function renameContainerFinshed (data) {
-          notify('Rename container to ' + renamePara.name + ' successful!')
+        function containerRenamed (data) {
+          notify('Rename container to ' + renameParams.name + ' successful!')
           self.containerNewName = ''
           self.inspectContainer()
         }
 
-        this.container.rename(renamePara)
-          .then(renameContainerFinshed)
+        this.container.rename(renameParams)
+          .then(containerRenamed)
           .catch(notify)
       },
       listTopProcesses () {
         var self = this
 
+        function topProcessesGot (data) {
+          self.topResult = data
+          self.topProcessesModal = true
+        }
+
         this.container.top()
-          .then(function (data) {
-            self.topResult = data
-            self.topProcessesModal = true
-          })
+          .then(topProcessesGot)
           .catch(notify)
       }
     },

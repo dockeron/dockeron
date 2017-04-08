@@ -110,7 +110,7 @@
           self.error = {}
         }
 
-        function updateError (err) {
+        function updateErrored (err) {
           self.containers = []
           self.error = err
           notify(err)
@@ -118,7 +118,7 @@
 
         docker.listContainers(queries)
           .then(updateContainers)
-          .catch(updateError)
+          .catch(updateErrored)
       }
     },
     created () {

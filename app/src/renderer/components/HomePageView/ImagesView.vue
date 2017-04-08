@@ -77,13 +77,13 @@
       },
       pullImage () {
         var self = this
-        function newImagePulled (info) {
+        function imagePulled (info) {
           notify('New image is pulled!')
           self.refreshImages()
         }
 
         docker.pull(this.repoTag)
-          .then(newImagePulled)
+          .then(imagePulled)
           .catch(notify)
       },
       inspectImage (imageId) {
@@ -104,7 +104,7 @@
           self.error = {}
         }
 
-        function updateError (err) {
+        function updateErrored (err) {
           self.images = []
           self.error = err
           notify(err)
@@ -112,7 +112,7 @@
 
         docker.listImages(queries)
           .then(updateImages)
-          .catch(updateError)
+          .catch(updateErrored)
       },
       getImageName (repoTag) {
         return repoTag.slice(0, repoTag.indexOf(':'))

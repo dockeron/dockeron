@@ -88,33 +88,31 @@
       getImageHistory () {
         var self = this
 
+        function imageHistoryGot (history) {
+          self.history = history
+          self.imageHistoryModal = true
+        }
+
         this.image.history()
-          .then(function (history) {
-            self.history = history
-            self.imageHistoryModal = true
-          })
+          .then(imageHistoryGot)
           .catch(notify)
       },
       pushImage () {
-        // var self = this
-
-        // console.log(this.image)
-        //
+        // TODO
       },
       tagImage () {
         var self = this
 
+        function imageTagged (info) {
+          self.inspectImage()
+        }
+
         this.image.tag(this.newTags)
-          .then(function (info) {
-            self.inspectImage()
-          })
+          .then(imageTagged)
           .catch(notify)
       },
       getImage () {
-        // var self = this
-
-        // console.log(this.image)
-        //
+        // TODO
       },
       inspectImage () {
         var self = this
@@ -123,14 +121,14 @@
           self.$emit('image-data-refreshed', data)
         }
 
-        function imageErrored (err) {
+        function refreshErrored (err) {
           notify(err)
           self.$emit('image-data-errored', err)
         }
 
         this.image.inspect()
           .then(imageRefreshed)
-          .catch(imageErrored)
+          .catch(refreshErrored)
       }
     },
     created () {

@@ -45,22 +45,20 @@
     methods: {
       submit () {
         var self = this
-        console.log('submit: ', this.defaultSettings)
-        console.log('submit: ', this.advancedSettings)
 
-        function newContainerCreated (container) {
+        function containerCreated (container) {
           notify('New Container Created!')
           self.$emit('new-container-created', container)
         }
 
-        function noContainerCreated (err) {
+        function creationErrored (err) {
           notify(err)
           self.$emit('no-container-created', err)
         }
 
         docker.createContainer(Object.assign(this.defaultSettings, this.advancedSettings))
-          .then(newContainerCreated)
-          .catch(noContainerCreated)
+          .then(containerCreated)
+          .catch(creationErrored)
 
         this.reset()
       },
@@ -81,25 +79,27 @@
       ipcRenderer.on('selected-directory', function (event, filepaths) {
         // console.log(filepaths)
         if (filepaths.length === 1) {
-          var filepath = filepaths[0]
-          try {
-            if (path.extname(filepath) === '.json') {
-              fs.readFile(filepath, (err, data) => {
-                if (err) {
-                  notify(err)
-                }
-                var parsedJSON = JSON.parse(data)
-                self.importedSettings = parsedJSON
-                self.advancedSettings = self.importedSettings
-              })
-            } else {
-              notify('Not a .json file!')
-            }
-          } catch (e) {
-            notify(e)
-          }
-        } else {
           notify('You should select and ONLY SELECT ONE file!')
+          return
+        }
+
+        var filepath = filepaths[0]
+        try {
+          if (path.extname(filepath) === '.json') {
+            notify('Not a .json file!')
+            return
+          }
+
+          fs.readFile(filepath, (err, data) => {
+            if (err) {
+              notify(err)
+            }
+            var parsedJSON = JSON.parse(data)
+            self.importedSettings = parsedJSON
+            self.advancedSettings = self.importedSettings
+          })
+        } catch (e) {
+          notify(e)
         }
       })
     }
