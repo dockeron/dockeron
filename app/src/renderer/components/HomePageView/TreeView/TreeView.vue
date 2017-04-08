@@ -1,3 +1,5 @@
+<!-- https://github.com/arvidkahl/vue-json-tree-view -->
+
 <template>
   <div class="tree-view-wrapper">
     <tree-view-item class="tree-view-item-root" :data="parsedData"

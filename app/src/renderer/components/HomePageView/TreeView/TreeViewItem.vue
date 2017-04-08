@@ -1,3 +1,5 @@
+<!-- https://github.com/arvidkahl/vue-json-tree-view -->
+
 <template>
   <div class="tree-view-item">
     <div v-if="isObject(data)" class="tree-view-item-leaf">

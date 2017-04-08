@@ -34,10 +34,12 @@
       <router-view></router-view>
     </div>
     <Modal v-model="showInfo" title="Info">
-      <pre>{{info}}</pre>
+      <tree-view :data="info" :options="{maxDepth: 1, rootObjectKey: 'Info'}">
+      </tree-view>
     </Modal>
     <Modal v-model="showVersion" title="Version">
-      <pre>{{version}}</pre>
+      <tree-view :data="version" :options="{maxDepth: 1, rootObjectKey: 'Version'}">
+      </tree-view>
     </Modal>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron
@@ -48,11 +50,17 @@
 <script>
   import ContainersView from './HomePageView/ContainersView'
   import ImagesView from './HomePageView/ImagesView'
+  import TreeView from './HomePageView/TreeView/TreeView'
 
   import docker from '../js/docker'
 
   export default {
     name: 'home-page',
+    components: {
+      ContainersView,
+      ImagesView,
+      TreeView
+    },
     data () {
       return {
         activeMenu: 'home-menu-containers',
@@ -66,10 +74,6 @@
         showInfo: false,
         showVersion: false
       }
-    },
-    components: {
-      ContainersView,
-      ImagesView
     },
     methods: {
       onMenuSelect (selectedMenuName) {
