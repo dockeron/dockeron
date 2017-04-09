@@ -53,6 +53,7 @@
   import TreeView from './HomePageView/TreeView/TreeView'
 
   import docker from '../js/docker'
+  import notify from '../js/notify'
 
   export default {
     name: 'home-page',
@@ -64,10 +65,6 @@
     data () {
       return {
         activeMenu: 'home-menu-containers',
-        routeToMenu: {
-          '/containers': 'home-menu-containers',
-          '/images': 'home-menu-images'
-        },
         info: {},
         version: {},
         ping: '',
@@ -77,21 +74,19 @@
     },
     methods: {
       onMenuSelect (selectedMenuName) {
-        if (selectedMenuName === 'home-menu-settings-info') {
-          this.showInfo = true
-        } else if (selectedMenuName === 'home-menu-settings-version') {
-          this.showVersion = true
-        } else if (selectedMenuName === 'home-menu-settings-ping') {
-          /* eslint-disable no-new */
-          new Notification('Dockeron', {
-            body: 'The network is ' + this.ping + ' !'
-          })
-        } else {
-          console.log(selectedMenuName)
+        switch (selectedMenuName) {
+          case 'home-menu-settings-info':
+            this.showInfo = true
+            break
+          case 'home-menu-settings-version':
+            this.showVersion = true
+            break
+          case 'home-menu-settings-ping':
+            notify('The network is ' + this.ping + ' !')
+            break
+          default:
+            console.log(selectedMenuName)
         }
-      },
-      loadActiveMenu () {
-        this.activeMenu = this.routeToMenu[this.$route.fullPath] || 'home-menu-containers'
       },
       loadInfo () {
         var self = this
@@ -123,7 +118,7 @@
       this.loadInfo()
       this.loadVersion()
       this.loadPing()
-      this.loadActiveMenu()
+      // this.loadActiveMenu()
     }
   }
 </script>
