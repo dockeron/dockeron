@@ -67,6 +67,7 @@
     },
     props: {
       containerId: '',
+      containerName: '',
       initialize: false,
       hasAllButtons: false,
       value: {}
@@ -76,7 +77,7 @@
         var self = this
 
         function containerStarted (data) {
-          notify('Container ' + self.value.Name + ' started!')
+          notify('Container ' + self.containerName + ' started!')
           self.inspectContainer()
         }
 
@@ -88,7 +89,7 @@
         var self = this
 
         function containerStopped (data) {
-          notify('Container ' + self.value.Name + ' stopped!')
+          notify('Container ' + self.containerName + ' stopped!')
           self.inspectContainer()
         }
 
@@ -100,7 +101,7 @@
         var self = this
 
         function containerPaused (data) {
-          notify('Container ' + self.value.Name + ' paused!')
+          notify('Container ' + self.containerName + ' paused!')
           self.inspectContainer()
         }
 
@@ -112,7 +113,7 @@
         var self = this
 
         function containerUnpaused (data) {
-          notify('Container ' + self.value.Name + ' unpaused!')
+          notify('Container ' + self.containerName + ' unpaused!')
           self.inspectContainer()
         }
 
@@ -124,7 +125,7 @@
         var self = this
 
         function containerRestarted (data) {
-          notify('Container ' + self.value.Name + ' restarted!')
+          notify('Container ' + self.containerName + ' restarted!')
           self.inspectContainer()
         }
 
@@ -136,7 +137,7 @@
         var self = this
 
         function containerKilled (data) {
-          notify('Container ' + self.value.Name + ' killed!')
+          notify('Container ' + self.containerName + ' killed!')
           self.inspectContainer()
         }
 
@@ -148,11 +149,13 @@
         var self = this
 
         function containerRefreshed (data) {
-          self.$emit('container-data-refreshed', data)
+          // self.value = data
+          self.$emit('input', data)
         }
 
         function refreshErrored (err) {
-          self.$emit('container-data-errored', err)
+          // self.value = err
+          self.$emit('input', err)
         }
 
         this.container.inspect()
@@ -212,9 +215,9 @@
     },
     created () {
       this.container = docker.getContainer(this.containerId)
-      if (this.initialize) {
-        this.inspectContainer()
-      }
+      // if (this.initialize) {
+      this.inspectContainer()
+      // }
     }
   }
 </script>

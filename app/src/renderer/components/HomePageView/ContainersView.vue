@@ -28,8 +28,8 @@
         <Button type="primary" @click="inspectContainer(container.Id)">
           Inspect
         </Button>
-        <container-control-panel class="control-panel" :container-id="container.Id"
-            @container-data-refreshed="function (newData) { loadContainers() }">
+        <container-control-panel class="control-panel" :container-id="container.Id" :container-name="container.Names[0]"
+            @input="function (newData) { loadContainers() }">
         </container-control-panel>
       </Card>
     </div>

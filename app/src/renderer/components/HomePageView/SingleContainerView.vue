@@ -1,8 +1,7 @@
 <template>
   <div>
     <container-control-panel class="container-control-panel" v-model="containerData"
-        :container-id="containerId" :initialize="true" :has-all-buttons="true"
-        @container-data-refreshed="refreshContainerData">
+        :container-id="containerId" :container-name="containerData.Name" :initialize="true" :has-all-buttons="true">
     </container-control-panel>
     <Tag class="container-state-tag" :color="stateToColor[status]">
       {{status}}
@@ -56,9 +55,6 @@
       },
       loadContainerId () {
         this.containerId = this.$route.params.containerId
-      },
-      refreshContainerData (newData) {
-        this.containerData = newData
       }
     },
     created () {
