@@ -32,7 +32,7 @@ install:
 - npm prune
 script:
 - npm run build
-- tar -cvf Dockeron-linux.tar dist/linux-unpacked
+- tar -cvf dist/Dockeron-linux.tar dist/linux-unpacked
 deploy:
   provider: releases
   api_key:
