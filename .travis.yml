@@ -1,25 +1,19 @@
 osx_image: xcode8.3
-
 dist: trusty
-
 sudo: required
-
 language: c
-
 matrix:
   include:
   - os: osx
   - os: linux
     env: CC=clang CXX=clang++ npm_config_clang=1
     compiler: clang
-
 cache:
   directories:
   - node_modules
   - app/node_modules
   - $HOME/.electron
   - $HOME/.cache
-
 addons:
   apt:
     packages:
@@ -27,28 +21,29 @@ addons:
     - icnsutils
     - graphicsmagick
     - xz-utils
-
 before_install:
 - mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.5.5/git-lfs-$([
   "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.5.5.tar.gz
   | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
-
 install:
 - nvm install 7
 - npm install electron-builder@next
 - npm install
 - npm prune
-
 script:
-- npm run release
-
+- npm run build
+deploy:
+  provider: releases
+  api_key:
+    secure: r9m0QBRu2+bL4U7bB9wwWq+uUeLHLJ6uaX5GqDtQqtXPsOPQ4oke6lE+p9cPv9SRKk3SrWn6athoT8HyFrhd83Kr7cm4W2rjTSt3gv8TUktAT04tkd9fae8WFZx4739xityf5xVdmDAxtNqIAeNyKHJFJ+LsoSAThu13nDsYhJZnkK+1MJuPOyL33O4dNlsbe/++wd9q8SJ+s5lP/4csZwwVl8Exa3qsukTxCVQm10NeBZzoPpLTsO2D8y9FovY0v4sSvOgmCTwD1b5ury2pu0n4DCuu7OBfBBqdEyYtlIjNsg3B+UPuJ7MQKbuCKxwx0u9Kf5BG3hkNS3tkNgEqTvZTxlksCzvg9cqfVcej+MEa/e6hnf10dFZAXCQUWzvlOFP6xrj7zSp8/AzYc7DdGmjT2OmUrsggiqOYJRKHSR9oLt47pnpj+16Y8RGjLixSyDYEoo4pFgiC6LyOCGWofu5djbMBrfe+fxuJQ5XO4xafSyyEB/nbrCHMsCZJuYdd1Fl8khxoUFhjqeuc40eSuio2S7QpcJLZaYNEJ4hBDrjVAsMdIOmUlKIG485M4wWmEnZQnbLQcv6YtUmynJOa4TCN51AghxAjn6gwvCnZgE8+D43dVEfIL2OMtx1DtGUfatOO/0D+RUIaAJbzuf6ADcv7i1LvMAlm/NM8m8XU4Kw=
+  file_glob: true
+  file: dist/*
+  skip_cleanup: true
+  on:
+    tags: true
+  overwrite: true
 branches:
   except:
   - /^v\d+\.\d+\.\d+$/
-
 notifications:
   slack: dockeron:Q1YhSx9YSd4k8SuLtYyD8zwI
-
-env:
-  global:
-    GH_TOKEN: a86bd97f1c14c963dd112086fbca4f2a4408b730
