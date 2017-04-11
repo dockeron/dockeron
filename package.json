@@ -3,6 +3,7 @@
   "version": "0.0.13",
   "description": "A dockeron project",
   "scripts": {
+    "release": "npm run build --publish onTag  --prerelease",
     "build": "npm run pack && build",
     "build:dir": "npm run pack && build --dir",
     "dev": "node tasks/runner.js",
@@ -54,7 +55,8 @@
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "deb"
       ]
     }
   },
