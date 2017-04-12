@@ -32,7 +32,7 @@ install:
 - npm prune
 script:
 - npm run build
-- tar -cvf dist/Dockeron-linux.tar dist/linux-unpacked
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then tar -cvf dist/Dockeron-linux.tar dist/linux-unpacked; fi
 deploy:
   provider: releases
   api_key:
