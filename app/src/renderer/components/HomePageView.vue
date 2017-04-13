@@ -34,12 +34,10 @@
       <router-view></router-view>
     </div>
     <Modal v-model="showInfo" title="Info">
-      <tree-view :data="info" :options="{maxDepth: 1, rootObjectKey: 'Info'}">
-      </tree-view>
+      <tree-view :data="info" :options="{maxDepth: 1, rootObjectKey: 'Info'}"></tree-view>
     </Modal>
     <Modal v-model="showVersion" title="Version">
-      <tree-view :data="version" :options="{maxDepth: 1, rootObjectKey: 'Version'}">
-      </tree-view>
+      <tree-view :data="version" :options="{maxDepth: 1, rootObjectKey: 'Version'}"></tree-view>
     </Modal>
     <div class="layout-copy">
       2017-2018 &copy; Dockeron

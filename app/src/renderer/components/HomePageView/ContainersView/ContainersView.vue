@@ -1,9 +1,7 @@
 <template>
   <div>
-    <Button type="primary" icon="refresh" :loading="loadingContainers"
-        @click="refreshContainers">
-      <span v-if="!loadingContainers">Refresh</span>
-      <span v-else>Loading...</span>
+    <Button type="primary" icon="refresh" @click="refreshContainers">
+      Refresh
     </Button>
     <Button type="primary" icon="plus-round" @click="containerCreateModal = true">
       Create
@@ -28,7 +26,8 @@
         <Button type="primary" @click="inspectContainer(container.Id)">
           Inspect
         </Button>
-        <container-control-panel class="control-panel" :container-id="container.Id" :container-name="container.Names[0]"
+        <container-control-panel class="control-panel"
+            :container-id="container.Id" :container-name="container.Names[0]"
             @input="function (newData) { loadContainers() }">
         </container-control-panel>
       </Card>
@@ -65,7 +64,6 @@
           exited: 'red',
           dead: 'red'
         },
-        loadingContainers: false,
         containerCreateModal: false
       }
     },
@@ -86,10 +84,8 @@
         this.$refs.containerCreationForm.reset()
       },
       refreshContainers () {
-        this.loadingContainers = true
         this.loadContainers()
         notify('Container list refreshed!')
-        this.loadingContainers = false
       },
       inspectContainer (containerId) {
         this.$router.push({
@@ -138,12 +134,12 @@
     height: 26px;
   }
 
-  .control-panel {
-    display: inline-block;
-  }
-
   .container-state-tag {
     position: absolute;
     right: 3px;
+  }
+  
+  .control-panel {
+    display: inline-block;
   }
 </style>

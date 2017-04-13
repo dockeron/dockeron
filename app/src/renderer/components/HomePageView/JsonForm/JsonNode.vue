@@ -105,7 +105,4 @@
   Collapse {
     margin-bottom: 10px;
   }
-  .import-button {
-    display: inline-block;
-  }
 </style>

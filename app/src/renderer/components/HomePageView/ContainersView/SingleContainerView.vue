@@ -1,14 +1,14 @@
 <template>
   <div>
     <container-control-panel class="container-control-panel" v-model="containerData"
-        :container-id="containerId" :container-name="containerData.Name" :initialize="true" :has-all-buttons="true">
+        :container-id="containerId" :container-name="containerData.Name"
+        :initialize="true" :has-all-buttons="true">
     </container-control-panel>
     <Tag class="container-state-tag" :color="stateToColor[status]">
       {{status}}
     </Tag>
     <br>
-    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}">
-    </tree-view>
+    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}"></tree-view>
   </div>
 </template>
 
@@ -65,7 +65,6 @@
 
 <style scoped>
   .container-control-panel {
-    /*display: inline-block;*/
     margin-left: 20px;
   }
 

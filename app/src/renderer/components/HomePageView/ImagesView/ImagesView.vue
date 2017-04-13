@@ -1,12 +1,9 @@
 <template>
   <div>
-    <Button class="refresh-button" type="primary" icon="refresh"
-        :loading="loadingImages" @click="refreshImages">
-      <span v-if="!loadingImages">Refresh</span>
-      <span v-else>Loading...</span>
+    <Button type="primary" icon="refresh" @click="refreshImages">
+      Refresh
     </Button>
-    <Button class="container-operation-button" type="primary" icon="plus-round"
-        @click="imagePullModal = true">
+    <Button type="primary" icon="plus-round" @click="imagePullModal = true">
       Pull
     </Button>
     <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
@@ -33,7 +30,7 @@
       </Card>
     </div>
     <div v-else>
-      <h4>No images found.</h4
+      <h4>No images found.</h4>
       <pre>{{error}}</pre>
     </div>
   </div>
@@ -54,7 +51,6 @@
         images: [],
         hasFoundImages: false,
         error: '',
-        loadingImages: false,
         imagePullModal: false,
         repoTag: ''
       }
@@ -70,10 +66,8 @@
     },
     methods: {
       refreshImages () {
-        this.loadingImages = true
         this.loadImages()
         notify('Image list refreshed!')
-        this.loadingImages = false
       },
       pullImage () {
         var self = this
@@ -148,11 +142,11 @@
     margin: 5px 5px;
   }
 
-  .control-panel {
-    display: inline-block;
-  }
-
   .image-card-title {
     height: 26px;
+  }
+  
+  .control-panel {
+    display: inline-block;
   }
 </style>

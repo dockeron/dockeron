@@ -1,40 +1,40 @@
 <template>
   <div>
-    <Button class="container-control-button" type="success" @click="startContainer">
+    <Button type="success" @click="startContainer">
       Start
     </Button>
-    <Button class="container-control-button" type="error" @click="stopContainer">
+    <Button type="error" @click="stopContainer">
       Stop
     </Button>
     <div v-if="hasAllButtons" class="additional-buttons">
-      <Button class="container-control-button" type="warning" @click="pauseContainer">
+      <Button type="warning" @click="pauseContainer">
         Pause
       </Button>
-      <Button class="container-control-button" type="info" @click="unpauseContainer">
+      <Button type="info" @click="unpauseContainer">
         Unpause
       </Button>
-      <Button class="container-control-button" type="warning" @click="restartContainer">
+      <Button type="warning" @click="restartContainer">
         Restart
       </Button>
-      <Button class="container-control-button" type="error" @click="killContainer">
+      <Button type="error" @click="killContainer">
         Kill
       </Button>
-      <Button class="container-control-button" type="success" @click="inspectContainer">
+      <Button type="success" @click="inspectContainer">
         Refresh
       </Button>
-      <Button class="container-control-button" type="info" @click="getContainerLogs">
+      <Button type="info" @click="getContainerLogs">
         Logs
       </Button>
       <Modal v-model="logsModal" title="Logs">
         <pre class="logs">{{logs}}</pre>
       </Modal>
-      <Button class="container-control-button" type="warning" @click="containerRenameModal = true">
+      <Button type="warning" @click="containerRenameModal = true">
         Rename
       </Button>
       <Modal v-model="containerRenameModal" title="Rename Container" @on-ok="renameContainer">
         <Input v-model="containerNewName" placeholder="New Name"></Input>
       </Modal>
-      <Button class="container-control-button" type="success" @click="listTopProcesses">
+      <Button type="success" @click="listTopProcesses">
         Top
       </Button>
       <Modal v-model="topProcessesModal" title="Top Processes">

@@ -4,8 +4,7 @@
         @image-data-refreshed="refreshImageData" :initialize="true" :has-all-buttons="true">
     </image-control-panel>
     <br>
-    <tree-view class="tree-view" :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}">
-    </tree-view>
+    <tree-view :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}"></tree-view>
   </div>
 </template>
 

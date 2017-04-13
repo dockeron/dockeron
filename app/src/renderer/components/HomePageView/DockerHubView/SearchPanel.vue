@@ -1,10 +1,10 @@
 <template>
   <Poptip placement="bottom">
     Search:
-    <Input class="search-input" icon="ios-search" v-model="term" @on-click="search">
-    </Input>
+    <Input class="search-input" icon="ios-search" v-model="term" @on-click="search"></Input>
     <div slot="content">
-      Limit: <Input-number v-model="limit"></Input-number>
+      Limit:
+      <Input-number v-model="limit"></Input-number>
       <Checkbox-group class="filter-option" v-model="selectedFilters">
         <Checkbox label="is-automated">Automated</Checkbox>
         <Checkbox label="is-official">Official</Checkbox>
@@ -25,7 +25,8 @@
         </i-switch>
       </p>
       <p class="filter-option">
-        Stars: <Input-number v-model="filters['stars']"></Input-number>
+        Stars:
+        <Input-number v-model="filters['stars']"></Input-number>
       </p>
     </div>
   </Poptip>
