@@ -45,9 +45,6 @@ deploy:
   on:
     tags: true
   overwrite: true
-branches:
-  except:
-  - /^v\d+\.\d+\.\d+$/
 notifications:
   slack: dockeron:Q1YhSx9YSd4k8SuLtYyD8zwI
   email: false
