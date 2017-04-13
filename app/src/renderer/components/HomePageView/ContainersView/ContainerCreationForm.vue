@@ -19,13 +19,13 @@
 
 <script>
   // import JsonForm from 'vue-json-form'
-  import JsonForm from './JsonForm/JsonForm'
+  import JsonForm from '../JsonForm/JsonForm'
 
-  import docker from '../../js/docker'
-  import { ipcRenderer } from 'electron'
   import fs from 'fs'
   import path from 'path'
-  import notify from '../../js/notify'
+  import { ipcRenderer } from 'electron'
+  import docker from '../../../js/docker'
+  import notify from '../../../js/notify'
 
   export default {
     components: {

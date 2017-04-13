@@ -14,7 +14,7 @@
 
 <script>
   import ContainerControlPanel from './ContainerControlPanel'
-  import TreeView from './TreeView/TreeView'
+  import TreeView from '../TreeView/TreeView'
 
   export default {
     components: {

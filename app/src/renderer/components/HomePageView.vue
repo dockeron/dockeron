@@ -48,8 +48,8 @@
 </template>
 
 <script>
-  import ContainersView from './HomePageView/ContainersView'
-  import ImagesView from './HomePageView/ImagesView'
+  import ContainersView from './HomePageView/ContainersView/ContainersView'
+  import ImagesView from './HomePageView/ImagesView/ImagesView'
   import TreeView from './HomePageView/TreeView/TreeView'
 
   import docker from '../js/docker'

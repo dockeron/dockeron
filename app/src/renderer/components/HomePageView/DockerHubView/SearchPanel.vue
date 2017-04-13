@@ -32,13 +32,11 @@
 </template>
 
 <script>
-  import docker from '../../js/docker'
-  import notify from '../../js/notify'
+  import docker from '../../../js/docker'
+  import notify from '../../../js/notify'
 
   export default {
-    props: {
-      value: []
-    },
+    props: ['value'],
     data () {
       return {
         term: '',

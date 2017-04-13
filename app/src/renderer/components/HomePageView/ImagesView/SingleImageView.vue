@@ -11,7 +11,7 @@
 
 <script>
   import ImageControlPanel from './ImageControlPanel'
-  import TreeView from './TreeView/TreeView'
+  import TreeView from '../TreeView/TreeView'
 
   export default {
     components: {
