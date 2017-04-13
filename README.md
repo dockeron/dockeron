@@ -15,7 +15,7 @@ A dockeron project, built on Electron + Vue.js for Docker.
 
 
 ![](./docs/dockeron-screenshot1.png)
-
+![](./docs/dockeron-screenshot2.png)
 
 
 *This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue).*
