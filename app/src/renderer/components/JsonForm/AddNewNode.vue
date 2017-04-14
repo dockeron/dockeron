@@ -15,7 +15,7 @@
       </Dropdown-menu>
     </Dropdown>
     <Modal v-model="nameInput" @on-ok="add">
-      <Input v-model="name" placeholder="Please give a property name."></Input>
+      <Input v-model="name" placeholder="Please give a name."></Input>
     </Modal>
   </div>
 </template>
