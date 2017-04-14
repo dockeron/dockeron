@@ -1,7 +1,7 @@
 <template>
   <div>
-    <image-control-panel class="image-control-panel" :image-id="imageId" v-model="imageData"
-        :initialize="true" :has-all-buttons="true">
+    <image-control-panel class="image-control-panel" :image-id="imageId"
+        v-model="imageData" :initialize="true" :has-all-buttons="true">
     </image-control-panel>
     <br>
     <tree-view :data="imageData" :options="{rootObjectKey: imageId}"></tree-view>

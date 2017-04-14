@@ -9,8 +9,7 @@
     <Modal v-model="removeImageModal" title="Do you want to remove this image?"
         @on-ok="removeImage">
     </Modal>
-    <Modal v-model="removedImageModal" title="Remove results"
-        @on-ok="goBackHome">
+    <Modal v-model="removedImageModal" title="Remove results">
       <tree-view :data="removed"></tree-view>
     </Modal>
     <div v-if="hasAllButtons" class="additional-buttons">
@@ -24,15 +23,21 @@
         Push
       </Button>
       <Button type="info" @click="tagImageModal = true">
-        Tag
+        Tag/Rename
       </Button>
       <Modal v-model="tagImageModal" title="Tag Image" @on-ok="tagImage">
-        Repo: <Input v-model="newTags.repo" placeholder="The repository to tag in."></Input>
-        Tag: <Input v-model="newTags.tag" placeholder="The name of the new tag."></Input>
+        <Form :model="newTags" label-position="right" :label-width="70">
+          <Form-item prop="repo" label="Repository">
+            <Input v-model="newTags.repo" placeholder="The repository to tag in."></Input>
+          </Form-item>
+          <Form-item prop="tag" label="Tag">
+            <Input v-model="newTags.tag" placeholder="The name of the new tag."></Input>
+          </Form-item>
+        </Form>
       </Modal>
-      <!-- <Button type="success" @click="getImage">
+      <Button type="success" @click="getImage">
         Get
-      </Button> -->
+      </Button>
     </div>
   </div>
 </template>
@@ -86,6 +91,7 @@
     methods: {
       createContainer () {
         // TODO (fluency03): create a container directly from image
+        // with specifying name and tag
       },
       removeImage () {
         var self = this
@@ -101,9 +107,6 @@
           .then(imageRemoved)
           .catch(notify)
       },
-      goBackHome () {
-        //
-      },
       getImageHistory () {
         var self = this
 
@@ -117,7 +120,7 @@
           .catch(notify)
       },
       pushImage () {
-        // TODO
+        // TODO (fluency03)
       },
       tagImage () {
         var self = this
@@ -131,7 +134,7 @@
           .catch(notify)
       },
       getImage () {
-        // TODO
+        // TODO (fluency03)
       },
       inspectImage () {
         var self = this
@@ -141,8 +144,8 @@
         }
 
         function refreshErrored (err) {
-          notify(err)
           self.$emit('input', err)
+          notify(err)
         }
 
         this.image.inspect()

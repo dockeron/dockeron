@@ -7,13 +7,20 @@
       Pull
     </Button>
     <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
-      Image Name (and Tag): <Input v-model="repoTag"></Input>
+      <Input v-model="repoTag" placeholder="Image Name (and Tag)"></Input>
     </Modal>
     <br>
     <div v-if="hasFoundImages">
       <Card v-for="image in images" class="image-card">
         <p slot="title" class="image-card-title">
-          {{getImageName(image.RepoTags[0])}}
+          <Tooltip placement="right">
+            {{getImageName(image.RepoTags[0])}}
+            <div slot="content" class="description-pop">
+              <p v-for="name in image.RepoTags">
+                {{name}}
+              </p>
+            </div>
+          </Tooltip>
         </p>
         <p>
           Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
@@ -110,6 +117,9 @@
       getImageName (repoTag) {
         return parseRepoTag(repoTag).repository
       },
+      getTag (repoTag) {
+        return parseRepoTag(repoTag).tag
+      },
       getTags (repoTags) {
         return repoTags.map(function (repoTag) {
           return parseRepoTag(repoTag).tag
@@ -147,5 +157,15 @@
 
   .control-panel {
     display: inline-block;
+  }
+
+  .description-pop p {
+    display: block;
+    white-space: normal;
+    color: #ffffff;
+  }
+
+  .description-pop {
+    white-space: normal;
   }
 </style>
