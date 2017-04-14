@@ -11,14 +11,14 @@
     </Modal>
     <Modal v-model="removedImageModal" title="Remove results"
         @on-ok="goBackHome">
-      <tree-view :data="removed" :options="{maxDepth: 2}"></tree-view>
+      <tree-view :data="removed"></tree-view>
     </Modal>
     <div v-if="hasAllButtons" class="additional-buttons">
       <Button type="success" @click="getImageHistory">
         History
       </Button>
       <Modal v-model="imageHistoryModal" title="Image History">
-        <tree-view :data="history" :options="{maxDepth: 2}"></tree-view>
+        <tree-view :data="history"></tree-view>
       </Modal>
       <Button type="warning" @click="pushImage">
         Push

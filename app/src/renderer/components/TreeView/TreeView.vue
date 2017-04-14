@@ -22,7 +22,7 @@
       allOptions: function () {
         return _.extend({}, {
           rootObjectKey: 'root',
-          maxDepth: 4
+          maxDepth: 1
         }, (this.options || {}))
       },
       parsedData: function () {

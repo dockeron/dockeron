@@ -18,7 +18,6 @@
 </template>
 
 <script>
-  // import JsonForm from 'vue-json-form'
   import JsonForm from '../JsonForm/JsonForm'
 
   import fs from 'fs'
@@ -38,8 +37,7 @@
           name: ''
         },
         importedSettings: {},
-        advancedSettings: {},
-        errorred: false
+        advancedSettings: {}
       }
     },
     methods: {
@@ -47,7 +45,8 @@
         var self = this
 
         function containerCreated (container) {
-          notify('New Container Created!')
+          notify('New container ID ' + container.Id +
+                 ' created from image ' + self.defaultSettings.Image + ' !')
           self.$emit('new-container-created', container)
         }
 

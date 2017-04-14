@@ -30,7 +30,6 @@
       </Card>
     </div>
     <div v-else>
-      <h4>No images found.</h4>
       <pre>{{error}}</pre>
     </div>
   </div>
@@ -41,6 +40,8 @@
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import notNull from '../../js/notNull'
+  import parseRepoTag from '../../js/parseRepoTag'
 
   export default {
     components: {
@@ -50,24 +51,22 @@
       return {
         images: [],
         hasFoundImages: false,
-        error: '',
+        error: {},
         imagePullModal: false,
         repoTag: ''
       }
     },
     watch: {
       images: function (newImages) {
-        this.hasFoundImages = (
-          typeof newImages !== 'undefined' &&
-          newImages !== null &&
-          newImages.length > 0
-        )
+        this.hasFoundImages = notNull(newImages) && newImages.length > 0
       }
     },
     methods: {
       refreshImages () {
         this.loadImages()
-        notify('Image list refreshed!')
+        if (notNull(this.error) && this.error !== {}) {
+          notify('Refreshed: ' + this.images.length + ' images found!')
+        }
       },
       pullImage () {
         var self = this
@@ -109,11 +108,11 @@
           .catch(updateErrored)
       },
       getImageName (repoTag) {
-        return repoTag.slice(0, repoTag.indexOf(':'))
+        return parseRepoTag(repoTag).repository
       },
       getTags (repoTags) {
         return repoTags.map(function (repoTag) {
-          return repoTag.slice(repoTag.indexOf(':') + 1)
+          return parseRepoTag(repoTag).tag
         })
       },
       formatBytes (bytes) {

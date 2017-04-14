@@ -4,7 +4,7 @@
         :initialize="true" :has-all-buttons="true">
     </image-control-panel>
     <br>
-    <tree-view :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}"></tree-view>
+    <tree-view :data="imageData" :options="{rootObjectKey: imageId}"></tree-view>
   </div>
 </template>
 
@@ -33,12 +33,6 @@
       }
     },
     methods: {
-      goHome () {
-        this.$router.push({
-          name: 'images-view',
-          params: { activeMenu: 'home-menu-images' }
-        })
-      },
       loadImageId () {
         this.imageId = this.$route.params.imageId
       }

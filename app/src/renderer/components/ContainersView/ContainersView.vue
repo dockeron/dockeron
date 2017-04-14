@@ -21,7 +21,10 @@
             {{container.State}}
           </Tag>
         </p>
-        <p>Image: {{container.Image}}</p>
+        <p>
+          Image: {{getImageName(container.Image)}}
+          <Tag v-if="getTag(container.Image)">{{getTag(container.Image)}}</Tag>
+        </p>
         <p>Status: {{container.Status}}</p>
         <Button type="primary" @click="inspectContainer(container.Id)">
           Inspect
@@ -33,7 +36,6 @@
       </Card>
     </div>
     <div v-else>
-      <h4>No containers found.</h4>
       <pre>{{error}}</pre>
     </div>
   </div>
@@ -45,6 +47,8 @@
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import notNull from '../../js/notNull'
+  import parseRepoTag from '../../js/parseRepoTag'
 
   export default {
     components: {
@@ -70,8 +74,7 @@
     watch: {
       containers: function (newContainers) {
         this.hasFoundContainers = (
-          typeof newContainers !== 'undefined' &&
-          newContainers !== null &&
+          notNull(newContainers) &&
           newContainers.length > 0
         )
       }
@@ -85,7 +88,15 @@
       },
       refreshContainers () {
         this.loadContainers()
-        notify('Container list refreshed!')
+        if (notNull(this.error) && this.error !== {}) {
+          notify('Refreshed: ' + this.containers.length + ' containers found!')
+        }
+      },
+      getImageName (repoTag) {
+        return parseRepoTag(repoTag).repository
+      },
+      getTag (repoTag) {
+        return parseRepoTag(repoTag).tag
       },
       inspectContainer (containerId) {
         this.$router.push({

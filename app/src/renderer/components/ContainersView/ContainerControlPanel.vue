@@ -38,7 +38,7 @@
         Top
       </Button>
       <Modal v-model="topProcessesModal" title="Top Processes">
-        <tree-view :data="topResult" :options="{maxDepth: 1, rootObjectKey: 'Top'}"></tree-view>
+        <tree-view :data="topResult"></tree-view>
       </Modal>
     </div>
   </div>
@@ -49,6 +49,12 @@
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+
+  function errorAndRefresh (err) {
+    notify(err)
+    // bind function to this during usage
+    this.inspectContainer()
+  }
 
   export default {
     components: {
@@ -101,7 +107,7 @@
 
         this.container.start()
           .then(containerStarted)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       stopContainer () {
         var self = this
@@ -113,7 +119,7 @@
 
         this.container.stop()
           .then(containerStopped)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       pauseContainer () {
         var self = this
@@ -125,7 +131,7 @@
 
         this.container.pause()
           .then(containerPaused)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       unpauseContainer () {
         var self = this
@@ -137,7 +143,7 @@
 
         this.container.unpause()
           .then(containerUnpaused)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       restartContainer () {
         var self = this
@@ -149,7 +155,7 @@
 
         this.container.restart()
           .then(containerRestarted)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       killContainer () {
         var self = this
@@ -161,19 +167,18 @@
 
         this.container.kill()
           .then(containerKilled)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       inspectContainer () {
         var self = this
 
         function containerRefreshed (data) {
-          // self.value = data
           self.$emit('input', data)
         }
 
         function refreshErrored (err) {
-          // self.value = err
           self.$emit('input', err)
+          notify(err)
         }
 
         this.container.inspect()
@@ -181,18 +186,19 @@
           .catch(refreshErrored)
       },
       getContainerLogs () {
+        // TODO (fluency03) : more options to get the logs
         var self = this
         var logOpts = {
           stdout: true,
           stderr: true,
-          tail: 10
+          tail: 20
         }
 
         function containerLogsGot (data) {
           data.setEncoding('utf8')
+          self.logsModal = true
 
           data.on('data', function (logs) {
-            self.logsModal = true
             self.logs = logs
           })
         }
@@ -202,7 +208,10 @@
           .catch(notify)
       },
       renameContainer () {
-        if (this.containerNewName === '') return
+        if (this.containerNewName === '') {
+          notify('Container name cannot be empty!')
+          return
+        }
         var self = this
         var renameParams = {
           name: self.containerNewName
@@ -216,7 +225,7 @@
 
         this.container.rename(renameParams)
           .then(containerRenamed)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       listTopProcesses () {
         var self = this
@@ -233,9 +242,9 @@
     },
     created () {
       this.container = docker.getContainer(this.containerId)
-      // if (this.initialize) {
-      this.inspectContainer()
-      // }
+      if (this.initialize) {
+        this.inspectContainer()
+      }
     }
   }
 </script>
@@ -246,6 +255,6 @@
   }
 
   .logs {
-    white-space: pre-wrap;
+    white-space: normal;
   }
 </style>

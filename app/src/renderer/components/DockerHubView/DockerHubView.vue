@@ -75,6 +75,6 @@
   }
 
   .description-pop {
-    white-space: pre-wrap;
+    white-space: normal;
   }
 </style>

@@ -10,7 +10,7 @@
  * @return {Object} input parsed into the repo and tag.
  */
 
-module.exports.parseRepoTag = function (input) {
+function parseRepoTag (input) {
   var separatorPos
   var digestPos = input.indexOf('@')
   var colonPos = input.lastIndexOf(':')
@@ -41,3 +41,5 @@ module.exports.parseRepoTag = function (input) {
     repository: input
   }
 }
+
+export default parseRepoTag

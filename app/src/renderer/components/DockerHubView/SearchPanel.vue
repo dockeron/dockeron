@@ -5,11 +5,17 @@
     <div slot="content">
       Limit:
       <Input-number v-model="limit"></Input-number>
+      <p class="filter-option">
+        Select applied filters:
+      </p>
       <Checkbox-group class="filter-option" v-model="selectedFilters">
         <Checkbox label="is-automated">Automated</Checkbox>
         <Checkbox label="is-official">Official</Checkbox>
         <Checkbox label="stars">Stars</Checkbox>
       </Checkbox-group>
+      <p class="filter-option">
+        Alter filters:
+      </p>
       <p class="filter-option">
         Automated:
         <i-switch v-model="filters['is-automated']" size="large">

@@ -8,7 +8,7 @@
       {{status}}
     </Tag>
     <br>
-    <tree-view :data="containerData" :options="{maxDepth: 1, rootObjectKey: containerId}"></tree-view>
+    <tree-view :data="containerData" :options="{rootObjectKey: containerId}"></tree-view>
   </div>
 </template>
 
@@ -47,12 +47,6 @@
       }
     },
     methods: {
-      goHome () {
-        this.$router.push({
-          name: 'containers-view',
-          params: { activeMenu: 'home-menu-containers' }
-        })
-      },
       loadContainerId () {
         this.containerId = this.$route.params.containerId
       }
