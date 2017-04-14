@@ -44,6 +44,12 @@
     components: {
       TreeView
     },
+    props: {
+      imageId: '',
+      initialize: false,
+      hasAllButtons: false,
+      value: {}
+    },
     data () {
       return {
         removeImageModal: false,
@@ -58,12 +64,6 @@
         },
         image: {}
       }
-    },
-    props: {
-      imageId: '',
-      initialize: false,
-      hasAllButtons: false,
-      value: {}
     },
     methods: {
       removeImage () {

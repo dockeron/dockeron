@@ -54,6 +54,13 @@
     components: {
       TreeView
     },
+    props: {
+      containerId: '',
+      containerName: '',
+      initialize: false,
+      hasAllButtons: false,
+      value: {}
+    },
     data () {
       return {
         topProcessesModal: false,
@@ -64,13 +71,6 @@
         containerNewName: '',
         container: {}
       }
-    },
-    props: {
-      containerId: '',
-      containerName: '',
-      initialize: false,
-      hasAllButtons: false,
-      value: {}
     },
     methods: {
       startContainer () {

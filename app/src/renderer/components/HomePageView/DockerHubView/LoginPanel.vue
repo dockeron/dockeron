@@ -37,6 +37,9 @@
   import notify from '../../../js/notify'
 
   export default {
+    props: {
+      value: ''
+    },
     data () {
       return {
         credentials: {
@@ -44,9 +47,6 @@
           password: ''
         }
       }
-    },
-    props: {
-      value: ''
     },
     methods: {
       login () {
