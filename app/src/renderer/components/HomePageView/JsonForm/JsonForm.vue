@@ -22,7 +22,8 @@
         type: String,
         default: ''
       },
-      value: {}
+      // JSON data
+      value: [Object, Array]
     }
   }
 </script>

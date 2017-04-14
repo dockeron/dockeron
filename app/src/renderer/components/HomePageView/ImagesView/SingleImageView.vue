@@ -1,7 +1,7 @@
 <template>
   <div>
     <image-control-panel class="image-control-panel" :image-id="imageId" v-model="imageData"
-        @image-data-refreshed="refreshImageData" :initialize="true" :has-all-buttons="true">
+        :initialize="true" :has-all-buttons="true">
     </image-control-panel>
     <br>
     <tree-view :data="imageData" :options="{maxDepth: 1, rootObjectKey: imageId}"></tree-view>
@@ -41,9 +41,6 @@
       },
       loadImageId () {
         this.imageId = this.$route.params.imageId
-      },
-      refreshImageData (newData) {
-        this.imageData = newData
       }
     },
     created () {

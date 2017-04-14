@@ -37,7 +37,15 @@
   import notify from '../../../js/notify'
 
   export default {
-    props: ['value'],
+    props: {
+      // searched images
+      value: {
+        type: Array,
+        default () {
+          return []
+        }
+      }
+    },
     data () {
       return {
         term: '',

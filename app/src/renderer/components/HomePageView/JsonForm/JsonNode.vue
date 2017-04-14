@@ -53,7 +53,10 @@
 
   export default {
     name: 'json-node',
-    props: ['prop', 'value'],
+    props: {
+      prop: [String, Number],
+      value: [Object, Array]
+    },
     components: {
       'json-node': this,
       'add-new-node': AddNewNode

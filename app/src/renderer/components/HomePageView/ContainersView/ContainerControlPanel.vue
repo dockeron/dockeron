@@ -55,11 +55,29 @@
       TreeView
     },
     props: {
-      containerId: '',
-      containerName: '',
-      initialize: false,
-      hasAllButtons: false,
-      value: {}
+      containerId: {
+        type: String,
+        default: ''
+      },
+      containerName: {
+        type: String,
+        default: ''
+      },
+      initialize: {
+        type: Boolean,
+        default: false
+      },
+      hasAllButtons: {
+        type: Boolean,
+        default: false
+      },
+      // container data
+      value: {
+        type: Object,
+        default () {
+          return {}
+        }
+      }
     },
     data () {
       return {

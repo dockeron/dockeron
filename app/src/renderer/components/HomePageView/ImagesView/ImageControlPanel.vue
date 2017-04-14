@@ -45,10 +45,25 @@
       TreeView
     },
     props: {
-      imageId: '',
-      initialize: false,
-      hasAllButtons: false,
-      value: {}
+      imageId: {
+        type: String,
+        default: ''
+      },
+      initialize: {
+        type: Boolean,
+        default: false
+      },
+      hasAllButtons: {
+        type: Boolean,
+        default: false
+      },
+      // image data
+      value: {
+        type: Object,
+        default () {
+          return {}
+        }
+      }
     },
     data () {
       return {
@@ -116,12 +131,12 @@
         var self = this
 
         function imageRefreshed (data) {
-          self.$emit('image-data-refreshed', data)
+          self.$emit('input', data)
         }
 
         function refreshErrored (err) {
           notify(err)
-          self.$emit('image-data-errored', err)
+          self.$emit('input', err)
         }
 
         this.image.inspect()

@@ -38,7 +38,11 @@
 
   export default {
     props: {
-      value: ''
+      // access token
+      value: {
+        type: String,
+        default: ''
+      }
     },
     data () {
       return {

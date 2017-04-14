@@ -24,7 +24,7 @@
           Inspect
         </Button>
         <image-control-panel class="control-panel" :image-id="image.Id"
-            @image-data-refreshed="function (newData) { loadImages() }"
+            @input="function (newData) { loadImages() }"
             @image-removed="function (removed) { loadImages() }">
         </image-control-panel>
       </Card>
@@ -145,7 +145,7 @@
   .image-card-title {
     height: 26px;
   }
-  
+
   .control-panel {
     display: inline-block;
   }
