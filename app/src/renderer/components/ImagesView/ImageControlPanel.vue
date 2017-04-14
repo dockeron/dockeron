@@ -1,11 +1,8 @@
 <template>
   <div>
-    <Button type="success" @click="getImageHistory">
-      History
+    <Button type="success" @click="createContainer">
+      Create
     </Button>
-    <Modal v-model="imageHistoryModal" title="Image History">
-      <tree-view :data="history" :options="{maxDepth: 2}"></tree-view>
-    </Modal>
     <Button type="error" @click="removeImageModal = true">
       Remove
     </Button>
@@ -17,6 +14,12 @@
       <tree-view :data="removed" :options="{maxDepth: 2}"></tree-view>
     </Modal>
     <div v-if="hasAllButtons" class="additional-buttons">
+      <Button type="success" @click="getImageHistory">
+        History
+      </Button>
+      <Modal v-model="imageHistoryModal" title="Image History">
+        <tree-view :data="history" :options="{maxDepth: 2}"></tree-view>
+      </Modal>
       <Button type="warning" @click="pushImage">
         Push
       </Button>
@@ -37,8 +40,8 @@
 <script>
   import TreeView from '../TreeView/TreeView'
 
-  import docker from '../../../js/docker'
-  import notify from '../../../js/notify'
+  import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     components: {
@@ -81,6 +84,9 @@
       }
     },
     methods: {
+      createContainer () {
+        // TODO (fluency03): create a container directly from image
+      },
       removeImage () {
         var self = this
 

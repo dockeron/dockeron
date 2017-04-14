@@ -1,43 +1,43 @@
 <template>
   <div>
-    <div v-if="isArray(value)">
+    <div v-if="isArray(internalValue)">
       <Collapse>
         <Panel>
           {{prop}}
           <p slot="content">
-            <template v-for="(item, index) in value">
-              <json-node :prop="index.toString()" v-model="value[index]"></json-node>
+            <template v-for="(item, index) in internalValue">
+              <json-node :prop="index.toString()" v-model="internalValue[index]"></json-node>
             </template>
             <add-new-node :is-array="true" @add-new-node="add"></add-new-node>
           </p>
         </Panel>
       </Collapse>
     </div>
-    <div v-else-if="isString(value)">
+    <div v-else-if="isString(internalValue)">
       <Form-item :label="prop">
-        <Input v-model="value" :placeholder="value"></Input>
+        <Input v-model="internalValue" :placeholder="internalValue"></Input>
       </Form-item>
     </div>
-    <div v-else-if="isBoolean(value)">
+    <div v-else-if="isBoolean(internalValue)">
       <Form-item :label="prop" class="switch">
-        <i-switch v-model="value" size="large">
+        <i-switch v-model="internalValue" size="large">
           <span slot="open">true</span>
           <span slot="close">false</span>
         </i-switch>
       </Form-item>
     </div>
-    <div v-else-if="isNumber(value)">
+    <div v-else-if="isNumber(internalValue)">
       <Form-item :label="prop" class="switch">
-        <Input-number v-model="value"></Input-number>
+        <Input-number v-model="internalValue"></Input-number>
       </Form-item>
     </div>
-    <div v-else-if="isObject(value)">
+    <div v-else-if="isObject(internalValue)">
       <Collapse>
         <Panel>
           {{prop}}
           <p slot="content">
-            <template v-for="(subvalue, subprop) in value">
-              <json-node :prop="subprop" v-model="value[subprop]"></json-node>
+            <template v-for="(subvalue, subprop) in internalValue">
+              <json-node :prop="subprop" v-model="internalValue[subprop]"></json-node>
             </template>
             <add-new-node @add-new-node="add"></add-new-node>
           </p>
@@ -53,13 +53,23 @@
 
   export default {
     name: 'json-node',
+    data () {
+      return {
+        internalValue: this.value
+      }
+    },
     props: {
       prop: [String, Number],
-      value: [Object, Array]
+      value: null
     },
     components: {
       'json-node': this,
       'add-new-node': AddNewNode
+    },
+    watch: {
+      internalValue: function (newValue) {
+        this.$emit('input', newValue)
+      }
     },
     methods: {
       add (params) {

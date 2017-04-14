@@ -34,7 +34,7 @@
 <script>
   import dockerHubApi from 'docker-hub-api'
 
-  import notify from '../../../js/notify'
+  import notify from '../../js/notify'
 
   export default {
     props: {

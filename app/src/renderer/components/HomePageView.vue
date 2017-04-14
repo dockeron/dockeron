@@ -46,9 +46,9 @@
 </template>
 
 <script>
-  import ContainersView from './HomePageView/ContainersView/ContainersView'
-  import ImagesView from './HomePageView/ImagesView/ImagesView'
-  import TreeView from './HomePageView/TreeView/TreeView'
+  import ContainersView from './ContainersView/ContainersView'
+  import ImagesView from './ImagesView/ImagesView'
+  import TreeView from './TreeView/TreeView'
 
   import docker from '../js/docker'
   import notify from '../js/notify'

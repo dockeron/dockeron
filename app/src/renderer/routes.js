@@ -7,32 +7,32 @@ export default [
       {
         path: '',
         name: 'default',
-        component: require('components/HomePageView/ContainersView/ContainersView')
+        component: require('components/ContainersView/ContainersView')
       },
       {
         path: 'containers',
         name: 'containers-view',
-        component: require('components/HomePageView/ContainersView/ContainersView')
+        component: require('components/ContainersView/ContainersView')
       },
       {
         path: '/containers/:containerId',
         name: 'single-container-view',
-        component: require('components/HomePageView/ContainersView/SingleContainerView')
+        component: require('components/ContainersView/SingleContainerView')
       },
       {
         path: 'images',
         name: 'images-view',
-        component: require('components/HomePageView/ImagesView/ImagesView')
+        component: require('components/ImagesView/ImagesView')
       },
       {
         path: '/images/:imageId',
         name: 'single-image-view',
-        component: require('components/HomePageView/ImagesView/SingleImageView')
+        component: require('components/ImagesView/SingleImageView')
       },
       {
         path: '/docker-hub',
         name: 'docker-hub-view',
-        component: require('components/HomePageView/DockerHubView/DockerHubView')
+        component: require('components/DockerHubView/DockerHubView')
       }
     ]
   },

@@ -47,8 +47,8 @@
 <script>
   import TreeView from '../TreeView/TreeView'
 
-  import docker from '../../../js/docker'
-  import notify from '../../../js/notify'
+  import docker from '../../js/docker'
+  import notify from '../../js/notify'
 
   export default {
     components: {
