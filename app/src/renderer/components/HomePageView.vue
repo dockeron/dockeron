@@ -12,11 +12,11 @@
         </Menu-item>
         <Menu-item name="home-menu-volumns">
           <Icon type="help-buoy"></Icon>
-          Volumns
+          <router-link to="/volumns">Volumns</router-link>
         </Menu-item>
         <Menu-item name="home-menu-plugins">
           <Icon type="gear-b"></Icon>
-          Plugins
+          <router-link to="/plugins">Plugins</router-link>
         </Menu-item>
         <Menu-item name="home-menu-dockerhub">
           <Icon type="stats-bars"></Icon>

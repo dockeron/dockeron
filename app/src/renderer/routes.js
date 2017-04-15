@@ -30,6 +30,16 @@ export default [
         component: require('components/ImagesView/SingleImageView')
       },
       {
+        path: 'volumns',
+        name: 'volumns-view',
+        component: require('components/VolumnsView/VolumnsView')
+      },
+      {
+        path: 'plugins',
+        name: 'plugins-view',
+        component: require('components/PluginsView/PluginsView')
+      },
+      {
         path: '/docker-hub',
         name: 'docker-hub-view',
         component: require('components/DockerHubView/DockerHubView')
