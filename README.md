@@ -13,9 +13,10 @@
 
 A dockeron project, built on Electron + Vue.js for Docker.
 
+<img src="./docs/dockeron-screenshot1.png" width="425"/> <img src="./docs/dockeron-screenshot2.png" width="425"/>
+<img src="./docs/dockeron-screenshot3.png" width="425"/> <img src="./docs/dockeron-screenshot4.png" width="425"/>
+<img src="./docs/dockeron-screenshot5.png" width="425"/> <img src="./docs/dockeron-screenshot6.png" width="425"/> 
 
-![](./docs/dockeron-screenshot1.png)
-![](./docs/dockeron-screenshot2.png)
 
 
 *This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue).*
