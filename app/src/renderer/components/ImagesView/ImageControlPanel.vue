@@ -1,8 +1,19 @@
 <template>
   <div>
-    <Button type="success" @click="createContainer">
+    <Button type="success" @click="selectTag">
       Create
     </Button>
+    <Modal v-model="imageSelectionModal" title="Select Image Name and Tag"
+        @on-ok="containerCreateModal = true">
+      <Select v-model="selectedImage" style="width:400px">
+        <Option v-for="repoTag in imageRepoTags" :value="repoTag" :key="repoTag">{{ repoTag }}</Option>
+      </Select>
+    </Modal>
+    <Modal v-model="containerCreateModal" title="Create Container"
+        @on-ok="confirmCreation" @on-cancel="resetCreation">
+      <container-creation-form ref="containerCreationForm" v-model="selectedImage">
+      </container-creation-form>
+    </Modal>
     <Button type="error" @click="removeImageModal = true">
       Remove
     </Button>
@@ -43,6 +54,7 @@
 </template>
 
 <script>
+  import ContainerCreationForm from '../ContainersView/ContainerCreationForm'
   import TreeView from '../TreeView/TreeView'
 
   import docker from '../../js/docker'
@@ -50,6 +62,7 @@
 
   export default {
     components: {
+      ContainerCreationForm,
       TreeView
     },
     props: {
@@ -75,6 +88,8 @@
     },
     data () {
       return {
+        imageSelectionModal: false,
+        containerCreateModal: false,
         removeImageModal: false,
         removedImageModal: false,
         imageHistoryModal: false,
@@ -85,13 +100,30 @@
           repo: '',
           tag: ''
         },
-        image: {}
+        image: {},
+        selectedImage: '',
+        imageRepoTags: []
+      }
+    },
+    watch: {
+      imageRepoTags: function (newRepoTags) {
+        try {
+          this.selectedImage = newRepoTags[0]
+        } catch (e) {
+          console.log(e)
+        }
       }
     },
     methods: {
-      createContainer () {
-        // TODO (fluency03): create a container directly from image
-        // with specifying name and tag
+      selectTag () {
+        this.inspectImage()
+        this.imageSelectionModal = true
+      },
+      confirmCreation () {
+        this.$refs.containerCreationForm.submit()
+      },
+      resetCreation () {
+        this.$refs.containerCreationForm.reset()
       },
       removeImage () {
         var self = this
@@ -140,10 +172,12 @@
         var self = this
 
         function imageRefreshed (data) {
+          self.imageRepoTags = data.RepoTags
           self.$emit('input', data)
         }
 
         function refreshErrored (err) {
+          self.imageRepoTags = []
           self.$emit('input', err)
           notify(err)
         }
