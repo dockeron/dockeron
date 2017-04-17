@@ -39,7 +39,8 @@ deploy:
     secure: r9m0QBRu2+bL4U7bB9wwWq+uUeLHLJ6uaX5GqDtQqtXPsOPQ4oke6lE+p9cPv9SRKk3SrWn6athoT8HyFrhd83Kr7cm4W2rjTSt3gv8TUktAT04tkd9fae8WFZx4739xityf5xVdmDAxtNqIAeNyKHJFJ+LsoSAThu13nDsYhJZnkK+1MJuPOyL33O4dNlsbe/++wd9q8SJ+s5lP/4csZwwVl8Exa3qsukTxCVQm10NeBZzoPpLTsO2D8y9FovY0v4sSvOgmCTwD1b5ury2pu0n4DCuu7OBfBBqdEyYtlIjNsg3B+UPuJ7MQKbuCKxwx0u9Kf5BG3hkNS3tkNgEqTvZTxlksCzvg9cqfVcej+MEa/e6hnf10dFZAXCQUWzvlOFP6xrj7zSp8/AzYc7DdGmjT2OmUrsggiqOYJRKHSR9oLt47pnpj+16Y8RGjLixSyDYEoo4pFgiC6LyOCGWofu5djbMBrfe+fxuJQ5XO4xafSyyEB/nbrCHMsCZJuYdd1Fl8khxoUFhjqeuc40eSuio2S7QpcJLZaYNEJ4hBDrjVAsMdIOmUlKIG485M4wWmEnZQnbLQcv6YtUmynJOa4TCN51AghxAjn6gwvCnZgE8+D43dVEfIL2OMtx1DtGUfatOO/0D+RUIaAJbzuf6ADcv7i1LvMAlm/NM8m8XU4Kw=
   file_glob: true
   file:
-    - dist/mac/*
+    - dist/mac/*.dmg
+    - dist/mac/*.zip
     - dist/*.tar
   skip_cleanup: true
   on:
