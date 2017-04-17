@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import dockerHubApi from 'docker-hub-api'
+  import dockerHubApi from '../../js/dockerHubApi'
 
   import notify from '../../js/notify'
 
