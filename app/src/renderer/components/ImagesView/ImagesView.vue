@@ -39,6 +39,7 @@
     <div v-else>
       <pre>{{error}}</pre>
     </div>
+    <pre class="foot-logs" v-if="pullProcess">{{pullProcess}}</pre>
   </div>
 </template>
 
@@ -60,7 +61,8 @@
         hasFoundImages: false,
         error: {},
         imagePullModal: false,
-        repoTag: ''
+        repoTag: '',
+        pullProcess: ''
       }
     },
     watch: {
@@ -77,9 +79,22 @@
       },
       pullImage () {
         var self = this
-        function imagePulled (info) {
-          notify('New image is pulled!')
-          self.refreshImages()
+        function imagePulled (stream) {
+          function onFinished (err, output) {
+            self.pullProcess = ''
+            if (err) {
+              notify(err)
+              return
+            }
+            notify('New image is pulled!')
+          }
+
+          function onProgress (event) {
+            self.pullProcess = JSON.stringify(event)
+            console.log(event)
+          }
+
+          docker.modem.followProgress(stream, onFinished, onProgress)
         }
 
         docker.pull(this.repoTag)
@@ -166,6 +181,15 @@
   }
 
   .description-pop {
+    white-space: normal;
+  }
+
+  .foot-logs {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    max-width: 1000px;
+    background: rgba(100, 100, 100, 0.5);
     white-space: normal;
   }
 </style>

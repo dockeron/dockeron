@@ -55,7 +55,6 @@
           'true': 'green',
           'false': 'red'
         },
-        pullProcessModal: false,
         pullProcess: ''
       }
     },
@@ -78,8 +77,6 @@
       pullImage (imageName) {
         var self = this
         function imagePulled (stream) {
-          self.pullProcessModal = true
-
           function onFinished (err, output) {
             self.pullProcess = ''
             if (err) {

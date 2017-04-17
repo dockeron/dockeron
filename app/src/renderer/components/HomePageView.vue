@@ -62,8 +62,6 @@
 </template>
 
 <script>
-  import ContainersView from './ContainersView/ContainersView'
-  import ImagesView from './ImagesView/ImagesView'
   import TreeView from './TreeView/TreeView'
 
   import docker from '../js/docker'
@@ -72,8 +70,6 @@
   export default {
     name: 'home-page',
     components: {
-      ContainersView,
-      ImagesView,
       TreeView
     },
     data () {
