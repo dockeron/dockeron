@@ -30,14 +30,25 @@
     components: {
       JsonForm
     },
+    props: {
+      value: {
+        type: String,
+        default: ''
+      }
+    },
     data () {
       return {
         defaultSettings: {
-          Image: '',
+          Image: this.value,
           name: ''
         },
         importedSettings: {},
         advancedSettings: {}
+      }
+    },
+    watch: {
+      value: function (newValue) {
+        this.defaultSettings.Image = newValue
       }
     },
     methods: {

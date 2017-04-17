@@ -34,6 +34,9 @@
       <Modal v-model="containerRenameModal" title="Rename Container" @on-ok="renameContainer">
         <Input v-model="containerNewName" placeholder="New Name"></Input>
       </Modal>
+      <Button type="error" @click="removeContainer">
+        Remove
+      </Button>
       <Button type="success" @click="listTopProcesses">
         Top
       </Button>
@@ -226,6 +229,20 @@
         this.container.rename(renameParams)
           .then(containerRenamed)
           .catch(errorAndRefresh.bind(this))
+      },
+      removeContainer () {
+        var self = this
+
+        function containerRemoved (data) {
+          notify('Container removed!')
+          self.$router.push({
+            name: 'containers-view'
+          })
+        }
+
+        this.container.remove()
+          .then(containerRemoved)
+          .catch(notify)
       },
       listTopProcesses () {
         var self = this
