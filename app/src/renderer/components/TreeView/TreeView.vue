@@ -17,7 +17,8 @@
     components: {
       TreeViewItem
     },
-    props: ['data', 'options'],
+    // TODO (fluency03): add filter for content search
+    props: ['data', 'options', 'filter'],
     computed: {
       allOptions: function () {
         return _.extend({}, {
