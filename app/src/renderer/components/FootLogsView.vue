@@ -1,6 +1,8 @@
 <template>
-  <div id="foot-logs">
-    <span class="log" v-for="log in value">{{log}}</span>
+  <div>
+    <div id="foot-logs">
+      <span class="log" v-for="log in value">{{log}}</span>
+    </div>
   </div>
 </template>
 
@@ -42,19 +44,14 @@
     white-space: normal;
     z-index: 1;
     resize: vertical;
+    transition: height 1s;
+  }
+
+  #foot-logs:hover {
+    height: 50%;
   }
 
   .log {
     display: block;
-  }
-
-  ::-webkit-resizer {
-    border: 2px solid grey;
-    box-shadow: 0 0 2px 5px black;
-
-    /*size does not work*/
-    position: fixed;
-    width: 100% !important;
-    height: 10px !important;
   }
 </style>
