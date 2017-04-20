@@ -39,12 +39,13 @@
     <div v-else>
       <pre>{{error}}</pre>
     </div>
-    <pre class="foot-logs" v-if="pullProcess">{{pullProcess}}</pre>
+    <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>
 </template>
 
 <script>
   import ImageControlPanel from './ImageControlPanel'
+  import FootLogsView from '../FootLogsView'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
@@ -53,7 +54,8 @@
 
   export default {
     components: {
-      ImageControlPanel
+      ImageControlPanel,
+      FootLogsView
     },
     data () {
       return {
@@ -62,7 +64,7 @@
         error: {},
         imagePullModal: false,
         repoTag: '',
-        pullProcess: ''
+        footLogs: {}
       }
     },
     watch: {
@@ -79,9 +81,13 @@
       },
       pullImage () {
         var self = this
+
+        this.$set(self.footLogs, 'pullLog', '')
+
         function imagePulled (stream) {
           function onFinished (err, output) {
-            self.pullProcess = ''
+            self.$delete(self.footLogs, 'pullLog')
+            console.log(self.footLogs)
             if (err) {
               notify(err)
               return
@@ -90,8 +96,8 @@
           }
 
           function onProgress (event) {
-            self.pullProcess = JSON.stringify(event)
             console.log(event)
+            self.$set(self.footLogs, 'pullLog', JSON.stringify(event))
           }
 
           docker.modem.followProgress(stream, onFinished, onProgress)
@@ -181,15 +187,6 @@
   }
 
   .description-pop {
-    white-space: normal;
-  }
-
-  .foot-logs {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    max-width: 1000px;
-    background: rgba(100, 100, 100, 0.5);
     white-space: normal;
   }
 </style>

@@ -30,13 +30,14 @@
         Pull
       </Button>
     </Card>
-    <pre class="foot-logs" v-if="pullProcess">{{pullProcess}}</pre>
+    <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>
 </template>
 
 <script>
   import SearchPanel from './SearchPanel'
   import LoginPanel from './LoginPanel'
+  import FootLogsView from '../FootLogsView'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
@@ -45,7 +46,8 @@
   export default {
     components: {
       SearchPanel,
-      LoginPanel
+      LoginPanel,
+      FootLogsView
     },
     data () {
       return {
@@ -55,7 +57,7 @@
           'true': 'green',
           'false': 'red'
         },
-        pullProcess: ''
+        footLogs: {}
       }
     },
     methods: {
@@ -76,9 +78,12 @@
       },
       pullImage (imageName) {
         var self = this
+
+        this.$set(self.footLogs, 'pullLog', '')
+
         function imagePulled (stream) {
           function onFinished (err, output) {
-            self.pullProcess = ''
+            self.$delete(self.footLogs, 'pullLog')
             if (err) {
               notify(err)
               return
@@ -87,7 +92,7 @@
           }
 
           function onProgress (event) {
-            self.pullProcess = JSON.stringify(event)
+            self.$set(self.footLogs, 'pullLog', JSON.stringify(event))
           }
 
           docker.modem.followProgress(stream, onFinished, onProgress)
@@ -127,15 +132,6 @@
   }
 
   .description-pop {
-    white-space: normal;
-  }
-
-  .foot-logs {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    max-width: 1000px;
-    background: rgba(100, 100, 100, 0.5);
     white-space: normal;
   }
 </style>

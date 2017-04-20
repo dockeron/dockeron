@@ -25,9 +25,6 @@
       <Button type="info" @click="getContainerLogs">
         Logs
       </Button>
-      <Modal v-model="logsModal" title="Logs">
-        <pre class="logs">{{logs}}</pre>
-      </Modal>
       <Button type="warning" @click="containerRenameModal = true">
         Rename
       </Button>
@@ -44,11 +41,13 @@
         <tree-view :data="topResult"></tree-view>
       </Modal>
     </div>
+    <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>
 </template>
 
 <script>
   import TreeView from '../TreeView/TreeView'
+  import FootLogsView from '../FootLogsView'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
@@ -61,7 +60,8 @@
 
   export default {
     components: {
-      TreeView
+      TreeView,
+      FootLogsView
     },
     props: {
       containerId: {
@@ -92,11 +92,11 @@
       return {
         topProcessesModal: false,
         containerRenameModal: false,
-        logsModal: false,
         logs: '',
         topResult: {},
         containerNewName: '',
-        container: {}
+        container: {},
+        footLogs: {}
       }
     },
     methods: {
@@ -197,12 +197,13 @@
           tail: 20
         }
 
+        this.$set(self.footLogs, 'runningLog', '')
+
         function containerLogsGot (data) {
           data.setEncoding('utf8')
-          self.logsModal = true
 
           data.on('data', function (logs) {
-            self.logs = logs
+            self.$set(self.footLogs, 'runningLog', logs)
           })
         }
 
@@ -269,9 +270,5 @@
 <style scoped>
   .additional-buttons {
     display: inline-block;
-  }
-
-  .logs {
-    white-space: normal;
   }
 </style>
