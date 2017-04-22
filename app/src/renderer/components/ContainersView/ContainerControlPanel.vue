@@ -34,9 +34,14 @@
       <Button type="error" @click="removeContainer">
         Remove
       </Button>
-      <Button type="success" @click="listTopProcesses">
+      <Button type="success" @click="psArgsModal = true">
         Top
       </Button>
+      <Modal v-model="psArgsModal" title="ps arguments" @on-ok="listTopProcesses">
+        <Input class="args-input" v-model="psArgs" placeholder="-ef">
+          <span slot="prepend">ps</span>
+        </Input>
+      </Modal>
       <Modal v-model="topProcessesModal" title="Top Processes">
         <tree-view :data="topResult"></tree-view>
       </Modal>
@@ -96,7 +101,9 @@
         topResult: {},
         containerNewName: '',
         container: {},
-        footLogs: {}
+        footLogs: {},
+        psArgsModal: false,
+        psArgs: ''
       }
     },
     methods: {
@@ -252,12 +259,17 @@
       listTopProcesses () {
         var self = this
 
+        var topParams = {
+          ps_args: this.psArgs
+        }
+
         function topProcessesGot (data) {
           self.topResult = data
           self.topProcessesModal = true
+          self.psArgs = '-ef'
         }
 
-        this.container.top()
+        this.container.top(topParams)
           .then(topProcessesGot)
           .catch(notify)
       }
@@ -274,5 +286,9 @@
 <style scoped>
   .additional-buttons {
     display: inline-block;
+  }
+
+  .args-input {
+    width: 30%;
   }
 </style>
