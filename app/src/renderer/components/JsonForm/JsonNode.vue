@@ -78,6 +78,9 @@
       'add-new-node': AddNewNode
     },
     watch: {
+      value: function (newValue) {
+        this.internalValue = newValue
+      },
       internalValue: function (newValue) {
         this.$emit('input', newValue)
       }

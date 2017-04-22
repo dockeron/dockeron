@@ -19,6 +19,17 @@
     </Button>
     <Modal v-model="removeImageModal" title="Do you want to remove this image?"
         @on-ok="removeImage">
+      Force remove:
+      <i-switch v-model="rmiParams.force" size="large">
+        <span slot="open">True</span>
+        <span slot="close">False</span>
+      </i-switch>
+      <br>
+      Do not delete untagged parent images:
+      <i-switch v-model="rmiParams.noprune" size="large">
+        <span slot="open">True</span>
+        <span slot="close">False</span>
+      </i-switch>
     </Modal>
     <Modal v-model="removedImageModal" title="Remove results">
       <tree-view :data="removed"></tree-view>
@@ -102,7 +113,11 @@
         },
         image: {},
         selectedImage: '',
-        imageRepoTags: []
+        imageRepoTags: [],
+        rmiParams: {
+          force: false,
+          noprune: false
+        }
       }
     },
     watch: {
@@ -135,7 +150,7 @@
           self.$emit('image-removed', removed)
         }
 
-        this.image.remove()
+        this.image.remove(this.rmiParams)
           .then(imageRemoved)
           .catch(notify)
       },

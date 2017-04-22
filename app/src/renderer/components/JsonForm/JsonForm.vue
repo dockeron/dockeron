@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Form :label-width="labelWidth">
+    <Form ref="vueJsonForm" :model="value" :label-width="labelWidth">
       <json-node v-model="value" :prop="name"></json-node>
     </Form>
   </div>
@@ -24,6 +24,11 @@
       },
       // JSON data
       value: [Object, Array]
+    },
+    methods: {
+      clear () {
+        this.$emit('input', {})
+      }
     }
   }
 </script>

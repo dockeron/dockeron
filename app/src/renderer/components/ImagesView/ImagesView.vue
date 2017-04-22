@@ -87,7 +87,6 @@
         function imagePulled (stream) {
           function onFinished (err, output) {
             self.$delete(self.footLogs, 'pullLog')
-            console.log(self.footLogs)
             if (err) {
               notify(err)
               return
@@ -96,7 +95,6 @@
           }
 
           function onProgress (event) {
-            console.log(event)
             self.$set(self.footLogs, 'pullLog', JSON.stringify(event))
           }
 
