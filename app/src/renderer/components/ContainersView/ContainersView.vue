@@ -12,6 +12,13 @@
           @new-container-created="function (newContainer) { loadContainers() }">
       </container-creation-form>
     </Modal>
+    <Button type="primary" icon="navicon-round" @click="listParamsModal = true">
+      Filters
+    </Button>
+    <Modal v-model="listParamsModal" title="Filters for listing containers">
+      <!-- TODO (fluency03): list containers filters -->
+      TODO
+    </Modal>
     <br>
     <div v-if="hasFoundContainers">
       <Card v-for="container in containers" class="container-card">
@@ -25,6 +32,7 @@
           Image: {{getImageName(container.Image)}}
           <Tag v-if="getTag(container.Image)">{{getTag(container.Image)}}</Tag>
         </p>
+        <p>Size: rw {{formatBytes(container.SizeRw)}}, rootfs {{formatBytes(container.SizeRootFs)}}</p>
         <p>Status: {{container.Status}}</p>
         <Button type="primary" @click="inspectContainer(container.Id)">
           Inspect
@@ -49,6 +57,7 @@
   import notify from '../../js/notify'
   import notNull from '../../js/notNull'
   import parseRepoTag from '../../js/parseRepoTag'
+  import formatBytes from '../../js/formatBytes'
 
   export default {
     components: {
@@ -68,7 +77,8 @@
           exited: 'red',
           dead: 'red'
         },
-        containerCreateModal: false
+        containerCreateModal: false,
+        listParamsModal: false
       }
     },
     watch: {
@@ -126,7 +136,8 @@
         docker.listContainers(queries)
           .then(updateContainers)
           .catch(updateErrored)
-      }
+      },
+      formatBytes: formatBytes
     },
     created () {
       this.loadContainers()

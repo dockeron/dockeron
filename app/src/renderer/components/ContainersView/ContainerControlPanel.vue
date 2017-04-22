@@ -175,6 +175,10 @@
       inspectContainer () {
         var self = this
 
+        var queries = {
+          size: true
+        }
+
         function containerRefreshed (data) {
           self.$emit('input', data)
         }
@@ -184,7 +188,7 @@
           notify(err)
         }
 
-        this.container.inspect()
+        this.container.inspect(queries)
           .then(containerRefreshed)
           .catch(refreshErrored)
       },
