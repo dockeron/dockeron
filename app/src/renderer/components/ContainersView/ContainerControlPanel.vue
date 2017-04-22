@@ -34,6 +34,20 @@
       <Button type="error" @click="removeContainer">
         Remove
       </Button>
+      <Modal v-model="removeContainerModal" title="Do you want to remove this cintainer?"
+          @on-ok="removeContainer">
+        Force remove:
+        <i-switch v-model="rmiParams.force" size="large">
+          <span slot="open">True</span>
+          <span slot="close">False</span>
+        </i-switch>
+        <br>
+        Do not delete untagged parent images:
+        <i-switch v-model="rmiParams.noprune" size="large">
+          <span slot="open">True</span>
+          <span slot="close">False</span>
+        </i-switch>
+      </Modal>
       <Button type="success" @click="psArgsModal = true">
         Top
       </Button>
@@ -103,7 +117,13 @@
         container: {},
         footLogs: {},
         psArgsModal: false,
-        psArgs: ''
+        psArgs: '',
+        removeContainerModal: false,
+        rmcParams: {
+          v: false,
+          force: false,
+          link: false
+        }
       }
     },
     methods: {
@@ -115,6 +135,7 @@
           self.inspectContainer()
         }
 
+        // TODO (fluency03): detachKeys - Override the key sequence for detaching a container
         this.container.start()
           .then(containerStarted)
           .catch(errorAndRefresh.bind(this))
@@ -127,6 +148,7 @@
           self.inspectContainer()
         }
 
+        // TODO (fluency03): Number of seconds to wait before killing the container
         this.container.stop()
           .then(containerStopped)
           .catch(errorAndRefresh.bind(this))
@@ -163,6 +185,7 @@
           self.inspectContainer()
         }
 
+        // TODO (fluency03): Number of seconds to wait before killing the container
         this.container.restart()
           .then(containerRestarted)
           .catch(errorAndRefresh.bind(this))
@@ -214,7 +237,7 @@
           data.setEncoding('utf8')
 
           data.on('data', function (logs) {
-            self.$set(self.footLogs, 'runningLog', logs)
+            self.$set(self.footLogs, 'runningLog', self.footLogs.runningLog + logs)
           })
         }
 

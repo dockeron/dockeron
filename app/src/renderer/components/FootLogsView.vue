@@ -15,11 +15,6 @@
           return {}
         }
       }
-    },
-    watch: {
-      value: function (newLogs) {
-        console.log(newLogs)
-      }
     }
   }
 </script>
@@ -52,6 +47,7 @@
   }
 
   .log {
+    white-space: pre-wrap;
     display: block;
   }
 </style>
