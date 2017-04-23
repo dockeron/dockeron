@@ -14,6 +14,8 @@
   import ContainerControlPanel from './ContainerControlPanel'
   import TreeView from '../TreeView/TreeView'
 
+  import containerStateToColor from '../../js/containerStateToColor'
+
   export default {
     components: {
       ContainerControlPanel,
@@ -23,14 +25,7 @@
       return {
         containerId: '',
         containerData: {},
-        stateToColor: {
-          created: 'blue',
-          restarting: 'yellow',
-          running: 'green',
-          paused: 'yellow',
-          exited: 'red',
-          dead: 'red'
-        },
+        stateToColor: containerStateToColor,
         status: 'exited'
       }
     },

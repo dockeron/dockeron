@@ -57,6 +57,7 @@
   import notNull from '../../js/notNull'
   import parseRepoTag from '../../js/parseRepoTag'
   import formatBytes from '../../js/formatBytes'
+  import containerStateToColor from '../../js/containerStateToColor'
 
   export default {
     components: {
@@ -69,14 +70,7 @@
         containers: [],
         hasFoundContainers: false,
         error: {},
-        stateToColor: {
-          created: 'blue',
-          restarting: 'yellow',
-          running: 'green',
-          paused: 'yellow',
-          exited: 'red',
-          dead: 'red'
-        },
+        stateToColor: containerStateToColor,
         containerCreateModal: false,
         containerRunModal: false,
         listParamsModal: false

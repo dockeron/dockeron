@@ -147,7 +147,6 @@
       var self = this
       this.creationSettings = this.importedSettings
 
-      this.stringifiedSettings = JSON.stringify(this.importedSettings, null, 4)
       ipcRenderer.on('selected-directory', function (event, filepaths) {
         // console.log(filepaths)
         if (filepaths.length === 1) {
