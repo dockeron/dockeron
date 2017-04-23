@@ -10,9 +10,9 @@
           <Icon type="beer"></Icon>
           <router-link to="/images">Images</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-volumns">
+        <Menu-item name="home-menu-volumes">
           <Icon type="help-buoy"></Icon>
-          <router-link to="/volumns">Volumns</router-link>
+          <router-link to="/volumes">Volumes</router-link>
         </Menu-item>
         <Menu-item name="home-menu-plugins">
           <Icon type="gear-b"></Icon>
