@@ -8,13 +8,10 @@
       <Card v-for="volume in volumes" class="volume-card">
         <p slot="title" class="volume-card-title">
           {{volume.Name}}
-          <!-- <Tag class="volume-state-tag">
-            {{volume.State}}
-          </Tag> -->
+          <Tag class="volume-state-tag">
+            {{volume.Driver}}
+          </Tag>
         </p>
-        <p>Diver: {{volume.Driver}}</p>
-        <p>Scope: {{volume.Scope}}</p>
-        <!-- <p>Mountpoint: {{volume.Mountpoint}}</p> -->
         <Button type="primary" @click="inspectVolume(volume.Name)">
           Inspect
         </Button>
@@ -96,7 +93,8 @@
 
 <style scoped>
   .volume-card {
-    width: 300px;
+    /*width: 300px;*/
+    width: 100%;
     display: inline-block;
     margin: 5px 5px;
   }
