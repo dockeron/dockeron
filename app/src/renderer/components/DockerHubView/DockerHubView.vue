@@ -8,16 +8,12 @@
     <Card v-for="image in searchedImages" class="image-card">
       <p slot="title" class="image-card-title">
         {{image.name}}
-        <Tag class="image-star-count-tag" color="blue">
-          {{image.star_count}}
-        </Tag>
+        <Tag class="image-star-count-tag" color="blue">{{image.star_count}}</Tag>
       </p>
       <p>
         <Tooltip>
           Description: {{image.description.slice(0, 20)}} ...
-          <div slot="content" class="description-pop">
-            {{image.description}}
-          </div>
+          <div slot="content" class="description-pop">{{image.description}}</div>
         </Tooltip>
       </p>
       <p>
@@ -26,9 +22,7 @@
         Automated:
         <Tag :color="booleanToTagColor[image.is_automated]">{{image.is_automated}}</Tag>
       </p>
-      <Button type="primary" icon="archive" @click="pullImage(image.name)">
-        Pull
-      </Button>
+      <Button type="primary" icon="archive" @click="pullImage(image.name)">Pull</Button>
     </Card>
     <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>

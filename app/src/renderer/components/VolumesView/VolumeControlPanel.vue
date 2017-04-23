@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Button type="error" @click="removeVolume">
-      Remove
-    </Button>
+    <Button type="error" @click="removeVolume">Remove</Button>
   </div>
 </template>
 

@@ -1,24 +1,20 @@
 <template>
   <div>
-    <Button type="primary" icon="refresh" @click="refreshVolumes">
-      Refresh
-    </Button>
+    <Button type="primary" icon="refresh" @click="refreshVolumes">Refresh</Button>
     <br>
     <div v-if="hasFoundVolumes">
       <Card v-for="volume in volumes" class="volume-card">
-        <p slot="title" class="volume-card-title">
-          {{volume.Name}}
-          <Tag class="volume-state-tag">
-            {{volume.Driver}}
-          </Tag>
-        </p>
-        <Button type="primary" @click="inspectVolume(volume.Name)">
-          Inspect
-        </Button>
-        <volume-control-panel class="control-panel" :volume-name="volume.Name"
-            @input="function (newData) { loadVolumes() }"
-            @volume-removed="function (removed) { loadVolumes() }">
-        </volume-control-panel>
+        <Poptip trigger="hover">
+            {{volume.Name}}
+          <div slot="content">
+            <Button type="primary" @click="inspectVolume(volume.Name)">Inspect</Button>
+            <volume-control-panel class="control-panel" :volume-name="volume.Name"
+                @input="function (newData) { loadVolumes() }"
+                @volume-removed="function (removed) { loadVolumes() }">
+            </volume-control-panel>
+          </div>
+        </Poptip>
+        <Tag class="volume-state-tag">{{volume.Driver}}</Tag>
       </Card>
     </div>
     <div v-else>
@@ -33,7 +29,6 @@
   import docker from '../../js/docker'
   import notify from '../../js/notify'
   import notNull from '../../js/notNull'
-  // import parseRepoTag from '../../js/parseRepoTag'
   import formatBytes from '../../js/formatBytes'
 
   export default {
@@ -97,10 +92,6 @@
     width: 100%;
     display: inline-block;
     margin: 5px 5px;
-  }
-
-  .volume-card-title {
-    height: 26px;
   }
 
   .volume-state-tag {

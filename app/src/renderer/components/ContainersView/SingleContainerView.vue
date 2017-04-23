@@ -4,9 +4,7 @@
         :container-id="containerId" :container-name="containerData.Name"
         :initialize="true" :has-all-buttons="true">
     </container-control-panel>
-    <Tag class="container-state-tag" :color="stateToColor[status]">
-      {{status}}
-    </Tag>
+    <Tag class="container-state-tag" :color="stateToColor[status]">{{status}}</Tag>
     <br>
     <tree-view :data="containerData" :options="{rootObjectKey: containerId}"></tree-view>
   </div>

@@ -1,11 +1,7 @@
 <template>
   <div>
-    <Button type="primary" icon="refresh" @click="refreshImages">
-      Refresh
-    </Button>
-    <Button type="primary" icon="plus-round" @click="imagePullModal = true">
-      Pull
-    </Button>
+    <Button type="primary" icon="refresh" @click="refreshImages">Refresh</Button>
+    <Button type="primary" icon="plus-round" @click="imagePullModal = true">Pull</Button>
     <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
       <Input v-model="repoTag" placeholder="Image Name (and Tag)"></Input>
     </Modal>
@@ -16,9 +12,7 @@
           <Tooltip placement="right">
             {{getImageName(image.RepoTags[0])}}
             <div slot="content" class="description-pop">
-              <p v-for="name in image.RepoTags">
-                {{name}}
-              </p>
+              <p v-for="name in image.RepoTags">{{name}}</p>
             </div>
           </Tooltip>
         </p>
@@ -27,9 +21,7 @@
         </p>
         <p>Size: {{formatBytes(image.Size)}}</p>
         <p>Created: {{getDateTime(image.Created)}}</p>
-        <Button type="primary" @click="inspectImage(image.Id)">
-          Inspect
-        </Button>
+        <Button type="primary" @click="inspectImage(image.Id)">Inspect</Button>
         <image-control-panel class="control-panel" :image-id="image.Id"
             @input="function (newData) { loadImages() }"
             @image-removed="function (removed) { loadImages() }">

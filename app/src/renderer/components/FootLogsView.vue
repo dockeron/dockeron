@@ -38,7 +38,7 @@
     color: #657180;
     white-space: normal;
     z-index: 1;
-    resize: vertical;
+    /*resize: vertical;*/
     transition: height 1s;
   }
 

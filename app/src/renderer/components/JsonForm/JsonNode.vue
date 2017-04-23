@@ -4,10 +4,7 @@
       <Collapse>
         <Panel>
           {{prop}}
-          <Poptip
-              confirm
-              title="Delete this?"
-              @on-ok="deleteNode">
+          <Poptip confirm title="Delete this?" @on-ok="deleteNode">
             <Button class="delete-button" type="ghost" shape="circle" icon="close-round" size="small"></Button>
           </Poptip>
           <p slot="content">

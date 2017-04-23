@@ -11,7 +11,8 @@
           {{data.children.length}} property
         </span>
         <span class="tree-view-item-hint" v-show="!isOpen() && data.children.length !== 1">
-          {{data.children.length}} properties</span>
+          {{data.children.length}} properties
+        </span>
       </div>
       <tree-view-item :key="getKey(data)" :max-depth="maxDepth" :current-depth="currentDepth+1"
           v-show="isOpen()" v-for="child in data.children" :data="child">

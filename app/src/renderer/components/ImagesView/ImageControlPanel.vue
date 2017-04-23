@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Button type="success" @click="selectTag">
-      Create
-    </Button>
+    <Button type="success" @click="selectTag">Create</Button>
     <Modal v-model="imageSelectionModal" title="Select Image Name and Tag"
         @on-ok="containerCreateModal = true">
       <Select v-model="selectedImage" style="width:400px">
-        <Option v-for="repoTag in imageRepoTags" :value="repoTag" :key="repoTag">{{ repoTag }}</Option>
+        <Option v-for="repoTag in imageRepoTags" :value="repoTag" :key="repoTag">
+          {{ repoTag }}
+        </Option>
       </Select>
     </Modal>
     <Modal v-model="containerCreateModal" title="Create Container"
@@ -14,9 +14,7 @@
       <container-creation-form ref="containerCreationForm" v-model="selectedImage">
       </container-creation-form>
     </Modal>
-    <Button type="error" @click="removeImageModal = true">
-      Remove
-    </Button>
+    <Button type="error" @click="removeImageModal = true">Remove</Button>
     <Modal v-model="removeImageModal" title="Do you want to remove this image?"
         @on-ok="removeImage">
       Force remove:
@@ -35,18 +33,12 @@
       <tree-view :data="removed"></tree-view>
     </Modal>
     <div v-if="hasAllButtons" class="additional-buttons">
-      <Button type="success" @click="getImageHistory">
-        History
-      </Button>
+      <Button type="success" @click="getImageHistory">History</Button>
       <Modal v-model="imageHistoryModal" title="Image History">
         <tree-view :data="history"></tree-view>
       </Modal>
-      <Button type="warning" @click="pushImage">
-        Push
-      </Button>
-      <Button type="info" @click="tagImageModal = true">
-        Tag/Rename
-      </Button>
+      <Button type="warning" @click="pushImage">Push</Button>
+      <Button type="info" @click="tagImageModal = true">Tag/Rename</Button>
       <Modal v-model="tagImageModal" title="Tag Image" @on-ok="tagImage">
         <Form :model="newTags" label-position="right" :label-width="70">
           <Form-item prop="repo" label="Repository">
@@ -57,9 +49,7 @@
           </Form-item>
         </Form>
       </Modal>
-      <Button type="success" @click="getImage">
-        Get
-      </Button>
+      <Button type="success" @click="getImage">Get</Button>
     </div>
   </div>
 </template>

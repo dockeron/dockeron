@@ -1,11 +1,7 @@
 <template>
   <div>
-    <Button type="primary" @click="inspectImage">
-      inspect
-    </Button>
-    <Button type="success" @click="pullImage">
-      Pull
-    </Button>
+    <Button type="primary" @click="inspectImage">Inspect</Button>
+    <Button type="success" @click="pullImage">Pull</Button>
   </div>
 </template>
 

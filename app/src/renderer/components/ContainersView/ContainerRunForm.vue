@@ -5,7 +5,9 @@
         <Input v-model="imageName" placeholder="Image name"></Input>
       </Form-item>
       <Form-item label="CMD">
-        <Tag v-for="cmd in cmdToBeExecuted" :key="cmd" :name="cmd" closable @on-close="deleteCMD">{{cmd}}</Tag>
+        <Tag v-for="cmd in cmdToBeExecuted" :key="cmd" :name="cmd" closable@on-close="deleteCMD">
+          {{cmd}}
+        </Tag>
         <Poptip>
           <Button icon="ios-plus-empty" type="dashed" size="small">Add CMD</Button>
           <div slot="title">What CMD you want to execute?</div>
@@ -17,7 +19,9 @@
         </Poptip>
       </Form-item>
       <Form-item label="Streams">
-        All to process.stdout <i-switch v-model="splitStreams"></i-switch> Split process.stdout and process.stderr
+        All to process.stdout
+        <i-switch v-model="splitStreams"></i-switch>
+        Split process.stdout and process.stderr
       </Form-item>
       <Form-item label="Name">
         <Input v-model="newContainerName" placeholder="New name of your container"></Input>

@@ -1,30 +1,20 @@
 <template>
   <div>
-    <Button type="primary" icon="refresh" @click="refreshContainers">
-      Refresh
-    </Button>
-    <Button type="primary" icon="plus-round" @click="containerCreateModal = true">
-      Create
-    </Button>
+    <Button type="primary" icon="refresh" @click="refreshContainers">Refresh</Button>
+    <Button type="primary" icon="plus-round" @click="containerCreateModal = true">Create</Button>
     <Modal v-model="containerCreateModal" title="Create Container"
         @on-ok="confirmCreation" @on-cancel="resetCreation">
       <container-creation-form ref="containerCreationForm"
           @new-container-created="function (newContainer) { loadContainers() }">
       </container-creation-form>
     </Modal>
-    <Button type="primary" icon="plus-round" @click="containerRunModal = true">
-      Run
-    </Button>
-    <Modal v-model="containerRunModal" title="Run"
-        @on-ok="confirmRun" @on-cancel="resetRun">
-      T.B.D.
+    <Button type="primary" icon="code" @click="containerRunModal = true">Run</Button>
+    <Modal v-model="containerRunModal" title="Run" @on-ok="confirmRun" @on-cancel="resetRun">
       <container-run-form ref="containerRunForm"
           @new-container-created="function (newContainer) { loadContainers() }">
       </container-run-form>
     </Modal>
-    <Button type="primary" icon="navicon-round" @click="listParamsModal = true">
-      Filters
-    </Button>
+    <Button type="primary" icon="navicon-round" @click="listParamsModal = true">Filters</Button>
     <Modal v-model="listParamsModal" title="Filters for listing containers">
       <!-- TODO (fluency03): list containers filters -->
       TODO
@@ -44,9 +34,7 @@
         </p>
         <p>Size: rw {{formatBytes(container.SizeRw)}}, rootfs {{formatBytes(container.SizeRootFs)}}</p>
         <p>Status: {{container.Status}}</p>
-        <Button type="primary" @click="inspectContainer(container.Id)">
-          Inspect
-        </Button>
+        <Button type="primary" @click="inspectContainer(container.Id)">Inspect</Button>
         <container-control-panel class="control-panel"
             :container-id="container.Id" :container-name="container.Names[0]"
             @input="function (newData) { loadContainers() }">
