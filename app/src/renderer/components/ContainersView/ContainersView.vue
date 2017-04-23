@@ -12,6 +12,16 @@
           @new-container-created="function (newContainer) { loadContainers() }">
       </container-creation-form>
     </Modal>
+    <Button type="primary" icon="plus-round" @click="containerRunModal = true">
+      Run
+    </Button>
+    <Modal v-model="containerRunModal" title="Run"
+        @on-ok="confirmRun" @on-cancel="resetRun">
+      T.B.D.
+      <container-run-form ref="containerRunForm"
+          @new-container-created="function (newContainer) { loadContainers() }">
+      </container-run-form>
+    </Modal>
     <Button type="primary" icon="navicon-round" @click="listParamsModal = true">
       Filters
     </Button>
@@ -52,6 +62,7 @@
 <script>
   import ContainerControlPanel from './ContainerControlPanel'
   import ContainerCreationForm from './ContainerCreationForm'
+  import ContainerRunForm from './ContainerRunForm'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
@@ -62,7 +73,8 @@
   export default {
     components: {
       ContainerControlPanel,
-      ContainerCreationForm
+      ContainerCreationForm,
+      ContainerRunForm
     },
     data () {
       return {
@@ -78,6 +90,7 @@
           dead: 'red'
         },
         containerCreateModal: false,
+        containerRunModal: false,
         listParamsModal: false
       }
     },
@@ -95,6 +108,12 @@
       },
       resetCreation () {
         this.$refs.containerCreationForm.reset()
+      },
+      confirmRun () {
+        this.$refs.containerRunForm.submit()
+      },
+      resetRun () {
+        this.$refs.containerRunForm.reset()
       },
       refreshContainers () {
         this.loadContainers()

@@ -31,19 +31,25 @@
       <Modal v-model="containerRenameModal" title="Rename Container" @on-ok="renameContainer">
         <Input v-model="containerNewName" placeholder="New Name"></Input>
       </Modal>
-      <Button type="error" @click="removeContainer">
+      <Button type="error" @click="removeContainerModal = true">
         Remove
       </Button>
       <Modal v-model="removeContainerModal" title="Do you want to remove this cintainer?"
           @on-ok="removeContainer">
-        Force remove:
-        <i-switch v-model="rmiParams.force" size="large">
+        Remove the volumes associated with the container:
+        <i-switch v-model="rmcParams.v" size="large">
           <span slot="open">True</span>
           <span slot="close">False</span>
         </i-switch>
         <br>
-        Do not delete untagged parent images:
-        <i-switch v-model="rmiParams.noprune" size="large">
+        Force remove:
+        <i-switch v-model="rmcParams.force" size="large">
+          <span slot="open">True</span>
+          <span slot="close">False</span>
+        </i-switch>
+        <br>
+        Remove the specified link associated with the container:
+        <i-switch v-model="rmcParams.link" size="large">
           <span slot="open">True</span>
           <span slot="close">False</span>
         </i-switch>
@@ -275,7 +281,7 @@
           })
         }
 
-        this.container.remove()
+        this.container.remove(this.rmcParams)
           .then(containerRemoved)
           .catch(notify)
       },
