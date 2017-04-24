@@ -14,6 +14,8 @@
 
 A dockeron project, built on Electron + Vue.js for Docker.
 
+TODOs and progress, please see [project dockeron](https://github.com/dockeron/dockeron/projects/1).
+
 
 ![](./docs/dockeron-screenshot1.png)
 ![](./docs/dockeron-screenshot2.png)
