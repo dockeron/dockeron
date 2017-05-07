@@ -15,7 +15,7 @@
           <router-link to="/volumes">Volumes</router-link>
         </Menu-item>
         <Menu-item name="home-menu-networks">
-          <Icon type="help-buoy"></Icon>
+          <Icon type="link"></Icon>
           <router-link to="/networks">Networks</router-link>
         </Menu-item>
         <Menu-item name="home-menu-plugins">

@@ -57,7 +57,7 @@
         var self = this
 
         function loginSuccess (token) {
-          self.$emit('input', token)
+          self.$emit('input', token.identitytoken)
           notify('Welcome, ' + self.credentials.username + ' !')
         }
 

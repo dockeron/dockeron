@@ -18,7 +18,7 @@
         </p>
         <p>Created: {{getDateTime(network.Created)}}</p>
         <Button type="primary" @click="inspectNetwork(network.Id)">Inspect</Button>
-        <network-control-panel class="control-panel" :network-id="networkId"></network-control-panel>
+        <network-control-panel class="control-panel" :network-id="network.Id"></network-control-panel>
       </Card>
     </div>
     <div v-else>
