@@ -40,6 +40,16 @@ export default [
         component: require('components/VolumesView/SingleVolumeView')
       },
       {
+        path: 'networks',
+        name: 'networks-view',
+        component: require('components/NetworksView/NetworksView')
+      },
+      {
+        path: '/networks/:networkId',
+        name: 'single-network-view',
+        component: require('components/NetworksView/SingleNetworkView')
+      },
+      {
         path: 'plugins',
         name: 'plugins-view',
         component: require('components/PluginsView/PluginsView')

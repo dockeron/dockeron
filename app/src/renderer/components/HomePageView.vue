@@ -14,6 +14,10 @@
           <Icon type="help-buoy"></Icon>
           <router-link to="/volumes">Volumes</router-link>
         </Menu-item>
+        <Menu-item name="home-menu-networks">
+          <Icon type="help-buoy"></Icon>
+          <router-link to="/networks">Networks</router-link>
+        </Menu-item>
         <Menu-item name="home-menu-plugins">
           <Icon type="gear-b"></Icon>
           <router-link to="/plugins">Plugins</router-link>
