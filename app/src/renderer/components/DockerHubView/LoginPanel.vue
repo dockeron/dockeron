@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value" class="logout">
+  <div v-if="token" class="logout">
     <Poptip trigger="hover" placement="bottom">
       <Tag type="dot" color="green">{{credentials.username}}</Tag>
       <div slot="content">
@@ -32,52 +32,35 @@
 </template>
 
 <script>
-  import dockerHubApi from '../../js/dockerHubApi'
-
-  import notify from '../../js/notify'
-
   export default {
-    props: {
-      // access token
-      value: {
-        type: String,
-        default: ''
-      }
-    },
     data () {
       return {
         credentials: {
           username: '',
           password: ''
-        }
+        },
+        token: ''
       }
     },
     methods: {
       login () {
-        var self = this
-
-        function loginSuccess (token) {
-          self.$emit('input', token.identitytoken)
-          notify('Welcome, ' + self.credentials.username + ' !')
-        }
-
-        function loginFailed (err) {
-          notify(err)
-          self.$emit('input', '')
-        }
-
-        dockerHubApi.login(this.credentials.username, this.credentials.password)
-          .then(loginSuccess)
-          .catch(loginFailed)
+        this.$store.dispatch('login', this.credentials)
       },
       logout () {
-        notify('Goodbye, ' + this.credentials.username + ' !')
+        this.$store.dispatch('logout')
         this.credentials = {
           username: '',
           password: ''
         }
-        this.$emit('input', '')
       }
+    },
+    created () {
+      var self = this
+      this.$store.watch(function (state) {
+        return state.auth.token
+      }, function (newToken) {
+        self.token = newToken
+      })
     }
   }
 </script>

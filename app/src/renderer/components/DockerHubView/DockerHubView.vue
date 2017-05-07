@@ -2,7 +2,7 @@
   <div>
     <div class="docker-hub-panel">
       <search-panel v-model="searchedImages"></search-panel>
-      <login-panel v-model="token"></login-panel>
+      <login-panel></login-panel>
     </div>
     <br><br>
     <Card v-for="image in searchedImages" class="image-card">
@@ -45,7 +45,6 @@
     },
     data () {
       return {
-        token: '',
         searchedImages: [],
         booleanToTagColor: {
           'true': 'green',
@@ -99,6 +98,7 @@
     },
     created () {
       this.getOfficialRepos()
+      console.log(this.$store)
     }
   }
 </script>
