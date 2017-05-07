@@ -5,13 +5,14 @@
     <Modal v-model="containerCreateModal" title="Create Container"
         @on-ok="confirmCreation" @on-cancel="resetCreation">
       <container-creation-form ref="containerCreationForm"
-          @new-container-created="function (newContainer) { loadContainers() }">
+          @container-created="function (newContainer) { loadContainers() }">
       </container-creation-form>
     </Modal>
     <Button type="primary" icon="code" @click="containerRunModal = true">Run</Button>
     <Modal v-model="containerRunModal" title="Run" @on-ok="confirmRun" @on-cancel="resetRun">
       <container-run-form ref="containerRunForm"
-          @new-container-created="function (newContainer) { loadContainers() }">
+          @container-created="function (newContainer) { loadContainers() }"
+          @container-started="function (newContainer) { loadContainers() }">
       </container-run-form>
     </Modal>
     <Button type="primary" icon="navicon-round" @click="listParamsModal = true">Filters</Button>

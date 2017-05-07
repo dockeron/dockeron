@@ -110,6 +110,11 @@
         }
       }
     },
+    watch: {
+      containerId: function (newContainerId) {
+        this.container = docker.getContainer(newContainerId)
+      }
+    },
     methods: {
       startContainer () {
         var self = this

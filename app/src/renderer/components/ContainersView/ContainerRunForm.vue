@@ -102,14 +102,19 @@
         var streams = null
 
         function containerCreated (container) {
-          notify('New container ID ' + container.Id +
-                 ' created from image ' + self.defaultSettings.Image + ' !')
-          self.$emit('new-container-created', container)
+          notify('New container ID ' + container.id +
+                 ' created from image ' + self.imageName + ' !')
+          self.$emit('container-created', container)
+        }
+
+        function containerStarted (container) {
+          notify('New container ID ' + container.id + ' started !')
+          self.$emit('container-started', container)
         }
 
         function creationErrored (err) {
           notify(err)
-          self.$emit('no-container-created', err)
+          self.$emit('container-creation-errored', err)
         }
 
         if (this.splitStreams) {
@@ -118,9 +123,20 @@
           streams = process.stdout
         }
 
-        docker.run(this.imageName, this.cmdToBeExecuted, streams, this.creationSettings)
-          .then(containerCreated)
-          .catch(creationErrored)
+        if (this.newContainerName) {
+          this.creationSettings.name = this.newContainerName
+        }
+
+        docker.run(this.imageName, this.cmdToBeExecuted, streams, this.creationSettings,
+          function (err, data, container) {
+            console.log(err, data, container)
+            if (err) {
+              creationErrored(err)
+              return
+            }
+          })
+          .on('container', containerCreated)
+          .on('start', containerStarted)
 
         this.reset()
       },
