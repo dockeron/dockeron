@@ -10,6 +10,12 @@
             {{network.Scope}}
           </Tag>
         </p>
+        <p>
+          Internal:
+          <Tag :color="booleanToTagColor[network.Internal]">{{network.Internal}}</Tag>
+          Attachable:
+          <Tag :color="booleanToTagColor[network.Attachable]">{{network.Attachable}}</Tag>
+        </p>
         <p>Created: {{getDateTime(network.Created)}}</p>
         <Button type="primary" @click="inspectNetwork(network.Id)">Inspect</Button>
         <network-control-panel class="control-panel" :network-id="networkId"></network-control-panel>
@@ -36,6 +42,10 @@
       return {
         networks: [],
         hasFoundNetworks: false,
+        booleanToTagColor: {
+          'true': 'green',
+          'false': 'red'
+        },
         error: {}
       }
     },
