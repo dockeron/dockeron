@@ -5,23 +5,25 @@
         <Input v-model="imageName" placeholder="Image name"></Input>
       </Form-item>
       <Form-item label="CMD">
-        <Tag v-for="cmd in cmdToBeExecuted" :key="cmd" :name="cmd" closable@on-close="deleteCMD">
+        <Tag v-for="cmd in cmdToBeExecuted" :key="cmd" :name="cmd" closable @on-close="deleteCMD">
           {{cmd}}
         </Tag>
         <Poptip>
           <Button icon="ios-plus-empty" type="dashed" size="small">Add CMD</Button>
           <div slot="title">What CMD you want to execute?</div>
           <div slot="content">
-            <Input v-model="newCMD" icon="plus-round" @on-click="addCMD" @on-enter="addCMD"
-                placeholder="eg. /bin/bash">
-            </Input>
+            <Tooltip content="CMD cannot be empty string!">
+              <Input v-model="newCMD" icon="plus-round" @on-click="addCMD" @on-enter="addCMD"
+                  placeholder="eg. uname -a">
+              </Input>
+            </Tooltip>
           </div>
         </Poptip>
       </Form-item>
       <Form-item label="Streams">
-        All to process.stdout
+        All to <font face="Courier New">process.stdout</font>
         <i-switch v-model="splitStreams"></i-switch>
-        Split process.stdout and process.stderr
+        Split <font face="Courier New">stdout</font> and <font face="Courier New">stderr</font>
       </Form-item>
       <Form-item label="Name">
         <Input v-model="newContainerName" placeholder="New name of your container"></Input>
@@ -85,8 +87,11 @@
     },
     methods: {
       addCMD () {
+        if (!this.newCMD) {
+          return
+        }
         this.cmdToBeExecuted.push(this.newCMD)
-        this.newCMDs = ''
+        this.newCMD = ''
       },
       deleteCMD (event, name) {
         var index = this.cmdToBeExecuted.indexOf(name)
