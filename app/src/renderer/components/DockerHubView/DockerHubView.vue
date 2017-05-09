@@ -98,7 +98,6 @@
     },
     created () {
       this.getOfficialRepos()
-      console.log(this.$store)
     }
   }
 </script>

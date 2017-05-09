@@ -176,7 +176,7 @@
     color: inherit;
   }
 
-  @media (max-width: 730px) {
+  @media (max-width: 850px) {
     .ivu-menu {
       display: inline-table;
     }

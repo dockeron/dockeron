@@ -31,6 +31,11 @@
         volume: {}
       }
     },
+    watch: {
+      volumeName: function (newVolumeName) {
+        this.volume = docker.getVolume(newVolumeName)
+      }
+    },
     methods: {
       removeVolume () {
         // var self = this

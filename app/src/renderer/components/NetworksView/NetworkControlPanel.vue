@@ -39,6 +39,11 @@
         network: {}
       }
     },
+    watch: {
+      networkId: function (newNetworkId) {
+        this.network = docker.getNetwork(newNetworkId)
+      }
+    },
     methods: {
       connectVolume () {
         // TODO (fluency03)

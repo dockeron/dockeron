@@ -111,6 +111,9 @@
       }
     },
     watch: {
+      imageId: function (newImageId) {
+        this.image = docker.getImage(newImageId)
+      },
       imageRepoTags: function (newRepoTags) {
         try {
           this.selectedImage = newRepoTags[0]
@@ -119,6 +122,7 @@
         }
       }
     },
+
     methods: {
       selectTag () {
         this.inspectImage()
