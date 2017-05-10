@@ -43,6 +43,7 @@
       <Modal v-model="topProcessesModal" title="Top Processes">
         <tree-view :data="topResult"></tree-view>
       </Modal>
+      <Button type="info" @click="exportContainer">Export</Button>
     </div>
     <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>
@@ -54,6 +55,7 @@
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import fs from 'fs'
 
   function errorAndRefresh (err) {
     notify(err)
@@ -232,6 +234,26 @@
 
         this.container.logs(logOpts)
           .then(containerLogsGot)
+          .catch(notify)
+      },
+      exportContainer () {
+        var self = this
+
+        function containerExported (stream) {
+          var containerName = self.value.Name.replace('/', '')
+          var containerId = self.value.Id
+          var fileName = containerName + '_' + containerId + '.tar'
+          var writeStream = fs.createWriteStream(fileName)
+
+          stream.pipe(writeStream)
+
+          stream.on('end', function () {
+            notify('Container ' + containerName + 'exported to ' + fileName + ' !')
+          })
+        }
+
+        this.container.export()
+          .then(containerExported)
           .catch(notify)
       },
       renameContainer () {
