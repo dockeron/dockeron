@@ -56,6 +56,8 @@
     },
     created () {
       var self = this
+      this.token = this.$store.state.auth.token
+      this.credentials.username = this.$store.state.user.username
       this.$store.watch(function (state) {
         return state.auth.token
       }, function (newToken) {

@@ -5,7 +5,10 @@
     <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
       <Input v-model="repoTag" placeholder="Image Name (and Tag)"></Input>
     </Modal>
-    <br>
+    <div class="docker-hub-panel">
+      <login-panel></login-panel>
+    </div>
+    <br><br>
     <div v-if="hasFoundImages">
       <Card v-for="image in images" class="image-card">
         <p slot="title" class="image-card-title">
@@ -38,6 +41,7 @@
 <script>
   import ImageControlPanel from './ImageControlPanel'
   import FootLogsView from '../FootLogsView'
+  import LoginPanel from '../DockerHubView/LoginPanel'
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
@@ -48,7 +52,8 @@
   export default {
     components: {
       ImageControlPanel,
-      FootLogsView
+      FootLogsView,
+      LoginPanel
     },
     data () {
       return {
@@ -143,12 +148,20 @@
       formatBytes: formatBytes
     },
     created () {
+      console.log('auth.token: ', this.$store.state.auth.token)
+      console.log('user.username: ', this.$store.state.user.username)
       this.loadImages()
     }
   }
 </script>
 
 <style scoped>
+  .docker-hub-panel {
+    display: inline-block;
+    float: right;
+    width: 350px;
+  }
+
   .image-card {
     width: 300px;
     display: inline-block;
