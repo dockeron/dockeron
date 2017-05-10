@@ -53,9 +53,9 @@
   import TreeView from '../TreeView/TreeView'
   import FootLogsView from '../FootLogsView'
 
+  import fs from 'fs'
   import docker from '../../js/docker'
   import notify from '../../js/notify'
-  import fs from 'fs'
 
   function errorAndRefresh (err) {
     notify(err)
@@ -248,7 +248,7 @@
           stream.pipe(writeStream)
 
           stream.on('end', function () {
-            notify('Container ' + containerName + 'exported to ' + fileName + ' !')
+            notify('Container ' + containerName + 'exported to a tar file !')
           })
         }
 

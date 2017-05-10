@@ -58,6 +58,7 @@
   import ContainerCreationForm from '../ContainersView/ContainerCreationForm'
   import TreeView from '../TreeView/TreeView'
 
+  import fs from 'fs'
   import docker from '../../js/docker'
   import notify from '../../js/notify'
 
@@ -175,7 +176,23 @@
           .catch(notify)
       },
       getImage () {
-        // TODO (fluency03)
+        var self = this
+
+        function imagesGot (stream) {
+          var imageId = self.value.Id.replace('sha256:', '')
+          var fileName = imageId + '.tar'
+          var writeStream = fs.createWriteStream(fileName)
+
+          stream.pipe(writeStream)
+
+          stream.on('end', function () {
+            notify('Image ' + imageId + 'exported to a tar file !')
+          })
+        }
+
+        this.image.get()
+          .then(imagesGot)
+          .catch(notify)
       },
       inspectImage () {
         var self = this
