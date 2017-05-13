@@ -20,11 +20,10 @@
 <script>
   import JsonForm from '../JsonForm/JsonForm'
 
-  import fs from 'fs'
-  import path from 'path'
   import { ipcRenderer } from 'electron'
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import jsonFileImportInit from '../../js/jsonFileImportInit'
 
   export default {
     components: {
@@ -86,32 +85,18 @@
     created () {
       var self = this
       this.stringifiedSettings = JSON.stringify(this.importedSettings, null, 4)
-      ipcRenderer.on('selected-directory', function (event, filepaths) {
-        // console.log(filepaths)
-        if (filepaths.length === 1) {
-          notify('You should select and ONLY SELECT ONE file!')
-          return
+
+      function readFileCB (err, data) {
+        if (err) {
+          notify(err)
         }
 
-        var filepath = filepaths[0]
-        try {
-          if (path.extname(filepath) === '.json') {
-            notify('Not a .json file!')
-            return
-          }
+        var parsedJSON = JSON.parse(data)
+        self.importedSettings = parsedJSON
+        self.advancedSettings = self.importedSettings
+      }
 
-          fs.readFile(filepath, (err, data) => {
-            if (err) {
-              notify(err)
-            }
-            var parsedJSON = JSON.parse(data)
-            self.importedSettings = parsedJSON
-            self.advancedSettings = self.importedSettings
-          })
-        } catch (e) {
-          notify(e)
-        }
-      })
+      jsonFileImportInit(readFileCB)
     }
   }
 </script>
