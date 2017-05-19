@@ -17,6 +17,21 @@ A dockeron project, built on Electron + Vue.js for Docker.
 TODOs and progress, please see [project dockeron](https://github.com/dockeron/dockeron/projects/1).
 
 
+## Development
+
+Make sure you have Node.js installed (node@^6.5.0 or higher is recommended). 
+
+```
+git clone git@github.com:dockeron/dockeron.git
+cd dockeron
+npm install
+npm run dev
+```
+
+
+## Screenshots
+
+
 ![](./docs/dockeron-screenshot1.png)
 ![](./docs/dockeron-screenshot2.png)
 ![](./docs/dockeron-screenshot3.png)
