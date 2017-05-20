@@ -14,12 +14,18 @@
 
 A dockeron project, built on Electron + Vue.js for Docker.
 
+Docker Engine API [dockerode](https://github.com/apocas/dockerode).
+
+UI components: [iView](https://github.com/iview/iview)
+
+
+
 TODOs and progress, please see [project dockeron](https://github.com/dockeron/dockeron/projects/1).
 
 
 ## Development
 
-Make sure you have Node.js installed (node@^6.5.0 or higher is recommended). 
+Make sure you have Node.js installed (node@^6.5.0 or higher is recommended).
 
 ```
 git clone git@github.com:dockeron/dockeron.git
