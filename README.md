@@ -18,6 +18,9 @@ Docker Engine API [dockerode](https://github.com/apocas/dockerode).
 
 UI components: [iView](https://github.com/iview/iview)
 
+*Now, there are only Mac and Linux versions. I am only using Mac version, Linux version is to be tested. Windows version is coming. Notice that, this project is still in development process, many functionalities or features are not implemented yet, and some parts are still buggy.*
+
+Welcome PR and issues.
 
 
 TODOs and progress, please see [project dockeron](https://github.com/dockeron/dockeron/projects/1).
