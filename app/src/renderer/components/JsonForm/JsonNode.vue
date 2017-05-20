@@ -134,11 +134,11 @@
 <style scoped>
   .switch {
     display: inline-block;
-  },
+  }
 
   .delete-button {
     margin: auto;
-  },
+  }
 
   Collapse {
     margin-bottom: 10px;

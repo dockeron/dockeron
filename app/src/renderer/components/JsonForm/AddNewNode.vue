@@ -14,9 +14,14 @@
         <Dropdown-item name="Boolean">Boolean</Dropdown-item>
       </Dropdown-menu>
     </Dropdown>
-    <Modal v-model="nameInput" @on-ok="add">
-      <Input v-model="name" placeholder="Please give a name."></Input>
-    </Modal>
+
+    <!-- <Modal v-model="nameInput" @on-ok="add"> -->
+    <div v-show="nameInput">
+      <Input class="new-name-input" v-model="name" placeholder="Please give a name."></Input>
+      <Button class="new-button" type="primary" icon="checkmark-round" shape="circle" @click="add" size="small"></Button>
+      <Button class="new-button" type="ghost" icon="close-round" shape="circle" @click="cancel" size="small"></Button>
+    </div>
+    <!-- </Modal> -->
   </div>
 </template>
 
@@ -49,11 +54,24 @@
           name: this.name
         }
         this.$emit('add-new-node', params)
+        this.nameInput = false
+        this.name = ''
+        this.type = ''
+      },
+      cancel () {
+        this.nameInput = false
+        this.name = ''
+        this.type = ''
       }
     }
   }
 </script>
 
 <style scoped>
-
+  .new-name-input {
+    width: 30%;
+  }
+  .new-button {
+    margin: auto;
+  }
 </style>
