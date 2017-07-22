@@ -1,7 +1,8 @@
 import Docker from 'dockerode'
 import fs from 'fs'
+import { DOCKER_ENGINE_UNIX_SOCKET } from './constants/DockerConstants'
 
-var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock'
+var socket = process.env.DOCKER_SOCKET || DOCKER_ENGINE_UNIX_SOCKET
 var stats
 
 try {
