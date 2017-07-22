@@ -148,8 +148,6 @@
       formatBytes: formatBytes
     },
     created () {
-      console.log('auth.token: ', this.$store.state.auth.token)
-      console.log('user.username: ', this.$store.state.user.username)
       this.loadImages()
     }
   }

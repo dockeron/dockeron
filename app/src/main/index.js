@@ -25,8 +25,6 @@ ipcMain.on('open-save-dialog', function (event, path) {
     title: 'Save File',
     defaultPath: path
   }
-  console.log(path)
-  console.log(options)
 
   dialog.showSaveDialog(options, function (filename) {
     event.sender.send('saved-file', filename)

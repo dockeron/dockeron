@@ -1,7 +1,8 @@
+import ElectronConstants from './constants/ElectronConstants'
 
 function notify (body) {
   /* eslint-disable no-new */
-  new Notification('Dockeron', {
+  new Notification(ElectronConstants.NOTIFICATION_TITLE_DOCKERON, {
     body: body
   })
 }
