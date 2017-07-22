@@ -59,6 +59,7 @@
   import notify from '../../js/notify'
   import tarFileSaveInit from '../../js/tarFileSaveInit'
   import { IPC_CHANNEL_OPEN_SAVE_DIALOG } from '../../js/constants/ElectronConstants'
+  import { STREAM_READABLE_EVENT_END, STREAM_READABLE_EVENT_DATA } from '../../js/constants/StreamConstants'
 
   function errorAndRefresh (err) {
     notify(err)
@@ -230,7 +231,7 @@
         function containerLogsGot (data) {
           data.setEncoding('utf8')
 
-          data.on('data', function (logs) {
+          data.on(STREAM_READABLE_EVENT_DATA, function (logs) {
             self.$set(self.footLogs, 'runningLog', self.footLogs.runningLog + logs)
           })
         }
@@ -252,7 +253,7 @@
 
           stream.pipe(writeStream)
 
-          stream.on('end', function () {
+          stream.on(STREAM_READABLE_EVENT_END, function () {
             notify('Container ' + containerName + 'exported to a tar file !')
           })
         }

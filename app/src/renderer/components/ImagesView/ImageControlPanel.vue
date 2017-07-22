@@ -61,6 +61,7 @@
   import fs from 'fs'
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import { STREAM_READABLE_EVENT_END } from '../../js/constants/StreamConstants'
 
   export default {
     components: {
@@ -178,6 +179,7 @@
       getImage () {
         var self = this
 
+        // TODO (fluency03): colleborate with openSaveDialog
         function imagesGot (stream) {
           var imageId = self.value.Id.replace('sha256:', '')
           var fileName = imageId + '.tar'
@@ -185,7 +187,7 @@
 
           stream.pipe(writeStream)
 
-          stream.on('end', function () {
+          stream.on(STREAM_READABLE_EVENT_END, function () {
             notify('Image ' + imageId + 'exported to a tar file !')
           })
         }
