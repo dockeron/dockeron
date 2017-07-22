@@ -1,13 +1,14 @@
 'use strict'
 
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
+import ElectronConstants from '../renderer/js/constants/ElectronConstants'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:${require('../../../config').port}`
   : `file://${__dirname}/index.html`
 
-ipcMain.on('open-file-dialog', function (event) {
+ipcMain.on(ElectronConstants.IPC_CHANNEL_OPEN_FILE_DIALOG, function (event) {
   dialog.showOpenDialog({
     properties: [
       'openFile',
@@ -15,19 +16,19 @@ ipcMain.on('open-file-dialog', function (event) {
     ]
   }, function (files) {
     if (files) {
-      event.sender.send('selected-directory', files)
+      event.sender.send(ElectronConstants.IPC_CHANNEL_SELECTED_DIRECTORY, files)
     }
   })
 })
 
-ipcMain.on('open-save-dialog', function (event, path) {
+ipcMain.on(ElectronConstants.IPC_CHANNEL_OPEN_SAVE_DIALOG, function (event, path) {
   const options = {
     title: 'Save File',
     defaultPath: path
   }
 
   dialog.showSaveDialog(options, function (filename) {
-    event.sender.send('saved-file', filename)
+    event.sender.send(ElectronConstants.IPC_CHANNEL_SAVED_FILE, filename)
   })
 })
 
@@ -43,7 +44,7 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
-  mainWindow.on('closed', () => {
+  mainWindow.on(ElectronConstants.BROWSER_WINDOW_EVENT_CLOSED, () => {
     mainWindow = null
   })
 
@@ -51,15 +52,15 @@ function createWindow () {
   console.log('mainWindow opened')
 }
 
-app.on('ready', createWindow)
+app.on(ElectronConstants.APP_EVENT_READY, createWindow)
 
-app.on('window-all-closed', () => {
+app.on(ElectronConstants.APP_EVENT_WINDOW_ALL_CLOSED, () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-app.on('activate', () => {
+app.on(ElectronConstants.APP_EVENT_ACTIVATE, () => {
   if (mainWindow === null) {
     createWindow()
   }
