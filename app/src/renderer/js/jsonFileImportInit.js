@@ -2,10 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import { ipcRenderer } from 'electron'
 import notify from './notify'
-import ElectronConstants from './constants/ElectronConstants'
+import { IPC_CHANNEL_SELECTED_DIRECTORY } from './constants/ElectronConstants'
 
 function jsonFileImportInit (callback) {
-  ipcRenderer.on(ElectronConstants.IPC_CHANNEL_SELECTED_DIRECTORY, function (event, filepaths) {
+  ipcRenderer.on(IPC_CHANNEL_SELECTED_DIRECTORY, function (event, filepaths) {
     // console.log(filepaths)
     if (filepaths.length !== 1) {
       notify('You should select and ONLY SELECT ONE file!')

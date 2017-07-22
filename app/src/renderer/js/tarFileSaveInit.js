@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron'
 import notify from './notify'
-import ElectronConstants from './constants/ElectronConstants'
+import { IPC_CHANNEL_SAVED_FILE } from './constants/ElectronConstants'
 
 function tarFileSaveInit (callback) {
-  ipcRenderer.on(ElectronConstants.IPC_CHANNEL_SAVED_FILE, function (event, path) {
+  ipcRenderer.on(IPC_CHANNEL_SAVED_FILE, function (event, path) {
     if (!path) {
       notify('File path is empty!')
       callback({message: 'File path is empty!'}, path)

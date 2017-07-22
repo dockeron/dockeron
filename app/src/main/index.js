@@ -1,7 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
-import ElectronConstants from '../renderer/js/constants/ElectronConstants'
+import * as ElectronConstants from '../renderer/js/constants/ElectronConstants'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -55,7 +55,7 @@ function createWindow () {
 app.on(ElectronConstants.APP_EVENT_READY, createWindow)
 
 app.on(ElectronConstants.APP_EVENT_WINDOW_ALL_CLOSED, () => {
-  if (process.platform !== 'darwin') {
+  if (process.platform !== ElectronConstants.PLATFORM_DARWIN) {
     app.quit()
   }
 })

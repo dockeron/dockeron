@@ -45,7 +45,7 @@
   import docker from '../../js/docker'
   import notify from '../../js/notify'
   import jsonFileImportInit from '../../js/jsonFileImportInit'
-  import ElectronConstants from '../../js/constants/ElectronConstants'
+  import { IPC_CHANNEL_OPEN_FILE_DIALOG } from '../../js/constants/ElectronConstants'
 
   export default {
     components: {
@@ -161,7 +161,7 @@
         }
       },
       openFileDialog () {
-        ipcRenderer.send(ElectronConstants.IPC_CHANNEL_OPEN_FILE_DIALOG)
+        ipcRenderer.send(IPC_CHANNEL_OPEN_FILE_DIALOG)
       }
     },
     created () {

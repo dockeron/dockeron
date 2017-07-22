@@ -1,19 +1,18 @@
+// channels
+export const IPC_CHANNEL_OPEN_FILE_DIALOG = 'open-file-dialog'
+export const IPC_CHANNEL_OPEN_SAVE_DIALOG = 'open-save-dialog'
+export const IPC_CHANNEL_SELECTED_DIRECTORY = 'selected-directory'
+export const IPC_CHANNEL_SAVED_FILE = 'saved-file'
 
-const ElectronConstants = Object.freeze({
-  // channels
-  IPC_CHANNEL_OPEN_FILE_DIALOG: 'open-file-dialog',
-  IPC_CHANNEL_OPEN_SAVE_DIALOG: 'open-save-dialog',
-  IPC_CHANNEL_SELECTED_DIRECTORY: 'selected-directory',
-  IPC_CHANNEL_SAVED_FILE: 'saved-file',
-  // app event
-  APP_EVENT_READY: 'ready',
-  APP_EVENT_WINDOW_ALL_CLOSED: 'window-all-closed',
-  APP_EVENT_ACTIVATE: 'activate',
-  // BrowserWindow event
-  BROWSER_WINDOW_EVENT_CLOSED: 'closed',
-  BROWSER_WINDOW_EVENT_CLOSE: 'close',
-  // others
-  NOTIFICATION_TITLE_DOCKERON: 'Dockeron'
-})
+// app event
+export const APP_EVENT_READY = 'ready'
+export const APP_EVENT_WINDOW_ALL_CLOSED = 'window-all-closed'
+export const APP_EVENT_ACTIVATE = 'activate'
 
-export default ElectronConstants
+// BrowserWindow event
+export const BROWSER_WINDOW_EVENT_CLOSED = 'closed'
+export const BROWSER_WINDOW_EVENT_CLOSE = 'close'
+
+// others
+export const NOTIFICATION_TITLE_DOCKERON = 'Dockeron'
+export const PLATFORM_DARWIN = 'darwin'

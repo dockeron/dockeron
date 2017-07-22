@@ -58,7 +58,7 @@
   import docker from '../../js/docker'
   import notify from '../../js/notify'
   import tarFileSaveInit from '../../js/tarFileSaveInit'
-  import ElectronConstants from '../../js/constants/ElectronConstants'
+  import { IPC_CHANNEL_OPEN_SAVE_DIALOG } from '../../js/constants/ElectronConstants'
 
   function errorAndRefresh (err) {
     notify(err)
@@ -245,7 +245,7 @@
         var containerId = self.value.Id
         var fileName = containerName + '_' + containerId + '.tar'
 
-        ipcRenderer.send(ElectronConstants.IPC_CHANNEL_OPEN_SAVE_DIALOG, fileName)
+        ipcRenderer.send(IPC_CHANNEL_OPEN_SAVE_DIALOG, fileName)
 
         function containerExported (stream) {
           var writeStream = fs.createWriteStream(fileName)
