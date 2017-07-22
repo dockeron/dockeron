@@ -54,8 +54,10 @@
   import FootLogsView from '../FootLogsView'
 
   import fs from 'fs'
+  import { ipcRenderer } from 'electron'
   import docker from '../../js/docker'
   import notify from '../../js/notify'
+  import tarFileSaveInit from '../../js/tarFileSaveInit'
 
   function errorAndRefresh (err) {
     notify(err)
@@ -238,11 +240,13 @@
       },
       exportContainer () {
         var self = this
+        var containerName = self.value.Name.replace('/', '')
+        var containerId = self.value.Id
+        var fileName = containerName + '_' + containerId + '.tar'
+
+        ipcRenderer.send('open-save-dialog', fileName)
 
         function containerExported (stream) {
-          var containerName = self.value.Name.replace('/', '')
-          var containerId = self.value.Id
-          var fileName = containerName + '_' + containerId + '.tar'
           var writeStream = fs.createWriteStream(fileName)
 
           stream.pipe(writeStream)
@@ -252,9 +256,16 @@
           })
         }
 
-        this.container.export()
-          .then(containerExported)
-          .catch(notify)
+        function saveFile (error, data) {
+          if (!error) {
+            fileName = data
+            self.container.export()
+              .then(containerExported)
+              .catch(notify)
+          }
+        }
+
+        tarFileSaveInit(saveFile)
       },
       renameContainer () {
         if (this.containerNewName === '') {

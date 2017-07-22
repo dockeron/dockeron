@@ -148,6 +148,8 @@
   .layout {
     height: 100%;
     position: relative;
+    overflow: auto;
+    ::-webkit-scrollbar {display:none;}
   }
 
   .layout-menu {
@@ -161,7 +163,8 @@
 
   .layout-content {
     min-height: 200px;
-    overflow-y: scroll;
+    overflow: auto;
+    ::-webkit-scrollbar {display:none;}
     max-height: 100vh;
     padding: 10px;
   }

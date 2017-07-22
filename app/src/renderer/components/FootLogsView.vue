@@ -33,10 +33,10 @@
     height: 20px;
     /*max-height: 50px;*/
     /*max-width: 800px;*/
-    overflow: scroll;
     background: rgba(255, 255, 255, 1);
     color: #657180;
     white-space: normal;
+    overflow: auto;
     z-index: 1;
     /*resize: vertical;*/
     transition: height 1s;

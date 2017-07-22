@@ -9,9 +9,27 @@ const winURL = process.env.NODE_ENV === 'development'
 
 ipcMain.on('open-file-dialog', function (event) {
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
+    properties: [
+      'openFile',
+      'openDirectory'
+    ]
   }, function (files) {
-    if (files) event.sender.send('selected-directory', files)
+    if (files) {
+      event.sender.send('selected-directory', files)
+    }
+  })
+})
+
+ipcMain.on('open-save-dialog', function (event, path) {
+  const options = {
+    title: 'Save File',
+    defaultPath: path
+  }
+  console.log(path)
+  console.log(options)
+
+  dialog.showSaveDialog(options, function (filename) {
+    event.sender.send('saved-file', filename)
   })
 })
 
