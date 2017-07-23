@@ -1,49 +1,49 @@
 <template>
   <div class="layout">
     <div class="layout-menu">
-      <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onMenuSelect">
-        <Menu-item name="home-menu-containers">
+      <Menu mode="horizontal" active-name="menu-containers" @on-select="onMenuSelect">
+        <Menu-item name="menu-containers">
           <Icon type="cube"></Icon>
           <router-link :to="pathFromRoot(route.CONTAINERS_VIEW_PATH)">Containers</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-images">
+        <Menu-item name="menu-images">
           <Icon type="beer"></Icon>
           <router-link :to="pathFromRoot(route.IMAGES_VIEW_PATH)">Images</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-volumes">
+        <Menu-item name="menu-volumes">
           <Icon type="help-buoy"></Icon>
           <router-link :to="pathFromRoot(route.VOLUMES_VIEW_PATH)">Volumes</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-networks">
+        <Menu-item name="menu-networks">
           <Icon type="link"></Icon>
           <router-link :to="pathFromRoot(route.NETWORKS_VIEW_PATH)">Networks</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-plugins">
+        <Menu-item name="menu-plugins">
           <Icon type="gear-b"></Icon>
           <router-link :to="pathFromRoot(route.PLUGINS_VIEW_PATH)">Plugins</router-link>
         </Menu-item>
-        <Menu-item name="home-menu-dockerhub">
+        <Menu-item name="menu-docker-hub">
           <Icon type="stats-bars"></Icon>
           <router-link :to="pathFromRoot(route.DOCKER_HUB_VIEW_PATH)">Docker Hub</router-link>
         </Menu-item>
-        <Submenu name="home-menu-settings">
+        <Submenu name="menu-settings">
           <template slot="title">
             <Icon type="settings"></Icon>
             Settings
           </template>
-          <Menu-item name="home-menu-settings-info">
+          <Menu-item name="menu-settings-info">
             <Icon type="chatbubble-working"></Icon>
             Info
           </Menu-item>
-          <Menu-item name="home-menu-settings-version">
+          <Menu-item name="menu-settings-version">
             <Icon type="pricetag"></Icon>
             Version
           </Menu-item>
-          <Menu-item name="home-menu-settings-ping">
+          <Menu-item name="menu-settings-ping">
             <Icon type="wifi"></Icon>
             Ping
           </Menu-item>
-          <Menu-item name="home-menu-settings-config">
+          <Menu-item name="menu-settings-config">
             <Icon type="edit"></Icon>
             Config
           </Menu-item>
@@ -90,13 +90,13 @@
     methods: {
       onMenuSelect (selectedMenuName) {
         switch (selectedMenuName) {
-          case 'home-menu-settings-info':
+          case 'menu-settings-info':
             this.showInfo = true
             break
-          case 'home-menu-settings-version':
+          case 'menu-settings-version':
             this.showVersion = true
             break
-          case 'home-menu-settings-ping':
+          case 'menu-settings-ping':
             this.loadPing()
             notify('The network is ' + this.ping + ' !')
             break
