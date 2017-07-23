@@ -1,62 +1,64 @@
+import * as Route from '../renderer/js/constants/RouteConstants'
+
 export default [
   {
-    path: '/',
-    name: 'home-page',
+    path: Route.HOME_PAGE_PATH,
+    name: Route.HOME_PAGE_NAME,
     component: require('components/HomePageView'),
     children: [
       {
-        path: '',
-        name: 'default',
+        path: Route.DEFAULT_VIEW_PATH,
+        name: Route.DEFAULT_VIEW_NAME,
         component: require('components/ContainersView/ContainersView')
       },
       {
-        path: 'containers',
-        name: 'containers-view',
+        path: Route.CONTAINERS_VIEW_PATH,
+        name: Route.CONTAINERS_VIEW_NAME,
         component: require('components/ContainersView/ContainersView')
       },
       {
-        path: '/containers/:containerId',
-        name: 'single-container-view',
+        path: Route.SINGLE_CONTAINER_VIEW_PATH,
+        name: Route.SINGLE_CONTAINER_VIEW_NAME,
         component: require('components/ContainersView/SingleContainerView')
       },
       {
-        path: 'images',
-        name: 'images-view',
+        path: Route.IMAGES_VIEW_PATH,
+        name: Route.IMAGES_VIEW_NAME,
         component: require('components/ImagesView/ImagesView')
       },
       {
-        path: '/images/:imageId',
-        name: 'single-image-view',
+        path: Route.SINGLE_IMAGE_VIEW_PATH,
+        name: Route.SINGLE_IMAGE_VIEW_NAME,
         component: require('components/ImagesView/SingleImageView')
       },
       {
-        path: 'volumes',
-        name: 'volumes-view',
+        path: Route.VOLUMES_VIEW_PATH,
+        name: Route.VOLUMES_VIEW_NAME,
         component: require('components/VolumesView/VolumesView')
       },
       {
-        path: '/volumes/:volumeName',
-        name: 'single-volume-view',
+        path: Route.SINGLE_VOLUME_VIEW_PATH,
+        name: Route.SINGLE_VOLUME_VIEW_NAME,
         component: require('components/VolumesView/SingleVolumeView')
       },
       {
-        path: 'networks',
-        name: 'networks-view',
+        path: Route.NETWORKS_VIEW_PATH,
+        name: Route.NETWORKS_VIEW_NAME,
         component: require('components/NetworksView/NetworksView')
       },
       {
-        path: '/networks/:networkId',
-        name: 'single-network-view',
+        path: Route.SINGLE_NETWORK_VIEW_PATH,
+        name: Route.SINGLE_NETWORK_VIEW_NAME,
         component: require('components/NetworksView/SingleNetworkView')
       },
       {
-        path: 'plugins',
-        name: 'plugins-view',
+        path: Route.PLUGINS_VIEW_PATH,
+        name: Route.PLUGINS_VIEW_NAME,
         component: require('components/PluginsView/PluginsView')
       },
       {
-        path: '/docker-hub',
-        name: 'docker-hub-view',
+        path: Route.DOCKER_HUB_VIEW_PATH,
+        name: Route.DOCKER_HUB_VIEW_NAME,
         component: require('components/DockerHubView/DockerHubView')
       }
     ]

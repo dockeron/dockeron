@@ -37,6 +37,9 @@ npm install
 npm run dev
 ```
 
+## Contributing
+
+[Contributing to Dockeron](https://github.com/dockeron/dockeron/blob/master/CONTRIBUTING.md)
 
 ## Screenshots
 
