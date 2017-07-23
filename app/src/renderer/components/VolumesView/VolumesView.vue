@@ -30,6 +30,7 @@
   import notify from '../../js/notify'
   import notNull from '../../js/notNull'
   import formatBytes from '../../js/formatBytes'
+  import { SINGLE_VOLUME_VIEW_NAME } from '../../js/constants/RouteConstants'
 
   export default {
     components: {
@@ -56,7 +57,7 @@
       },
       inspectVolume (volumeName) {
         this.$router.push({
-          name: 'single-volume-view',
+          name: SINGLE_VOLUME_VIEW_NAME,
           params: { volumeName: volumeName }
         })
       },

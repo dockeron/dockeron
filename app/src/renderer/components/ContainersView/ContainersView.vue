@@ -59,6 +59,7 @@
   import parseRepoTag from '../../js/parseRepoTag'
   import formatBytes from '../../js/formatBytes'
   import containerStateToColor from '../../js/containerStateToColor'
+  import { SINGLE_CONTAINER_VIEW_NAME } from '../../js/constants/RouteConstants'
 
   export default {
     components: {
@@ -112,7 +113,7 @@
       },
       inspectContainer (containerId) {
         this.$router.push({
-          name: 'single-container-view',
+          name: SINGLE_CONTAINER_VIEW_NAME,
           params: { containerId: containerId }
         })
       },

@@ -33,6 +33,7 @@
   import docker from '../../js/docker'
   import notify from '../../js/notify'
   import notNull from '../../js/notNull'
+  import { SINGLE_NETWORK_VIEW_NAME } from '../../js/constants/RouteConstants'
 
   export default {
     components: {
@@ -63,7 +64,7 @@
       },
       inspectNetwork (networkId) {
         this.$router.push({
-          name: 'single-network-view',
+          name: SINGLE_NETWORK_VIEW_NAME,
           params: { networkId: networkId }
         })
       },

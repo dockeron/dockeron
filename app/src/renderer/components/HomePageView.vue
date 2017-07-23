@@ -4,27 +4,27 @@
       <Menu mode="horizontal" active-name="home-menu-containers" @on-select="onMenuSelect">
         <Menu-item name="home-menu-containers">
           <Icon type="cube"></Icon>
-          <router-link to="/containers">Containers</router-link>
+          <router-link :to="pathFromRoot(route.CONTAINERS_VIEW_PATH)">Containers</router-link>
         </Menu-item>
         <Menu-item name="home-menu-images">
           <Icon type="beer"></Icon>
-          <router-link to="/images">Images</router-link>
+          <router-link :to="pathFromRoot(route.IMAGES_VIEW_PATH)">Images</router-link>
         </Menu-item>
         <Menu-item name="home-menu-volumes">
           <Icon type="help-buoy"></Icon>
-          <router-link to="/volumes">Volumes</router-link>
+          <router-link :to="pathFromRoot(route.VOLUMES_VIEW_PATH)">Volumes</router-link>
         </Menu-item>
         <Menu-item name="home-menu-networks">
           <Icon type="link"></Icon>
-          <router-link to="/networks">Networks</router-link>
+          <router-link :to="pathFromRoot(route.NETWORKS_VIEW_PATH)">Networks</router-link>
         </Menu-item>
         <Menu-item name="home-menu-plugins">
           <Icon type="gear-b"></Icon>
-          <router-link to="/plugins">Plugins</router-link>
+          <router-link :to="pathFromRoot(route.PLUGINS_VIEW_PATH)">Plugins</router-link>
         </Menu-item>
         <Menu-item name="home-menu-dockerhub">
           <Icon type="stats-bars"></Icon>
-          <router-link to="/docker-hub">Docker Hub</router-link>
+          <router-link :to="pathFromRoot(route.DOCKER_HUB_VIEW_PATH)">Docker Hub</router-link>
         </Menu-item>
         <Submenu name="home-menu-settings">
           <template slot="title">
@@ -70,6 +70,7 @@
 
   import docker from '../js/docker'
   import notify from '../js/notify'
+  import * as Route from '../js/constants/RouteConstants'
 
   export default {
     name: 'home-page',
@@ -82,7 +83,8 @@
         version: {},
         ping: '',
         showInfo: false,
-        showVersion: false
+        showVersion: false,
+        route: Route
       }
     },
     methods: {
@@ -134,6 +136,9 @@
         docker.ping()
           .then(updateNetwork)
           .catch(notify)
+      },
+      pathFromRoot (subPath) {
+        return Route.HOME_PAGE_PATH + subPath
       }
     },
     created () {

@@ -48,6 +48,7 @@
   import notNull from '../../js/notNull'
   import parseRepoTag from '../../js/parseRepoTag'
   import formatBytes from '../../js/formatBytes'
+  import { SINGLE_IMAGE_VIEW_NAME } from '../../js/constants/RouteConstants'
 
   export default {
     components: {
@@ -105,7 +106,7 @@
       },
       inspectImage (imageId) {
         this.$router.push({
-          name: 'single-image-view',
+          name: SINGLE_IMAGE_VIEW_NAME,
           params: { imageId: imageId }
         })
       },
