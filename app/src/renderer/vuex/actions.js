@@ -3,14 +3,6 @@ import * as types from './mutation-types'
 import dockerHubApi from '../js/dockerHubApi'
 import notify from '../js/notify'
 
-export const decrementMain = ({ commit }) => {
-  commit(types.DECREMENT_MAIN_COUNTER)
-}
-
-export const incrementMain = ({ commit }) => {
-  commit(types.INCREMENT_MAIN_COUNTER)
-}
-
 export const login = function ({ commit }, credentials) {
   function loginSuccess (tokenResult) {
     commit(types.UPDATE_AUTH_TOKEN, tokenResult.token)
