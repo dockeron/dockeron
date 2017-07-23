@@ -32,6 +32,8 @@
 </template>
 
 <script>
+  import { VUEX_ACTION_LOGIN, VUEX_ACTION_LOGOUT } from '../../js/constants/VuexConstants'
+
   export default {
     data () {
       return {
@@ -44,10 +46,10 @@
     },
     methods: {
       login () {
-        this.$store.dispatch('login', this.credentials)
+        this.$store.dispatch(VUEX_ACTION_LOGIN, this.credentials)
       },
       logout () {
-        this.$store.dispatch('logout')
+        this.$store.dispatch(VUEX_ACTION_LOGOUT)
         this.credentials = {
           username: '',
           password: ''
