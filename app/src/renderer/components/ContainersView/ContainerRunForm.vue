@@ -21,9 +21,10 @@
         </Poptip>
       </Form-item>
       <Form-item label="Streams">
-        All to <font face="Courier New">process.stdout</font>
+        All to <span style="font-family: Courier New;">process.stdout</span>
         <i-switch v-model="splitStreams"></i-switch>
-        Split <font face="Courier New">stdout</font> and <font face="Courier New">stderr</font>
+        Split <span style="font-family: Courier New; ">stdout</span> and <span
+              style="font-family: Courier New; ">stderr</span>
       </Form-item>
       <Form-item label="Name">
         <Input v-model="newContainerName" placeholder="New name of your container"></Input>

@@ -14,7 +14,7 @@
         <Input v-model="containerNewName" placeholder="New Name"></Input>
       </Modal>
       <Button type="error" @click="removeContainerModal = true">Remove</Button>
-      <Modal v-model="removeContainerModal" title="Do you want to remove this cintainer?"
+      <Modal v-model="removeContainerModal" title="Do you want to remove this container?"
           @on-ok="removeContainer">
         Remove the volumes associated with the container:
         <i-switch v-model="rmcParams.v" size="large">

@@ -5,14 +5,14 @@
     <Modal v-model="containerCreateModal" title="Create Container"
         @on-ok="confirmCreation" @on-cancel="resetCreation">
       <container-creation-form ref="containerCreationForm"
-          @container-created="function (newContainer) { loadContainers() }">
+          @container-created="(function () { loadContainers() }())">
       </container-creation-form>
     </Modal>
     <Button type="primary" icon="code" @click="containerRunModal = true">Run</Button>
     <Modal v-model="containerRunModal" title="Run" @on-ok="confirmRun" @on-cancel="resetRun">
       <container-run-form ref="containerRunForm"
-          @container-created="function (newContainer) { loadContainers() }"
-          @container-started="function (newContainer) { loadContainers() }">
+          @container-created="(function () { loadContainers() }())"
+          @container-started="(function () { loadContainers() }())">
       </container-run-form>
     </Modal>
     <Button type="primary" icon="navicon-round" @click="listParamsModal = true">Filters</Button>
@@ -38,7 +38,7 @@
         <Button type="primary" @click="inspectContainer(container.Id)">Inspect</Button>
         <container-control-panel class="control-panel"
             :container-id="container.Id" :container-name="container.Names[0]"
-            @input="function (newData) { loadContainers() }">
+            @input="(function () { loadContainers() }())">
         </container-control-panel>
       </Card>
     </div>
