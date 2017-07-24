@@ -104,17 +104,17 @@
         function containerCreated (container) {
           notify('New container ID ' + container.id +
                  ' created from image ' + self.imageName + ' !')
-          self.$emit('container-created', container)
+          self.$emit('created', container)
         }
 
         function containerStarted (container) {
           notify('New container ID ' + container.id + ' started !')
-          self.$emit('container-started', container)
+          self.$emit('started', container)
         }
 
         function creationErrored (err) {
           notify(err)
-          self.$emit('container-creation-errored', err)
+          self.$emit('failed', err)
         }
 
         if (this.splitStreams) {

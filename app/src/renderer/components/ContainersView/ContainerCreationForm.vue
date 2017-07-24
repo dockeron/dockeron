@@ -58,12 +58,12 @@
         function containerCreated (container) {
           notify('New container ID ' + container.id +
                  ' created from image ' + self.defaultSettings.Image + ' !')
-          self.$emit('container-created', container)
+          self.$emit('created', container)
         }
 
         function creationErrored (err) {
           notify(err)
-          self.$emit('container-creation-errored', err)
+          self.$emit('failed', err)
         }
 
         docker.createContainer(Object.assign({}, this.defaultSettings, this.advancedSettings))
