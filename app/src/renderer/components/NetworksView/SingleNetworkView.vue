@@ -1,7 +1,7 @@
 <template>
   <div>
     <network-control-panel class="network-control-panel" :network-id="networkId"
-        v-model="networkData" :initialize="true" :has-all-buttons="true">
+        v-model="networkData" :full-panel="true">
     </network-control-panel>
     <br>
     <tree-view :data="networkData" :options="{rootObjectKey: networkId}"></tree-view>

@@ -21,8 +21,8 @@
         <Panel>
           {{prop}}
           <p slot="content">
-            <template v-for="(subvalue, subprop) in internalValue">
-              <json-node :prop="subprop" v-model="internalValue[subprop]"></json-node>
+            <template v-for="(subValue, subProp) in internalValue">
+              <json-node :prop="subProp" v-model="internalValue[subProp]"></json-node>
             </template>
             <add-new-node @add-new-node="add"></add-new-node>
           </p>

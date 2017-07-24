@@ -1,7 +1,7 @@
 <template>
   <div>
     <volume-control-panel class="volume-control-panel" :volume-name="volumeName"
-        v-model="volumeData" :initialize="true">
+        v-model="volumeData" :full-panel="true">
     </volume-control-panel>
     <br>
     <tree-view :data="volumeData" :options="{rootObjectKey: volumeName}"></tree-view>

@@ -9,8 +9,7 @@
           <div slot="content">
             <Button type="primary" @click="inspectVolume(volume.Name)">Inspect</Button>
             <volume-control-panel class="control-panel" :volume-name="volume.Name"
-                @input="function (newData) { loadVolumes() }"
-                @volume-removed="function (removed) { loadVolumes() }">
+                @removed="loadVolumes">
             </volume-control-panel>
           </div>
         </Poptip>

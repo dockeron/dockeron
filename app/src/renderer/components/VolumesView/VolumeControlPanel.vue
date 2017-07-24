@@ -14,7 +14,7 @@
         type: String,
         default: ''
       },
-      initialize: {
+      fullPanel: {
         type: Boolean,
         default: false
       },
@@ -38,11 +38,11 @@
     },
     methods: {
       removeVolume () {
-        // var self = this
+        var self = this
 
         function volumeRemoved (removed) {
-          console.log(removed)
           notify('Volume has been removed!')
+          self.$emit('removed')
         }
 
         this.volume.remove()
@@ -68,7 +68,7 @@
     },
     created () {
       this.volume = docker.getVolume(this.volumeName)
-      if (this.initialize) {
+      if (this.fullPanel) {
         this.inspectVolume()
       }
     }

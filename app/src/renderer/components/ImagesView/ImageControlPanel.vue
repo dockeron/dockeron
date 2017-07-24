@@ -32,7 +32,7 @@
     <Modal v-model="removedImageModal" title="Remove results">
       <tree-view :data="removed"></tree-view>
     </Modal>
-    <div v-if="hasAllButtons" class="additional-buttons">
+    <div v-if="fullPanel" class="additional-buttons">
       <Button type="success" @click="getImageHistory">History</Button>
       <Modal v-model="imageHistoryModal" title="Image History">
         <tree-view :data="history"></tree-view>
@@ -73,11 +73,7 @@
         type: String,
         default: ''
       },
-      initialize: {
-        type: Boolean,
-        default: false
-      },
-      hasAllButtons: {
+      fullPanel: {
         type: Boolean,
         default: false
       },
@@ -143,7 +139,7 @@
           self.removed = removed
           self.removedImageModal = true
           notify('Image has been removed!')
-          self.$emit('image-removed', removed)
+          self.$emit('removed')
         }
 
         this.image.remove(this.rmiParams)
@@ -179,7 +175,7 @@
       getImage () {
         var self = this
 
-        // TODO (fluency03): colleborate with openSaveDialog
+        // TODO (fluency03): collaborate with openSaveDialog
         function imagesGot (stream) {
           var imageId = self.value.Id.replace('sha256:', '')
           var fileName = imageId + '.tar'
@@ -217,7 +213,7 @@
     },
     created () {
       this.image = docker.getImage(this.imageId)
-      if (this.initialize) {
+      if (this.fullPanel) {
         this.inspectImage()
       }
     }

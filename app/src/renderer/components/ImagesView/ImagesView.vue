@@ -25,9 +25,7 @@
         <p>Size: {{formatBytes(image.Size)}}</p>
         <p>Created: {{getDateTime(image.Created)}}</p>
         <Button type="primary" @click="inspectImage(image.Id)">Inspect</Button>
-        <image-control-panel class="control-panel" :image-id="image.Id"
-            @input="function (newData) { loadImages() }"
-            @image-removed="function (removed) { loadImages() }">
+        <image-control-panel class="control-panel" :image-id="image.Id" @removed="loadImages">
         </image-control-panel>
       </Card>
     </div>

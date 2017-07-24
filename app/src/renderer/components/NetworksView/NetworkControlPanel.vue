@@ -2,7 +2,7 @@
   <div>
     <Button type="success" @click="connectVolume">Connect</Button>
     <Button type="warning" @click="disconnectVolume">Disconnect</Button>
-    <div v-if="hasAllButtons" class="additional-buttons">
+    <div v-if="fullPanel" class="additional-buttons">
       <Button type="error" @click="removeVolume">Remove</Button>
     </div>
   </div>
@@ -18,11 +18,7 @@
         type: String,
         default: ''
       },
-      initialize: {
-        type: Boolean,
-        default: false
-      },
-      hasAllButtons: {
+      fullPanel: {
         type: Boolean,
         default: false
       },
@@ -73,7 +69,7 @@
     },
     created () {
       this.network = docker.getNetwork(this.networkId)
-      if (this.initialize) {
+      if (this.fullPanel) {
         this.inspectNetwork()
       }
     }
