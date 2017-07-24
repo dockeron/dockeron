@@ -72,7 +72,6 @@
         var self = this
 
         function updateNetworks (listResults) {
-          console.log(listResults)
           self.networks = listResults
           self.error = {}
         }

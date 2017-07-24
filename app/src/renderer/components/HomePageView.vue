@@ -101,7 +101,7 @@
             notify('The network is ' + this.ping + ' !')
             break
           default:
-            console.log(selectedMenuName)
+            break
         }
       },
       loadInfo () {

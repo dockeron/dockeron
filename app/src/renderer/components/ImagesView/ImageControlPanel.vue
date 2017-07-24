@@ -113,11 +113,7 @@
         this.image = docker.getImage(newImageId)
       },
       imageRepoTags: function (newRepoTags) {
-        try {
-          this.selectedImage = newRepoTags[0]
-        } catch (e) {
-          console.log(e)
-        }
+        this.selectedImage = newRepoTags[0]
       }
     },
 

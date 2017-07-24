@@ -129,7 +129,6 @@
 
         docker.run(this.imageName, this.cmdToBeExecuted, streams, this.creationSettings,
           function (err, data, container) {
-            console.log(err, data, container)
             if (err) {
               creationErrored(err)
               return
