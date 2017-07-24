@@ -38,7 +38,7 @@
         <Button type="primary" @click="inspectContainer(container.Id)">Inspect</Button>
         <container-control-panel class="control-panel"
             :container-id="container.Id" :container-name="container.Names[0]"
-            @input="(function () { loadContainers() }())">
+            @reload="(function () { loadContainers() }())">
         </container-control-panel>
       </Card>
     </div>

@@ -5,20 +5,20 @@ import notify from './notify'
 import { IPC_CHANNEL_SELECTED_DIRECTORY } from './constants/ElectronConstants'
 
 function jsonFileImportInit (callback) {
-  ipcRenderer.on(IPC_CHANNEL_SELECTED_DIRECTORY, function (event, filepaths) {
-    if (filepaths.length !== 1) {
+  ipcRenderer.on(IPC_CHANNEL_SELECTED_DIRECTORY, function (event, filePaths) {
+    if (filePaths.length !== 1) {
       notify('You should select and ONLY SELECT ONE file!')
       return
     }
 
-    var filepath = filepaths[0]
+    var filePath = filePaths[0]
     try {
-      if (path.extname(filepath) !== '.json') {
+      if (path.extname(filePath) !== '.json') {
         notify('Not a .json file!')
         return
       }
 
-      fs.readFile(filepath, callback)
+      fs.readFile(filePath, callback)
     } catch (e) {
       notify(e)
     }

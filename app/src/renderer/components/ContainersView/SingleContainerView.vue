@@ -1,8 +1,7 @@
 <template>
   <div>
     <container-control-panel class="container-control-panel" v-model="containerData"
-        :container-id="containerId" :container-name="containerData.Name"
-        :initialize="true" :has-all-buttons="true">
+        :container-id="containerId" :container-name="containerData.Name" :full-panel="true">
     </container-control-panel>
     <Tag class="container-state-tag" :color="stateToColor[status]">{{status}}</Tag>
     <br>
@@ -34,7 +33,6 @@
         try {
           this.status = newContainerData.State.Status
         } catch (e) {
-          console.log(e)
           this.status = 'exited'
         }
       }

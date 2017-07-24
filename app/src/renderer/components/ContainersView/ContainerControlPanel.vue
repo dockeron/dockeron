@@ -2,7 +2,7 @@
   <div>
     <Button type="success" @click="startContainer">Start</Button>
     <Button type="error" @click="stopContainer">Stop</Button>
-    <div v-if="hasAllButtons" class="additional-buttons">
+    <div v-if="fullPanel" class="additional-buttons">
       <Button type="warning" @click="pauseContainer">Pause</Button>
       <Button type="info" @click="unpauseContainer">Unpause</Button>
       <Button type="warning" @click="restartContainer">Restart</Button>
@@ -64,7 +64,11 @@
   function errorAndRefresh (err) {
     notify(err)
     // bind function to this during usage
-    this.inspectContainer()
+    if (this.fullPanel) {
+      this.inspectContainer()
+    } else {
+      this.reload()
+    }
   }
 
   export default {
@@ -81,11 +85,7 @@
         type: String,
         default: ''
       },
-      initialize: {
-        type: Boolean,
-        default: false
-      },
-      hasAllButtons: {
+      fullPanel: {
         type: Boolean,
         default: false
       },
@@ -127,7 +127,11 @@
 
         function containerStarted (data) {
           notify('Container ' + self.containerName + ' started!')
-          self.inspectContainer()
+          if (self.fullPanel) {
+            self.inspectContainer()
+          } else {
+            self.reload()
+          }
         }
 
         // TODO (fluency03): detachKeys - Override the key sequence for detaching a container
@@ -140,7 +144,11 @@
 
         function containerStopped (data) {
           notify('Container ' + self.containerName + ' stopped!')
-          self.inspectContainer()
+          if (self.fullPanel) {
+            self.inspectContainer()
+          } else {
+            self.reload()
+          }
         }
 
         // TODO (fluency03): Number of seconds to wait before killing the container
@@ -301,7 +309,7 @@
 
         this.container.remove(this.rmcParams)
           .then(containerRemoved)
-          .catch(notify)
+          .catch(errorAndRefresh.bind(this))
       },
       listTopProcesses () {
         var self = this
@@ -319,11 +327,14 @@
         this.container.top(topParams)
           .then(topProcessesGot)
           .catch(notify)
+      },
+      reload () {
+        this.$emit('reload')
       }
     },
     created () {
       this.container = docker.getContainer(this.containerId)
-      if (this.initialize) {
+      if (this.fullPanel) {
         this.inspectContainer()
       }
     }
