@@ -61,16 +61,14 @@
         })
       },
       loadVolumes () {
-        var self = this
-
-        function updateVolumes (listResults) {
-          self.volumes = listResults.Volumes
-          self.error = {}
+        const updateVolumes = listResults => {
+          this.volumes = listResults.Volumes
+          this.error = {}
         }
 
-        function updateErrored (err) {
-          self.volumes = []
-          self.error = err
+        const updateErrored = err => {
+          this.volumes = []
+          this.error = err
           notify(err)
         }
 

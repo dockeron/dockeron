@@ -77,13 +77,11 @@
         }
       },
       pullImage () {
-        var self = this
+        this.$set(this.footLogs, 'pullLog', '')
 
-        this.$set(self.footLogs, 'pullLog', '')
-
-        function imagePulled (stream) {
-          function onFinished (err, output) {
-            self.$delete(self.footLogs, 'pullLog')
+        const imagePulled = stream => {
+          const onFinished = (err, output) => {
+            this.$delete(this.footLogs, 'pullLog')
             if (err) {
               notify(err)
               return
@@ -91,8 +89,8 @@
             notify('New image is pulled!')
           }
 
-          function onProgress (event) {
-            self.$set(self.footLogs, 'pullLog', JSON.stringify(event))
+          const onProgress = event => {
+            this.$set(this.footLogs, 'pullLog', JSON.stringify(event))
           }
 
           docker.modem.followProgress(stream, onFinished, onProgress)
@@ -109,20 +107,18 @@
         })
       },
       loadImages () {
-        var self = this
-
-        var queries = {
+        const queries = {
           all: false
         }
 
-        function updateImages (images) {
-          self.images = images
-          self.error = {}
+        const updateImages = images => {
+          this.images = images
+          this.error = {}
         }
 
-        function updateErrored (err) {
-          self.images = []
-          self.error = err
+        const updateErrored = err => {
+          this.images = []
+          this.error = err
           notify(err)
         }
 
@@ -137,7 +133,7 @@
         return parseRepoTag(repoTag).tag
       },
       getTags (repoTags) {
-        return repoTags.map(function (repoTag) {
+        return repoTags.map(repoTag => {
           return parseRepoTag(repoTag).tag
         })
       },

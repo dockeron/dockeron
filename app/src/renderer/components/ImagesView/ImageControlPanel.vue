@@ -129,13 +129,11 @@
         this.$refs.containerCreationForm.reset()
       },
       removeImage () {
-        var self = this
-
-        function imageRemoved (removed) {
-          self.removed = removed
-          self.removedImageModal = true
+        const imageRemoved = removed => {
+          this.removed = removed
+          this.removedImageModal = true
           notify('Image has been removed!')
-          self.$emit('removed')
+          this.$emit('removed')
         }
 
         this.image.remove(this.rmiParams)
@@ -143,11 +141,9 @@
           .catch(notify)
       },
       getImageHistory () {
-        var self = this
-
-        function imageHistoryGot (history) {
-          self.history = history
-          self.imageHistoryModal = true
+        const imageHistoryGot = history => {
+          this.history = history
+          this.imageHistoryModal = true
         }
 
         this.image.history()
@@ -158,30 +154,24 @@
         // TODO (fluency03)
       },
       tagImage () {
-        var self = this
-
-        function imageTagged (info) {
-          self.inspectImage()
-        }
+        const imageTagged = info => this.inspectImage()
 
         this.image.tag(this.newTags)
           .then(imageTagged)
           .catch(notify)
       },
       getImage () {
-        var self = this
-
         // TODO (fluency03): collaborate with openSaveDialog
-        function imagesGot (stream) {
-          var imageId = self.value.Id.replace('sha256:', '')
+        const imagesGot = stream => {
+          var imageId = this.value.Id.replace('sha256:', '')
           var fileName = imageId + '.tar'
           var writeStream = fs.createWriteStream(fileName)
 
           stream.pipe(writeStream)
 
-          stream.on(STREAM_READABLE_EVENT_END, function () {
+          stream.on(STREAM_READABLE_EVENT_END, () =>
             notify('Image ' + imageId + 'exported to a tar file !')
-          })
+          )
         }
 
         this.image.get()
@@ -189,16 +179,14 @@
           .catch(notify)
       },
       inspectImage () {
-        var self = this
-
-        function imageRefreshed (data) {
-          self.imageRepoTags = data.RepoTags
-          self.$emit('input', data)
+        const imageRefreshed = data => {
+          this.imageRepoTags = data.RepoTags
+          this.$emit('input', data)
         }
 
-        function refreshErrored (err) {
-          self.imageRepoTags = []
-          self.$emit('input', err)
+        const refreshErrored = err => {
+          this.imageRepoTags = []
+          this.$emit('input', err)
           notify(err)
         }
 

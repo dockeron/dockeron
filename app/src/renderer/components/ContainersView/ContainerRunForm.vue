@@ -98,23 +98,22 @@
         this.cmdToBeExecuted.splice(index, 1)
       },
       submit () {
-        var self = this
         var streams = null
 
-        function containerCreated (container) {
+        const containerCreated = container => {
           notify('New container ID ' + container.id +
-                 ' created from image ' + self.imageName + ' !')
-          self.$emit('created', container)
+                 ' created from image ' + this.imageName + ' !')
+          this.$emit('created', container)
         }
 
-        function containerStarted (container) {
+        const containerStarted = container => {
           notify('New container ID ' + container.id + ' started !')
-          self.$emit('started', container)
+          this.$emit('started', container)
         }
 
-        function creationErrored (err) {
+        const creationErrored = err => {
           notify(err)
-          self.$emit('failed', err)
+          this.$emit('failed', err)
         }
 
         if (this.splitStreams) {
@@ -128,7 +127,7 @@
         }
 
         docker.run(this.imageName, this.cmdToBeExecuted, streams, this.creationSettings,
-          function (err, data, container) {
+          (err, data, container) => {
             if (err) {
               creationErrored(err)
               return
@@ -164,17 +163,16 @@
       }
     },
     created () {
-      var self = this
       this.creationSettings = this.importedSettings
 
-      function readFileCB (err, data) {
+      const readFileCB = (err, data) => {
         if (err) {
           notify(err)
         }
 
         var parsedJSON = JSON.parse(data)
-        self.importedSettings = parsedJSON
-        self.creationSettings = self.importedSettings
+        this.importedSettings = parsedJSON
+        this.creationSettings = this.importedSettings
       }
 
       jsonFileImportInit(readFileCB)

@@ -123,45 +123,37 @@
     },
     methods: {
       startContainer () {
-        var self = this
-
-        function containerStarted (data) {
-          notify('Container ' + self.containerName + ' started!')
-          if (self.fullPanel) {
-            self.inspectContainer()
+        const containerStarted = data => {
+          notify('Container ' + this.containerName + ' started!')
+          if (this.fullPanel) {
+            this.inspectContainer()
           } else {
-            self.reload()
+            this.reload()
           }
         }
 
-        // TODO (fluency03): detachKeys - Override the key sequence for detaching a container
         this.container.start()
           .then(containerStarted)
           .catch(errorAndRefresh.bind(this))
       },
       stopContainer () {
-        var self = this
-
-        function containerStopped (data) {
-          notify('Container ' + self.containerName + ' stopped!')
-          if (self.fullPanel) {
-            self.inspectContainer()
+        const containerStopped = data => {
+          notify('Container ' + this.containerName + ' stopped!')
+          if (this.fullPanel) {
+            this.inspectContainer()
           } else {
-            self.reload()
+            this.reload()
           }
         }
 
-        // TODO (fluency03): Number of seconds to wait before killing the container
         this.container.stop()
           .then(containerStopped)
           .catch(errorAndRefresh.bind(this))
       },
       pauseContainer () {
-        var self = this
-
-        function containerPaused (data) {
-          notify('Container ' + self.containerName + ' paused!')
-          self.inspectContainer()
+        const containerPaused = data => {
+          notify('Container ' + this.containerName + ' paused!')
+          this.inspectContainer()
         }
 
         this.container.pause()
@@ -169,11 +161,9 @@
           .catch(errorAndRefresh.bind(this))
       },
       unpauseContainer () {
-        var self = this
-
-        function containerUnpaused (data) {
-          notify('Container ' + self.containerName + ' unpaused!')
-          self.inspectContainer()
+        const containerUnpaused = data => {
+          notify('Container ' + this.containerName + ' unpaused!')
+          this.inspectContainer()
         }
 
         this.container.unpause()
@@ -181,24 +171,19 @@
           .catch(errorAndRefresh.bind(this))
       },
       restartContainer () {
-        var self = this
-
-        function containerRestarted (data) {
-          notify('Container ' + self.containerName + ' restarted!')
-          self.inspectContainer()
+        const containerRestarted = data => {
+          notify('Container ' + this.containerName + ' restarted!')
+          this.inspectContainer()
         }
 
-        // TODO (fluency03): Number of seconds to wait before killing the container
         this.container.restart()
           .then(containerRestarted)
           .catch(errorAndRefresh.bind(this))
       },
       killContainer () {
-        var self = this
-
-        function containerKilled (data) {
-          notify('Container ' + self.containerName + ' killed!')
-          self.inspectContainer()
+        const containerKilled = data => {
+          notify('Container ' + this.containerName + ' killed!')
+          this.inspectContainer()
         }
 
         this.container.kill()
@@ -206,18 +191,16 @@
           .catch(errorAndRefresh.bind(this))
       },
       inspectContainer () {
-        var self = this
-
         var queries = {
           size: true
         }
 
-        function containerRefreshed (data) {
-          self.$emit('input', data)
+        const containerRefreshed = data => {
+          this.$emit('input', data)
         }
 
-        function refreshErrored (err) {
-          self.$emit('input', err)
+        const refreshErrored = err => {
+          this.$emit('input', err)
           notify(err)
         }
 
@@ -227,21 +210,20 @@
       },
       getContainerLogs () {
         // TODO (fluency03) : more options to get the logs
-        var self = this
-        var logOpts = {
+        const logOpts = {
           stdout: true,
           stderr: true,
           tail: 20
         }
 
-        this.$set(self.footLogs, 'runningLog', '')
+        this.$set(this.footLogs, 'runningLog', '')
 
-        function containerLogsGot (data) {
+        const containerLogsGot = data => {
           data.setEncoding('utf8')
 
-          data.on(STREAM_READABLE_EVENT_DATA, function (logs) {
-            self.$set(self.footLogs, 'runningLog', self.footLogs.runningLog + logs)
-          })
+          data.on(STREAM_READABLE_EVENT_DATA, logs =>
+            this.$set(this.footLogs, 'runningLog', this.footLogs.runningLog + logs)
+          )
         }
 
         this.container.logs(logOpts)
@@ -249,27 +231,26 @@
           .catch(notify)
       },
       exportContainer () {
-        var self = this
-        var containerName = self.value.Name.replace('/', '')
-        var containerId = self.value.Id
+        var containerName = this.value.Name.replace('/', '')
+        var containerId = this.value.Id
         var fileName = containerName + '_' + containerId + '.tar'
 
         ipcRenderer.send(IPC_CHANNEL_OPEN_SAVE_DIALOG, fileName)
 
-        function containerExported (stream) {
+        const containerExported = stream => {
           var writeStream = fs.createWriteStream(fileName)
 
           stream.pipe(writeStream)
 
-          stream.on(STREAM_READABLE_EVENT_END, function () {
+          stream.on(STREAM_READABLE_EVENT_END, () =>
             notify('Container ' + containerName + 'exported to a tar file !')
-          })
+          )
         }
 
-        function saveFile (error, data) {
+        const saveFile = (error, data) => {
           if (!error) {
             fileName = data
-            self.container.export()
+            this.container.export()
               .then(containerExported)
               .catch(notify)
           }
@@ -282,15 +263,14 @@
           notify('Container name cannot be empty!')
           return
         }
-        var self = this
         var renameParams = {
-          name: self.containerNewName
+          name: this.containerNewName
         }
 
-        function containerRenamed (data) {
+        const containerRenamed = data => {
           notify('Rename container to ' + renameParams.name + ' successful!')
-          self.containerNewName = ''
-          self.inspectContainer()
+          this.containerNewName = ''
+          this.inspectContainer()
         }
 
         this.container.rename(renameParams)
@@ -298,11 +278,9 @@
           .catch(errorAndRefresh.bind(this))
       },
       removeContainer () {
-        var self = this
-
-        function containerRemoved (data) {
+        const containerRemoved = data => {
           notify('Container removed!')
-          self.$router.push({
+          this.$router.push({
             name: 'containers-view'
           })
         }
@@ -312,16 +290,14 @@
           .catch(errorAndRefresh.bind(this))
       },
       listTopProcesses () {
-        var self = this
-
-        var topParams = {
+        const topParams = {
           ps_args: this.psArgs
         }
 
-        function topProcessesGot (data) {
-          self.topResult = data
-          self.topProcessesModal = true
-          self.psArgs = '-ef'
+        const topProcessesGot = data => {
+          this.topResult = data
+          this.topProcessesModal = true
+          this.psArgs = '-ef'
         }
 
         this.container.top(topParams)

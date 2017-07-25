@@ -53,17 +53,15 @@
     },
     methods: {
       submit () {
-        var self = this
-
-        function containerCreated (container) {
+        const containerCreated = container => {
           notify('New container ID ' + container.id +
-                 ' created from image ' + self.defaultSettings.Image + ' !')
-          self.$emit('created', container)
+                 ' created from image ' + this.defaultSettings.Image + ' !')
+          this.$emit('created', container)
         }
 
-        function creationErrored (err) {
+        const creationErrored = err => {
           notify(err)
-          self.$emit('failed', err)
+          this.$emit('failed', err)
         }
 
         docker.createContainer(Object.assign({}, this.defaultSettings, this.advancedSettings))
@@ -84,17 +82,16 @@
       }
     },
     created () {
-      var self = this
       this.stringifiedSettings = JSON.stringify(this.importedSettings, null, 4)
 
-      function readFileCB (err, data) {
+      const readFileCB = (err, data) => {
         if (err) {
           notify(err)
         }
 
         var parsedJSON = JSON.parse(data)
-        self.importedSettings = parsedJSON
-        self.advancedSettings = self.importedSettings
+        this.importedSettings = parsedJSON
+        this.advancedSettings = this.importedSettings
       }
 
       jsonFileImportInit(readFileCB)

@@ -55,12 +55,10 @@
     },
     methods: {
       getOfficialRepos () {
-        var self = this
-
-        function officialReposGot (data) {
+        const officialReposGot = data => {
           notify('Docker Hub: ' + data.results.length + ' images loaded!')
-          self.searchedImages = data.results
-          self.searchedImages.forEach(function (image) {
+          this.searchedImages = data.results
+          this.searchedImages.forEach(image => {
             image.is_official = true
           })
         }
@@ -70,13 +68,11 @@
           .catch(notify)
       },
       pullImage (imageName) {
-        var self = this
+        this.$set(this.footLogs, 'pullLog', '')
 
-        this.$set(self.footLogs, 'pullLog', '')
-
-        function imagePulled (stream) {
-          function onFinished (err, output) {
-            self.$delete(self.footLogs, 'pullLog')
+        const imagePulled = stream => {
+          const onFinished = (err, output) => {
+            this.$delete(this.footLogs, 'pullLog')
             if (err) {
               notify(err)
               return
@@ -84,8 +80,8 @@
             notify('New image is pulled!')
           }
 
-          function onProgress (event) {
-            self.$set(self.footLogs, 'pullLog', JSON.stringify(event))
+          const onProgress = event => {
+            this.$set(this.footLogs, 'pullLog', JSON.stringify(event))
           }
 
           docker.modem.followProgress(stream, onFinished, onProgress)

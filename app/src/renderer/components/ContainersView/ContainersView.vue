@@ -115,21 +115,19 @@
         })
       },
       loadContainers () {
-        var self = this
-
         var queries = {
           all: true,
           size: true
         }
 
-        function updateContainers (containers) {
-          self.containers = containers
-          self.error = {}
+        const updateContainers = containers => {
+          this.containers = containers
+          this.error = {}
         }
 
-        function updateErrored (err) {
-          self.containers = []
-          self.error = err
+        const updateErrored = err => {
+          this.containers = []
+          this.error = err
           notify(err)
         }
 

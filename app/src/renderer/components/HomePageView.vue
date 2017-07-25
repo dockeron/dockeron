@@ -105,10 +105,8 @@
         }
       },
       loadInfo () {
-        var self = this
-
-        function updateInfo (info) {
-          self.info = info
+        const updateInfo = info => {
+          this.info = info
         }
 
         docker.info()
@@ -116,10 +114,8 @@
           .catch(notify)
       },
       loadVersion () {
-        var self = this
-
-        function updateVersion (version) {
-          self.version = version
+        const updateVersion = version => {
+          this.version = version
         }
 
         docker.version()
@@ -127,10 +123,8 @@
           .catch(notify)
       },
       loadPing () {
-        var self = this
-
-        function updateNetwork (ping) {
-          self.ping = ping
+        const updateNetwork = ping => {
+          this.ping = ping
         }
 
         docker.ping()

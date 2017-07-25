@@ -69,16 +69,14 @@
         })
       },
       loadNetworks () {
-        var self = this
-
-        function updateNetworks (listResults) {
-          self.networks = listResults
-          self.error = {}
+        const updateNetworks = listResults => {
+          this.networks = listResults
+          this.error = {}
         }
 
-        function updateErrored (err) {
-          self.networks = []
-          self.error = err
+        const updateErrored = err => {
+          this.networks = []
+          this.error = err
           notify(err)
         }
 

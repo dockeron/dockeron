@@ -66,21 +66,19 @@
     },
     methods: {
       search () {
-        var self = this
-
         var searchParams = {
           term: this.term,
           limit: this.limit
         }
 
         var searchFilters = {}
-        this.selectedFilters.forEach(function (filter) {
-          searchFilters[filter] = [self.filters[filter].toString()]
+        this.selectedFilters.forEach(filter => {
+          searchFilters[filter] = [this.filters[filter].toString()]
         })
         searchParams['filters'] = JSON.stringify(searchFilters)
 
-        function imagesSearched (images) {
-          self.$emit('input', images)
+        const imagesSearched = images => {
+          this.$emit('input', images)
           notify(images.length + ' images found!')
         }
 
