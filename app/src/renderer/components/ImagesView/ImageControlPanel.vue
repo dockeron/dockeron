@@ -154,7 +154,9 @@
         // TODO (fluency03)
       },
       tagImage () {
-        const imageTagged = info => this.inspectImage()
+        const imageTagged = info => {
+          this.inspectImage()
+        }
 
         this.image.tag(this.newTags)
           .then(imageTagged)
@@ -169,9 +171,9 @@
 
           stream.pipe(writeStream)
 
-          stream.on(STREAM_READABLE_EVENT_END, () =>
+          stream.on(STREAM_READABLE_EVENT_END, () => {
             notify('Image ' + imageId + 'exported to a tar file !')
-          )
+          })
         }
 
         this.image.get()

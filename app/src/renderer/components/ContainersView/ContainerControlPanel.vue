@@ -221,9 +221,9 @@
         const containerLogsGot = data => {
           data.setEncoding('utf8')
 
-          data.on(STREAM_READABLE_EVENT_DATA, logs =>
+          data.on(STREAM_READABLE_EVENT_DATA, logs => {
             this.$set(this.footLogs, 'runningLog', this.footLogs.runningLog + logs)
-          )
+          })
         }
 
         this.container.logs(logOpts)
@@ -242,9 +242,9 @@
 
           stream.pipe(writeStream)
 
-          stream.on(STREAM_READABLE_EVENT_END, () =>
+          stream.on(STREAM_READABLE_EVENT_END, () => {
             notify('Container ' + containerName + 'exported to a tar file !')
-          )
+          })
         }
 
         const saveFile = (error, data) => {
