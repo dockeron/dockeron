@@ -40,6 +40,7 @@ module.exports = {
     'no-new-func': 2,
     'no-param-reassign': [2, { 'props': true }],
     'prefer-arrow-callback': 2,
+    'arrow-parens': [2, 'always'],
     // not assign to const
     'no-const-assign': 2
     // no var, use let and const

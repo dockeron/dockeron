@@ -72,12 +72,12 @@
         }
 
         var searchFilters = {}
-        this.selectedFilters.forEach(filter => {
+        this.selectedFilters.forEach((filter) => {
           searchFilters[filter] = [this.filters[filter].toString()]
         })
         searchParams['filters'] = JSON.stringify(searchFilters)
 
-        const imagesSearched = images => {
+        const imagesSearched = (images) => {
           this.$emit('input', images)
           notify(`${images.length} images found!`)
         }

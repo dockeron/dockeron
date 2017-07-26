@@ -120,12 +120,12 @@
           size: true
         }
 
-        const updateContainers = containers => {
+        const updateContainers = (containers) => {
           this.containers = containers
           this.error = {}
         }
 
-        const updateErrored = err => {
+        const updateErrored = (err) => {
           this.containers = []
           this.error = err
           notify(err)

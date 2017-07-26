@@ -55,11 +55,11 @@
     },
     methods: {
       getOfficialRepos () {
-        const officialReposGot = data => {
+        const officialReposGot = (data) => {
           notify(`Docker Hub: ${data.results.length} images loaded!`)
           this.searchedImages = data.results
           /* eslint no-param-reassign: ["error", { "props": false }] */
-          this.searchedImages.forEach(image => {
+          this.searchedImages.forEach((image) => {
             image.is_official = true
           })
         }
@@ -71,7 +71,7 @@
       pullImage (imageName) {
         this.$set(this.footLogs, 'pullLog', '')
 
-        const imagePulled = stream => {
+        const imagePulled = (stream) => {
           const onFinished = (err, output) => {
             this.$delete(this.footLogs, 'pullLog')
             if (err) {
@@ -81,7 +81,7 @@
             notify('New image is pulled!')
           }
 
-          const onProgress = event => {
+          const onProgress = (event) => {
             this.$set(this.footLogs, 'pullLog', JSON.stringify(event))
           }
 

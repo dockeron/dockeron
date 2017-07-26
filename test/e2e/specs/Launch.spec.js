@@ -6,7 +6,7 @@ describe('Launch', () => {
 
   it('shows the proper application title', function () {
     return this.app.client.getTitle()
-      .then(title => {
+      .then((title) => {
         expect(title).to.equal('dockeron')
       })
   })

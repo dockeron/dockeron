@@ -53,12 +53,12 @@
     },
     methods: {
       submit () {
-        const containerCreated = container => {
+        const containerCreated = (container) => {
           notify(`New container ID ${container.id} created from image ${this.defaultSettings.Image} !`)
           this.$emit('created', container)
         }
 
-        const creationErrored = err => {
+        const creationErrored = (err) => {
           notify(err)
           this.$emit('failed', err)
         }
