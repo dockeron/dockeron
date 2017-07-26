@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/dockeron/dockeron.svg?branch=master)](https://travis-ci.org/dockeron/dockeron)
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://ci.appveyor.com/project/fluency03/dockeron)
 [![Tag](https://img.shields.io/github/tag/dockeron/dockeron.svg)](https://github.com/dockeron/dockeron/tags)
-[![Release](https://img.shields.io/github/release/dockeron/dockeron.svg)](https://github.com/dockeron/dockeron/releases)
+[![GitHub (pre-)release](https://img.shields.io/github/release/dockeron/dockeron/all.svg)](https://github.com/dockeron/dockeron/releases)
 [![Version npm](https://img.shields.io/npm/v/dockeron.svg)](https://www.npmjs.com/package/dockeron)
 [![Downloads npm](https://img.shields.io/npm/dt/dockeron.svg)](https://www.npmjs.com/package/dockeron)
 [![MIT license](https://img.shields.io/npm/l/dockeron.svg)](https://opensource.org/licenses/MIT)
@@ -11,20 +11,21 @@
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-*In development process.*
-
 A dockeron project, built on Electron + Vue.js for Docker.
+  - Template generator: [electron-vue](https://github.com/SimulatedGREG/electron-vue)
+  - Docker Engine API: [dockerode](https://github.com/apocas/dockerode).
+  - UI components: [iView](https://github.com/iview/iview)
 
-Docker Engine API [dockerode](https://github.com/apocas/dockerode).
+*I am only using Mac version, which means that the Windows and Linux versions are to be tested.* 
 
-UI components: [iView](https://github.com/iview/iview)
+*Notice that, this project is still under active development, many functionalities or features are not implemented yet, and some parts are still buggy.*
 
-*Now, there are only Mac and Linux versions. I am only using Mac version, Linux version is to be tested. Windows version is coming. Notice that, this project is still in development process, many functionalities or features are not implemented yet, and some parts are still buggy.*
-
-Welcome PR and issues.
+Welcome PR and [issues](https://github.com/dockeron/dockeron/issues/new).
 
 
-TODOs and progress, please see [project dockeron](https://github.com/dockeron/dockeron/projects/1).
+## TODOs and progress
+
+Please refer to [project dockeron](https://github.com/dockeron/dockeron/projects/1).
 
 
 ## Development
