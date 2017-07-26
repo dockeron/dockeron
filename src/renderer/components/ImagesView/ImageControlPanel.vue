@@ -166,13 +166,13 @@
         // TODO (fluency03): collaborate with openSaveDialog
         const imagesGot = stream => {
           var imageId = this.value.Id.replace('sha256:', '')
-          var fileName = imageId + '.tar'
+          var fileName = `${imageId}.tar`
           var writeStream = fs.createWriteStream(fileName)
 
           stream.pipe(writeStream)
 
           stream.on(STREAM_READABLE_EVENT_END, () => {
-            notify('Image ' + imageId + 'exported to a tar file !')
+            notify(`Image ${imageId}exported to a tar file !`)
           })
         }
 

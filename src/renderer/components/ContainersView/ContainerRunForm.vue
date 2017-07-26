@@ -101,13 +101,12 @@
         var streams = null
 
         const containerCreated = container => {
-          notify('New container ID ' + container.id +
-                 ' created from image ' + this.imageName + ' !')
+          notify(`New container ID ${container.id} created from image ${this.imageName} !`)
           this.$emit('created', container)
         }
 
         const containerStarted = container => {
-          notify('New container ID ' + container.id + ' started !')
+          notify(`New container ID ${container.id} started !`)
           this.$emit('started', container)
         }
 

@@ -99,7 +99,7 @@
       refreshContainers () {
         this.loadContainers()
         if (notNull(this.error) && this.error !== {}) {
-          notify('Refreshed: ' + this.containers.length + ' containers found!')
+          notify(`Refreshed: ${this.containers.length} containers found!`)
         }
       },
       getImageName (repoTag) {

@@ -73,9 +73,9 @@
       },
       getKey (value) {
         if (_.isInteger(value.key)) {
-          return value.key + ':'
+          return `${value.key}:`
         } else {
-          return '"' + value.key + '":'
+          return `"${value.key}":`
         }
       },
       getValue (value) {
@@ -86,7 +86,7 @@
           return 'null'
         }
         if (_.isString(value.value)) {
-          return '"' + value.value + '"'
+          return `"${value.value}"`
         }
         return value.value
       },
@@ -94,21 +94,21 @@
         var prefix = 'tree-view-item-value-'
 
         if (_.isNumber(value.value)) {
-          return prefix + 'number'
+          return `${prefix}number`
         }
         if (_.isFunction(value.value)) {
-          return prefix + 'function'
+          return `${prefix}function`
         }
         if (_.isBoolean(value.value)) {
-          return prefix + 'boolean'
+          return `${prefix}boolean`
         }
         if (_.isNull(value.value)) {
-          return prefix + 'null'
+          return `${prefix}null`
         }
         if (_.isString(value.value)) {
-          return prefix + 'string'
+          return `${prefix}string`
         }
-        return prefix + 'unknown'
+        return `${prefix}unknown`
       },
       isRootObject (value = this.data) {
         return value.isRoot

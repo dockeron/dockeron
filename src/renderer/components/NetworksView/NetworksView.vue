@@ -59,7 +59,7 @@
       refreshNetworks () {
         this.loadNetworks()
         if (notNull(this.error) && this.error !== {}) {
-          notify('Refreshed: ' + this.networks.length + ' networks found!')
+          notify(`Refreshed: ${this.networks.length} networks found!`)
         }
       },
       inspectNetwork (networkId) {

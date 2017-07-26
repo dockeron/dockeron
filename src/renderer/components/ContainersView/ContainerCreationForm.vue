@@ -54,8 +54,7 @@
     methods: {
       submit () {
         const containerCreated = container => {
-          notify('New container ID ' + container.id +
-                 ' created from image ' + this.defaultSettings.Image + ' !')
+          notify(`New container ID ${container.id} created from image ${this.defaultSettings.Image} !`)
           this.$emit('created', container)
         }
 

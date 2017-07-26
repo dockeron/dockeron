@@ -98,7 +98,7 @@
             break
           case 'menu-settings-ping':
             this.loadPing()
-            notify('The network is ' + this.ping + ' !')
+            notify(`The network is ${this.ping} !`)
             break
           default:
             break

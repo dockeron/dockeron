@@ -358,12 +358,12 @@ var dockerHubApi = {
 
               // Check to see if the user provided a username for the toRepo
       if (toRepo.indexOf('/') === -1) {
-        toRepo = 'library/' + toRepo
+        toRepo = `library/${toRepo}`
       }
 
               // If to-repo has '_/' then we're trying to get an official repository
       if (toRepo.substr(0, 2) === '_/') {
-        toRepo = 'library/' + toRepo.substr(2)
+        toRepo = `library/${toRepo.substr(2)}`
       }
 
               // Make sure the username is all lowercase as per Docker Hub requirements
@@ -1252,7 +1252,7 @@ var dockerHubApi = {
 
           // Also add a slash to the end of the path unless there is a ? in the path
     if (path.substr(-1) !== '/' && path.indexOf('?') === -1) {
-      path = path + '/'
+      path = `${path}/`
     }
 
     var url = `https://hub.docker.com/v${apiVersion}/${path}`

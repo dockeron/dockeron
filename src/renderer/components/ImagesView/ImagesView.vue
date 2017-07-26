@@ -73,7 +73,7 @@
       refreshImages () {
         this.loadImages()
         if (notNull(this.error) && this.error !== {}) {
-          notify('Refreshed: ' + this.images.length + ' images found!')
+          notify(`Refreshed: ${this.images.length} images found!`)
         }
       },
       pullImage () {

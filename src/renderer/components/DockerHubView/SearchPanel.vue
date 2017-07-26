@@ -79,7 +79,7 @@
 
         const imagesSearched = images => {
           this.$emit('input', images)
-          notify(images.length + ' images found!')
+          notify(`${images.length} images found!`)
         }
 
         docker.searchImages(searchParams)

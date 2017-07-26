@@ -7,7 +7,7 @@ export const login = function ({ commit }, credentials) {
   function loginSuccess (tokenResult) {
     commit(types.UPDATE_AUTH_TOKEN, tokenResult.token)
     commit(types.UPDATE_USERNAME, credentials.username)
-    notify('Welcome, ' + credentials.username + ' !')
+    notify(`Welcome, ${credentials.username} !`)
   }
 
   function loginFailed (err) {
@@ -22,7 +22,7 @@ export const login = function ({ commit }, credentials) {
 }
 
 export const logout = function ({ state, commit }) {
-  notify('Goodbye, ' + state.user.username + ' !')
+  notify(`Goodbye, ${state.user.username} !`)
   commit(types.REMOVE_AUTH_TOKEN)
   commit(types.REMOVE_USERNAME)
 }

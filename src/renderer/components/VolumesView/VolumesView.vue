@@ -51,7 +51,7 @@
       refreshVolumes () {
         this.loadVolumes()
         if (notNull(this.error) && this.error !== {}) {
-          notify('Refreshed: ' + this.volumes.length + ' volumes found!')
+          notify(`Refreshed: ${this.volumes.length} volumes found!`)
         }
       },
       inspectVolume (volumeName) {

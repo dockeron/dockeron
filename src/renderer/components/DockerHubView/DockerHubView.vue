@@ -56,7 +56,7 @@
     methods: {
       getOfficialRepos () {
         const officialReposGot = data => {
-          notify('Docker Hub: ' + data.results.length + ' images loaded!')
+          notify(`Docker Hub: ${data.results.length} images loaded!`)
           this.searchedImages = data.results
           this.searchedImages.forEach(image => {
             image.is_official = true

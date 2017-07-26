@@ -124,7 +124,7 @@
     methods: {
       startContainer () {
         const containerStarted = data => {
-          notify('Container ' + this.containerName + ' started!')
+          notify(`Container ${this.containerName} started!`)
           if (this.fullPanel) {
             this.inspectContainer()
           } else {
@@ -138,7 +138,7 @@
       },
       stopContainer () {
         const containerStopped = data => {
-          notify('Container ' + this.containerName + ' stopped!')
+          notify(`Container ${this.containerName} stopped!`)
           if (this.fullPanel) {
             this.inspectContainer()
           } else {
@@ -152,7 +152,7 @@
       },
       pauseContainer () {
         const containerPaused = data => {
-          notify('Container ' + this.containerName + ' paused!')
+          notify(`Container ${this.containerName} paused!`)
           this.inspectContainer()
         }
 
@@ -162,7 +162,7 @@
       },
       unpauseContainer () {
         const containerUnpaused = data => {
-          notify('Container ' + this.containerName + ' unpaused!')
+          notify(`Container ${this.containerName} unpaused!`)
           this.inspectContainer()
         }
 
@@ -172,7 +172,7 @@
       },
       restartContainer () {
         const containerRestarted = data => {
-          notify('Container ' + this.containerName + ' restarted!')
+          notify(`Container ${this.containerName} restarted!`)
           this.inspectContainer()
         }
 
@@ -182,7 +182,7 @@
       },
       killContainer () {
         const containerKilled = data => {
-          notify('Container ' + this.containerName + ' killed!')
+          notify(`Container ${this.containerName} killed!`)
           this.inspectContainer()
         }
 
@@ -233,7 +233,7 @@
       exportContainer () {
         var containerName = this.value.Name.replace('/', '')
         var containerId = this.value.Id
-        var fileName = containerName + '_' + containerId + '.tar'
+        var fileName = `${containerName}_${containerId}.tar`
 
         ipcRenderer.send(IPC_CHANNEL_OPEN_SAVE_DIALOG, fileName)
 
@@ -243,7 +243,7 @@
           stream.pipe(writeStream)
 
           stream.on(STREAM_READABLE_EVENT_END, () => {
-            notify('Container ' + containerName + 'exported to a tar file !')
+            notify(`Container ${containerName}exported to a tar file !`)
           })
         }
 
@@ -268,7 +268,7 @@
         }
 
         const containerRenamed = data => {
-          notify('Rename container to ' + renameParams.name + ' successful!')
+          notify(`Rename container to ${renameParams.name} successful!`)
           this.containerNewName = ''
           this.inspectContainer()
         }
