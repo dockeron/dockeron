@@ -1,7 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import setIpcChannels from './setIpcChannels'
+import setIPCChannels from './setIPCChannels'
 import {
   BROWSER_WINDOW_EVENT_CLOSED,
   APP_EVENT_READY,
@@ -23,7 +23,7 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
-setIpcChannels()
+setIPCChannels()
 
 function createWindow () {
   /**
