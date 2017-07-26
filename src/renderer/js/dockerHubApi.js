@@ -743,9 +743,10 @@ var dockerHubApi = {
    */
   registrySettings () {
     return new Promise((resolve, reject) => {
-      this.loggedInUser().then((user) => {
-        return this.makeGetRequest(`users/${user.username}/registry-settings`)
-      }).then(resolve).catch(reject)
+      this.loggedInUser()
+        .then((user) => this.makeGetRequest(`users/${user.username}/registry-settings`))
+        .then(resolve)
+        .catch(reject)
     })
   },
   /**

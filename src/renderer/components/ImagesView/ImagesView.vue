@@ -133,9 +133,7 @@
         return parseRepoTag(repoTag).tag
       },
       getTags (repoTags) {
-        return repoTags.map((repoTag) => {
-          return parseRepoTag(repoTag).tag
-        })
+        return repoTags.map((repoTag) => parseRepoTag(repoTag).tag)
       },
       getDateTime (seconds) {
         return new Date(seconds * 1000).toLocaleString()

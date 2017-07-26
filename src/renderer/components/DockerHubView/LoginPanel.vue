@@ -59,9 +59,7 @@
     created () {
       this.token = this.$store.state.auth.token
       this.credentials.username = this.$store.state.user.username
-      this.$store.watch((state) => {
-        return state.auth.token
-      }, (newToken) => {
+      this.$store.watch((state) => state.auth.token, (newToken) => {
         this.token = newToken
       })
     }
