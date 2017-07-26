@@ -1,24 +1,33 @@
 'use strict'
 
-process.env.BABEL_ENV = 'renderer'
+process.env.BABEL_ENV = 'web'
 
 const path = require('path')
-const pkg = require('./app/package.json')
-const settings = require('./config.js')
 const webpack = require('webpack')
 
+const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-let rendererConfig = {
-  devtool: '#eval-source-map',
-  devServer: { overlay: true },
+let webConfig = {
+  devtool: '#cheap-module-eval-source-map',
   entry: {
-    renderer: path.join(__dirname, 'app/src/renderer/main.js')
+    web: path.join(__dirname, '../src/renderer/main.js')
   },
-  externals: Object.keys(pkg.dependencies || {}),
   module: {
     rules: [
+      {
+        test: /\.(js|vue)$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          }
+        }
+      },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
@@ -33,22 +42,15 @@ let rendererConfig = {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        include: [ path.resolve(__dirname, 'app/src/renderer') ],
+        include: [ path.resolve(__dirname, '../src/renderer') ],
         exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        use: 'json-loader'
-      },
-      {
-        test: /\.node$/,
-        use: 'node-loader'
       },
       {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
+            extractCSS: true,
             loaders: {
               sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
               scss: 'vue-style-loader!css-loader!sass-loader'
@@ -82,72 +84,59 @@ let rendererConfig = {
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './app/index.ejs',
-      appModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, 'app/node_modules')
-        : false,
+      template: path.resolve(__dirname, '../src/index.ejs'),
+      minify: {
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        removeComments: true
+      },
+      nodeModules: false
     }),
+    new webpack.DefinePlugin({
+      'process.env.IS_WEB': 'true'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
     filename: '[name].js',
-    libraryTarget: 'commonjs2',
-    path: path.join(__dirname, 'app/dist')
+    path: path.join(__dirname, '../dist/web')
   },
   resolve: {
     alias: {
-      'components': path.join(__dirname, 'app/src/renderer/components'),
-      'renderer': path.join(__dirname, 'app/src/renderer')
+      '@': path.join(__dirname, '../src/renderer'),
+      'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node'],
-    modules: [
-      path.join(__dirname, 'app/node_modules'),
-      path.join(__dirname, 'node_modules')
-    ]
+    extensions: ['.js', '.vue', '.json', '.css']
   },
-  target: 'electron-renderer'
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  /**
-   * Apply ESLint
-   */
-  if (settings.eslint) {
-    rendererConfig.module.rules.push(
-      {
-        test: /\.(js|vue)$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            formatter: require('eslint-friendly-formatter')
-          }
-        }
-      }
-    )
-  }
+  target: 'web'
 }
 
 /**
- * Adjust rendererConfig for production settings
+ * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
+  webConfig.devtool = ''
 
-  rendererConfig.plugins.push(
+  webConfig.plugins.push(
+    new BabiliWebpackPlugin({
+      removeConsole: true,
+      removeDebugger: true
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname, '../static'),
+        to: path.join(__dirname, '../dist/web/static'),
+        ignore: ['.*']
+      }
+    ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
     })
   )
 }
 
-module.exports = rendererConfig
+module.exports = webConfig

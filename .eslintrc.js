@@ -9,6 +9,9 @@ module.exports = {
     node: true
   },
   extends: 'standard',
+  globals: {
+    __static: true
+  },
   plugins: [
     'html'
   ],
