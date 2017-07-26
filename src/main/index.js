@@ -2,7 +2,13 @@
 
 import { app, BrowserWindow } from 'electron'
 import setIpcChannels from './setIpcChannels'
-import ElectronConstants from '../renderer/js/constants/ElectronConstants'
+import {
+  BROWSER_WINDOW_EVENT_CLOSED,
+  APP_EVENT_READY,
+  APP_EVENT_WINDOW_ALL_CLOSED,
+  APP_EVENT_ACTIVATE,
+  PLATFORM_DARWIN
+} from '../renderer/js/constants/ElectronConstants'
 
 /**
  * Set `__static` path to static files in production
@@ -32,20 +38,20 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
-  mainWindow.on(ElectronConstants.BROWSER_WINDOW_EVENT_CLOSED, () => {
+  mainWindow.on(BROWSER_WINDOW_EVENT_CLOSED, () => {
     mainWindow = null
   })
 }
 
-app.on(ElectronConstants.APP_EVENT_READY, createWindow)
+app.on(APP_EVENT_READY, createWindow)
 
-app.on(ElectronConstants.APP_EVENT_WINDOW_ALL_CLOSED, () => {
-  if (process.platform !== ElectronConstants.PLATFORM_DARWIN) {
+app.on(APP_EVENT_WINDOW_ALL_CLOSED, () => {
+  if (process.platform !== PLATFORM_DARWIN) {
     app.quit()
   }
 })
 
-app.on(ElectronConstants.APP_EVENT_ACTIVATE, () => {
+app.on(APP_EVENT_ACTIVATE, () => {
   if (mainWindow === null) {
     createWindow()
   }

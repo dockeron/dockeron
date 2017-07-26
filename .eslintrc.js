@@ -42,10 +42,17 @@ module.exports = {
     'prefer-arrow-callback': 2,
     'arrow-parens': [2, 'as-needed'],
     'arrow-body-style': [2, 'as-needed'],
-    'no-confusing-arrow': [2, {'allowParens': false}],
+    'no-confusing-arrow': [2, { 'allowParens': false }],
     'no-useless-constructor': 2,
+    'no-duplicate-imports': 2,
+    'dot-notation': 2,
+    // 'no-plusplus': 2,
+    'no-plusplus': [2, { 'allowForLoopAfterthoughts': true }],
+    'no-nested-ternary': 2,
+    'no-unneeded-ternary': 2,
+    'newline-per-chained-call': [2, { 'ignoreChainWithDepth': 3 }],
     // not assign to const
-    'no-const-assign': 2
+    'no-const-assign': 2,
     // no var, use let and const
     // 'no-var': 1
   }

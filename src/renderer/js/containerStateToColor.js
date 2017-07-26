@@ -1,5 +1,5 @@
 
-const containerStateToColor = {
+const ContainerStateToColor = {
   created: 'blue',
   restarting: 'yellow',
   running: 'green',
@@ -8,4 +8,4 @@ const containerStateToColor = {
   dead: 'red'
 }
 
-export default containerStateToColor
+export default ContainerStateToColor

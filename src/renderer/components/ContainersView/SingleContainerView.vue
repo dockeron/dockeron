@@ -13,7 +13,7 @@
   import ContainerControlPanel from './ContainerControlPanel'
   import TreeView from '../TreeView/TreeView'
 
-  import containerStateToColor from '../../js/containerStateToColor'
+  import ContainerStateToColor from '../../js/ContainerStateToColor'
 
   export default {
     components: {
@@ -24,7 +24,7 @@
       return {
         containerId: '',
         containerData: {},
-        stateToColor: containerStateToColor,
+        stateToColor: ContainerStateToColor,
         status: 'exited'
       }
     },

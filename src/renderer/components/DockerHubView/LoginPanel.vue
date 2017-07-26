@@ -32,7 +32,10 @@
 </template>
 
 <script>
-  import { VUEX_ACTION_LOGIN, VUEX_ACTION_LOGOUT } from '../../js/constants/VuexConstants'
+  import {
+    VUEX_ACTION_LOGIN,
+    VUEX_ACTION_LOGOUT
+  } from '../../js/constants/VuexConstants'
 
   export default {
     data () {

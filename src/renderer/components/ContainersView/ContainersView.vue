@@ -55,7 +55,7 @@
   import notNull from '../../js/notNull'
   import parseRepoTag from '../../js/parseRepoTag'
   import formatBytes from '../../js/formatBytes'
-  import containerStateToColor from '../../js/containerStateToColor'
+  import ContainerStateToColor from '../../js/ContainerStateToColor'
   import { SINGLE_CONTAINER_VIEW_NAME } from '../../js/constants/RouteConstants'
 
   export default {
@@ -69,7 +69,7 @@
         containers: [],
         hasFoundContainers: false,
         error: {},
-        stateToColor: containerStateToColor,
+        stateToColor: ContainerStateToColor,
         containerCreateModal: false,
         containerRunModal: false,
         listParamsModal: false

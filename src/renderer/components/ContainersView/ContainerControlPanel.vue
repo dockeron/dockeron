@@ -59,7 +59,10 @@
   import notify from '../../js/notify'
   import tarFileSaveInit from '../../js/tarFileSaveInit'
   import { IPC_CHANNEL_OPEN_SAVE_DIALOG } from '../../js/constants/ElectronConstants'
-  import { STREAM_READABLE_EVENT_END, STREAM_READABLE_EVENT_DATA } from '../../js/constants/StreamConstants'
+  import {
+    STREAM_READABLE_EVENT_END,
+    STREAM_READABLE_EVENT_DATA
+  } from '../../js/constants/StreamConstants'
 
   function errorAndRefresh (err) {
     notify(err)

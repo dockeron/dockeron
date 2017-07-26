@@ -75,7 +75,7 @@
         this.selectedFilters.forEach(filter => {
           searchFilters[filter] = [this.filters[filter].toString()]
         })
-        searchParams['filters'] = JSON.stringify(searchFilters)
+        searchParams.filters = JSON.stringify(searchFilters)
 
         const imagesSearched = images => {
           this.$emit('input', images)

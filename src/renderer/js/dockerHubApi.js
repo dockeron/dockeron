@@ -20,16 +20,16 @@
 
 import request from 'request'
 
-var apiVersion = 2
+let apiVersion = 2
 
-var cache = {}
-var cacheEnabled = true
-var cacheTimeSeconds = 300
+let cache = {}
+let cacheEnabled = true
+let cacheTimeSeconds = 300
 
-var loggedInToken = null
+let loggedInToken = null
 
 /* eslint no-param-reassign: 'off' */
-var dockerHubApi = {
+const DockerHubApi = {
   /**
    * This logs into Docker Hub with the given username and password.
    *
@@ -399,7 +399,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
               // Build our object to post
-      var obj = {
+      let obj = {
         isNew: true,
         namespace: username,
         repoName: name,
@@ -437,7 +437,7 @@ var dockerHubApi = {
               // Make sure the username is all lowercase as per Docker Hub requirements
       username = username.toLowerCase()
 
-      var obj = {
+      let obj = {
         name,
         namespace: username,
         active: true,
@@ -483,7 +483,7 @@ var dockerHubApi = {
               // Make sure the username is all lowercase as per Docker Hub requirements
       username = username.toLowerCase()
 
-      var obj = {
+      let obj = {
         name,
         namespace: username
       }
@@ -846,7 +846,7 @@ var dockerHubApi = {
       }
 
               // Build our object to post
-      var obj = {
+      let obj = {
         id,
         name: details.name || 'latest',
         dockerfile_location: details.dockerfile_location || '/',
@@ -875,7 +875,7 @@ var dockerHubApi = {
         return reject(new Error('Passed in descriptions must be an object with full and/or short properties!'))
       }
 
-      var obj = {}
+      let obj = {}
 
       if (descriptions.full) {
         obj.full_description = descriptions.full
@@ -973,7 +973,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
               // Build our object to post
-      var obj = {
+      let obj = {
         dockerfile_location: details.dockerfile_location || '/',
         source_type: details.source_type || 'Branch',
         source_name: details.source_name || 'master'
@@ -1062,7 +1062,7 @@ var dockerHubApi = {
    */
   makeGetRequest (path, extract) {
     return new Promise((resolve, reject) => {
-      var params = this.makeRequestParams('get', path)
+      let params = this.makeRequestParams('get', path)
 
       if (cacheEnabled && cache.hasOwnProperty(params.url)) {
         if (Date.now() >= cache[params.url].expires) {
@@ -1257,15 +1257,15 @@ var dockerHubApi = {
       path = `${path}/`
     }
 
-    var url = `https://hub.docker.com/v${apiVersion}/${path}`
+    let url = `https://hub.docker.com/v${apiVersion}/${path}`
 
-    var headers = {}
+    let headers = {}
 
     if (loggedInToken) {
       headers.Authorization = `JWT ${loggedInToken}`
     }
 
-    var params = {url, method, json: true, headers}
+    let params = {url, method, json: true, headers}
 
     if (data) {
       params.body = data
@@ -1275,4 +1275,4 @@ var dockerHubApi = {
   }
 }
 
-export default dockerHubApi
+export default DockerHubApi
