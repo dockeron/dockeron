@@ -1,4 +1,4 @@
-import Route from '../js/constants/RouteConstants'
+import * as Route from '../js/constants/RouteConstants'
 
 export default [
   {

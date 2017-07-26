@@ -35,7 +35,7 @@
 
   import docker from '../../js/docker'
   import notify from '../../js/notify'
-  import { repository } from '../../js/DockerHubApi'
+  import DockerHubApi from '../../js/DockerHubApi'
 
   export default {
     components: {
@@ -64,7 +64,7 @@
           })
         }
 
-        repository()
+        DockerHubApi.repository()
           .then(officialReposGot)
           .catch(notify)
       },

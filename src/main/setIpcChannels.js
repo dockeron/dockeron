@@ -8,7 +8,7 @@ import {
   IPC_CHANNEL_SAVED_FILE
 } from '../renderer/js/constants/ElectronConstants'
 
-export default function setIpcChannels () {
+export default function setIPCChannels () {
   ipcMain.on(IPC_CHANNEL_OPEN_FILE_DIALOG, event => {
     dialog.showOpenDialog({
       properties: [

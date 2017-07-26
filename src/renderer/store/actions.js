@@ -1,6 +1,6 @@
-import types from './mutation-types'
+import * as types from './mutation-types'
 
-import dockerHubApi from '../js/dockerHubApi'
+import dockerHubApi from '../js/DockerHubApi'
 import notify from '../js/notify'
 
 export const login = function ({ commit }, credentials) {

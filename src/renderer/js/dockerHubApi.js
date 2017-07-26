@@ -29,7 +29,7 @@ let cacheTimeSeconds = 300
 let loggedInToken = null
 
 /* eslint no-param-reassign: 'off' */
-const DockerHubApi = {
+export default {
   /**
    * This logs into Docker Hub with the given username and password.
    *
@@ -1275,4 +1275,4 @@ const DockerHubApi = {
   }
 }
 
-export default DockerHubApi
+// export default DockerHubApi
