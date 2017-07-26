@@ -65,17 +65,17 @@
         splitStreams: false,
         newContainerName: '',
         importedSettings: {
-          'Hostname': '',
-          'User': '',
-          'AttachStdin': false,
-          'AttachStdout': true,
-          'AttachStderr': true,
-          'Tty': true,
-          'OpenStdin': false,
-          'StdinOnce': false,
-          'Env': null,
-          'Volumes': {},
-          'VolumesFrom': []
+          Hostname: '',
+          User: '',
+          AttachStdin: false,
+          AttachStdout: true,
+          AttachStderr: true,
+          Tty: true,
+          OpenStdin: false,
+          StdinOnce: false,
+          Env: null,
+          Volumes: {},
+          VolumesFrom: []
         },
         creationSettings: {}
       }
@@ -144,17 +144,17 @@
         this.splitStreams = false
         this.newContainerName = ''
         this.creationSettings = {
-          'Hostname': '',
-          'User': '',
-          'AttachStdin': false,
-          'AttachStdout': true,
-          'AttachStderr': true,
-          'Tty': true,
-          'OpenStdin': false,
-          'StdinOnce': false,
-          'Env': null,
-          'Volumes': {},
-          'VolumesFrom': []
+          Hostname: '',
+          User: '',
+          AttachStdin: false,
+          AttachStdout: true,
+          AttachStderr: true,
+          Tty: true,
+          OpenStdin: false,
+          StdinOnce: false,
+          Env: null,
+          Volumes: {},
+          VolumesFrom: []
         }
       },
       openFileDialog () {

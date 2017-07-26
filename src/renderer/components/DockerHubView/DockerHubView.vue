@@ -47,8 +47,8 @@
       return {
         searchedImages: [],
         booleanToTagColor: {
-          'true': 'green',
-          'false': 'red'
+          true: 'green',
+          false: 'red'
         },
         footLogs: {}
       }

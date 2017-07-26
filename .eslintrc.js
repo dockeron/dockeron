@@ -25,6 +25,7 @@ module.exports = {
     // no console
     'no-console': 1,
     'no-new-object': 1,
+    'quote-props': ["error", "as-needed"],
     "object-shorthand": ["error", "always"],
     // not assign to const
     'no-const-assign': 1

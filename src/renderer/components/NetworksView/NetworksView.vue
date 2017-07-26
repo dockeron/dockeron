@@ -44,8 +44,8 @@
         networks: [],
         hasFoundNetworks: false,
         booleanToTagColor: {
-          'true': 'green',
-          'false': 'red'
+          true: 'green',
+          false: 'red'
         },
         error: {}
       }

@@ -60,7 +60,7 @@
         filters: {
           'is-automated': true,
           'is-official': true,
-          'stars': 0
+          stars: 0
         }
       }
     },
