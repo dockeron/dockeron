@@ -64,7 +64,7 @@
           this.$emit('failed', err)
         }
 
-        docker.createContainer(Object.assign({}, this.defaultSettings, this.advancedSettings))
+        docker.createContainer({...this.defaultSettings, ...this.advancedSettings})
           .then(containerCreated)
           .catch(creationErrored)
 
