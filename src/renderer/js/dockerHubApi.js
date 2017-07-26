@@ -28,6 +28,7 @@ var cacheTimeSeconds = 300
 
 var loggedInToken = null
 
+/* eslint no-param-reassign: 'off' */
 var dockerHubApi = {
   /**
    * This logs into Docker Hub with the given username and password.
@@ -39,12 +40,12 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   login (username, password) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || !password) {
         return reject(new Error('Both username and password must be passed to this function!'))
       }
 
-      this.makePostRequest('users/login/', {username, password}).then(function (info) {
+      this.makePostRequest('users/login/', {username, password}).then((info) => {
         if (!info.token) {
           return reject(new Error('Error logging into Docker Hub! No login token sent back!'))
         }
@@ -53,7 +54,7 @@ var dockerHubApi = {
 
         return resolve(info)
       }).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This gets information about the current logged in user.
@@ -61,13 +62,13 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   loggedInUser () {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!loggedInToken) {
         return reject(new Error('No login token found! Please login() or setLoginToken() to continue!'))
       }
 
       this.makeGetRequest('user/').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This will set the caching options.
@@ -103,7 +104,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   addCollaborator (username, name, collaborator) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -121,7 +122,7 @@ var dockerHubApi = {
       collaborator = collaborator.toLowerCase()
 
       this.makePostRequest(`repositories/${username}/${name}/collaborators/`, {user: collaborator}).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the details for a given build of a repository.
@@ -132,7 +133,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildDetails (username, name, code) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -149,7 +150,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/buildhistory/${code}`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Get the history of all the builds done for a given repository.
@@ -160,7 +161,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildHistory (username, name, options) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -177,7 +178,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/buildhistory?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the build links for a given repository.
@@ -187,7 +188,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildLinks (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -200,7 +201,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/links`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the build settings for a given repository.
@@ -210,7 +211,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildSettings (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -223,7 +224,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/autobuild`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the build trigger for a given repository.
@@ -233,7 +234,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildTrigger (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -246,7 +247,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/buildtrigger`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the build trigger history for a given repository.
@@ -256,7 +257,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   buildTriggerHistory (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -269,7 +270,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/buildtrigger/history`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the collaborators for a repository.
@@ -279,7 +280,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   collaborators (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -292,7 +293,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/collaborators`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the comments for a repository.
@@ -303,7 +304,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   comments (username, name, options) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
               // If no name is passed in, then the user wants an official repository
       if (username && !name && !options) {
         name = username
@@ -332,7 +333,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/comments?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates a build link for a given repository to the given repository.
@@ -343,7 +344,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createBuildLink (username, name, toRepo) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -370,7 +371,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makePostRequest(`repositories/${username}/${name}/links`, {toRepo}).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates a build tag for a given repository.
@@ -381,7 +382,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createBuildTag (username, name, details) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -409,7 +410,7 @@ var dockerHubApi = {
       }
 
       this.makePostRequest(`repositories/${username}/${name}/autobuild/tags`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates an automated build.
@@ -420,7 +421,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createAutomatedBuild (username, name, details) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -455,7 +456,7 @@ var dockerHubApi = {
       }
 
       return this.makePostRequest(`repositories/${username}/${name}/autobuild/`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates a repository.
@@ -466,7 +467,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createRepository (username, name, details) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -500,7 +501,7 @@ var dockerHubApi = {
       }
 
       return this.makePostRequest(`repositories/`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates a webhook for the given username and repository.
@@ -511,7 +512,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createWebhook (username, name, webhookName) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -528,7 +529,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makePostRequest(`repositories/${username}/${name}/webhooks/`, {name: webhookName}).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Creates a hook for an existing webhook.
@@ -540,7 +541,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   createWebhookHook (username, name, webhookID, url) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -561,7 +562,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makePostRequest(`repositories/${username}/${name}/webhooks/${webhookID}/hooks/`, {hook_url: url}).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a build link for a given repository.
@@ -572,7 +573,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteBuildLink (username, name, id) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -593,7 +594,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeDeleteRequest(`repositories/${username}/${name}/links/${id}`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a build tag for a given repository.
@@ -604,7 +605,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteBuildTag (username, name, id) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -625,7 +626,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeDeleteRequest(`repositories/${username}/${name}/autobuild/tags/${id}`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a build tag for a given repository.
@@ -636,7 +637,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteCollaborator (username, name, collaborator) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -654,7 +655,7 @@ var dockerHubApi = {
       collaborator = collaborator.toLowerCase()
 
       this.makeDeleteRequest(`repositories/${username}/${name}/collaborators/${collaborator}`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a repository.
@@ -664,7 +665,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteRepository (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -677,7 +678,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makeDeleteRequest(`repositories/${username}/${name}/`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a tag for the given username and repository.
@@ -688,7 +689,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteTag (username, name, tag) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -705,7 +706,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makeDeleteRequest(`repositories/${username}/${name}/tags/${tag}/`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Deletes a webhook for the given username and repository.
@@ -716,7 +717,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   deleteWebhook (username, name, webhookID) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -733,7 +734,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makeDeleteRequest(`repositories/${username}/${name}/webhooks/${webhookID}/`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This gets the registry settings for the current logged in user containing information about the number of private repositories used/available.
@@ -741,11 +742,11 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   registrySettings () {
-    return new Promise(function (resolve, reject) {
-      this.loggedInUser().then(function (user) {
+    return new Promise((resolve, reject) => {
+      this.loggedInUser().then((user) => {
         return this.makeGetRequest(`users/${user.username}/registry-settings`)
-      }.bind(this)).then(resolve).catch(reject)
-    }.bind(this))
+      }).then(resolve).catch(reject)
+    })
   },
   /**
    * Gets the details about a repository.
@@ -778,7 +779,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   repositories (username) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username) {
         return reject(new Error('Username must be provided!'))
       }
@@ -787,7 +788,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`users/${username}/repositories`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the starred repositories for a user.
@@ -797,7 +798,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   repositoriesStarred (username, options) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -810,7 +811,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`users/${username}/repositories/starred?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This sets the details of a build tag for a given users repository.
@@ -822,7 +823,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   setBuildTag (username, name, id, details) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -853,7 +854,7 @@ var dockerHubApi = {
       }
 
       return this.makePutRequest(`repositories/${username}/${name}/autobuild/tags/${id}`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This sets the description (short, full, or both) for a given users repository.
@@ -864,7 +865,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   setRepositoryDescription (username, name, descriptions) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || !name || !descriptions) {
         return reject(new Error('A username and repository name must be passed in as well as the data to set!'))
       }
@@ -884,7 +885,7 @@ var dockerHubApi = {
       }
 
       return this.makePatchRequest(`repositories/${username}/${name}`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This stars a repository for the logged in user.
@@ -894,7 +895,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   starRepository (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (username && !name) {
         name = username
         username = 'library'
@@ -909,7 +910,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makePostRequest(`repositories/${username}/${name}/stars/`, {}).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the tags for a repository.
@@ -954,7 +955,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   triggerBuild (username, name, details) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -978,7 +979,7 @@ var dockerHubApi = {
       }
 
       this.makePostRequest(`repositories/${username}/${name}/autobuild/trigger-build`, obj).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * This unstars a repository for the logged in user.
@@ -988,7 +989,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   unstarRepository (username, name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (username && !name) {
         name = username
         username = 'library'
@@ -1003,7 +1004,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       return this.makeDeleteRequest(`repositories/${username}/${name}/stars/`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the details about a user.
@@ -1012,7 +1013,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   user (username) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username) {
         return reject(new Error('Username must be provided!'))
       }
@@ -1021,7 +1022,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`users/${username}`).then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Gets the webhooks for a repository you own.
@@ -1032,7 +1033,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   webhooks (username, name, options) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
       }
@@ -1049,7 +1050,7 @@ var dockerHubApi = {
       username = username.toLowerCase()
 
       this.makeGetRequest(`repositories/${username}/${name}/repositories/webhooks?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
-    }.bind(this))
+    })
   },
   /**
    * Makes a raw get request to the Docker Hub API.
@@ -1059,7 +1060,7 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   makeGetRequest (path, extract) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       var params = this.makeRequestParams('get', path)
 
       if (cacheEnabled && cache.hasOwnProperty(params.url)) {
@@ -1070,7 +1071,7 @@ var dockerHubApi = {
         }
       }
 
-      request(params, function (err, res, body) {
+      request(params, (err, res, body) => {
         if (err) {
           return reject(err)
         }
@@ -1095,7 +1096,7 @@ var dockerHubApi = {
 
         return resolve(body)
       })
-    }.bind(this))
+    })
   },
   /**
    * Makes a raw delete request to the Docker Hub API.
@@ -1105,15 +1106,15 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   makeDeleteRequest (path) {
-    return new Promise(function (resolve, reject) {
-      request(this.makeRequestParams('delete', path), function (err) {
+    return new Promise((resolve, reject) => {
+      request(this.makeRequestParams('delete', path), (err) => {
         if (err) {
           return reject(err)
         }
 
         return resolve()
       })
-    }.bind(this))
+    })
   },
       /**
        * Makes a raw patch request to the Docker Hub API.
@@ -1124,12 +1125,12 @@ var dockerHubApi = {
        * @returns {Promise}
        */
   makePatchRequest (path, data, extract) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all PATCH requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('patch', path, data), function (err, res, body) {
+      request(this.makeRequestParams('patch', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
@@ -1150,7 +1151,7 @@ var dockerHubApi = {
 
         return resolve(body)
       })
-    }.bind(this))
+    })
   },
   /**
    * Makes a raw post request to the Docker Hub API.
@@ -1161,12 +1162,12 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   makePostRequest (path, data, extract) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all POST requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('post', path, data), function (err, res, body) {
+      request(this.makeRequestParams('post', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
@@ -1192,7 +1193,7 @@ var dockerHubApi = {
 
         return resolve(body)
       })
-    }.bind(this))
+    })
   },
   /**
    * Makes a raw put request to the Docker Hub API.
@@ -1203,12 +1204,12 @@ var dockerHubApi = {
    * @returns {Promise}
    */
   makePutRequest (path, data, extract) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all PUT requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('put', path, data), function (err, res, body) {
+      request(this.makeRequestParams('put', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
@@ -1234,7 +1235,7 @@ var dockerHubApi = {
 
         return resolve(body)
       })
-    }.bind(this))
+    })
   },
   /**
    * Generates and error checks a request object.

@@ -3,7 +3,7 @@ import notify from './notify'
 import { IPC_CHANNEL_SAVED_FILE } from './constants/ElectronConstants'
 
 function tarFileSaveInit (callback) {
-  ipcRenderer.on(IPC_CHANNEL_SAVED_FILE, function (event, path) {
+  ipcRenderer.on(IPC_CHANNEL_SAVED_FILE, (event, path) => {
     if (!path) {
       notify('File path is empty!')
       callback(new Error('File path is empty!'), path)

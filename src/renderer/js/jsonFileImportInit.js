@@ -5,7 +5,7 @@ import notify from './notify'
 import { IPC_CHANNEL_SELECTED_DIRECTORY } from './constants/ElectronConstants'
 
 function jsonFileImportInit (callback) {
-  ipcRenderer.on(IPC_CHANNEL_SELECTED_DIRECTORY, function (event, filePaths) {
+  ipcRenderer.on(IPC_CHANNEL_SELECTED_DIRECTORY, (event, filePaths) => {
     if (filePaths.length !== 1) {
       notify('You should select and ONLY SELECT ONE file!')
       return
