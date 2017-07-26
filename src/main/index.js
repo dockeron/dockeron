@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow } from 'electron'
 import setIpcChannels from './setIpcChannels'
-import * as ElectronConstants from '../renderer/js/constants/ElectronConstants'
+import ElectronConstants from '../renderer/js/constants/ElectronConstants'
 
 /**
  * Set `__static` path to static files in production

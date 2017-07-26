@@ -70,7 +70,7 @@
 
   import docker from '../js/docker'
   import notify from '../js/notify'
-  import * as Route from '../js/constants/RouteConstants'
+  import Route from '../js/constants/RouteConstants'
 
   export default {
     name: 'home-page',

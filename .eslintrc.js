@@ -42,6 +42,8 @@ module.exports = {
     'prefer-arrow-callback': 2,
     'arrow-parens': [2, 'as-needed'],
     'arrow-body-style': [2, 'as-needed'],
+    'no-confusing-arrow': [2, {'allowParens': false}],
+    'no-useless-constructor': 2,
     // not assign to const
     'no-const-assign': 2
     // no var, use let and const

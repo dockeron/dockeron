@@ -1,4 +1,4 @@
-import * as types from '../mutation-types'
+import types from '../mutation-types'
 
 const state = {
   username: ''

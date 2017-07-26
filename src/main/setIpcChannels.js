@@ -1,7 +1,7 @@
 'use strict'
 
 import { ipcMain, dialog } from 'electron'
-import * as ElectronConstants from '../renderer/js/constants/ElectronConstants'
+import ElectronConstants from '../renderer/js/constants/ElectronConstants'
 
 export default function setIpcChannels () {
   ipcMain.on(ElectronConstants.IPC_CHANNEL_OPEN_FILE_DIALOG, event => {
