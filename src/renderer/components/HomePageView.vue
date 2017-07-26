@@ -105,7 +105,7 @@
         }
       },
       loadInfo () {
-        const updateInfo = (info) => {
+        const updateInfo = info => {
           this.info = info
         }
 
@@ -114,7 +114,7 @@
           .catch(notify)
       },
       loadVersion () {
-        const updateVersion = (version) => {
+        const updateVersion = version => {
           this.version = version
         }
 
@@ -123,7 +123,7 @@
           .catch(notify)
       },
       loadPing () {
-        const updateNetwork = (ping) => {
+        const updateNetwork = ping => {
           this.ping = ping
         }
 

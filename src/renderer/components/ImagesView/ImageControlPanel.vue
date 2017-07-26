@@ -129,7 +129,7 @@
         this.$refs.containerCreationForm.reset()
       },
       removeImage () {
-        const imageRemoved = (removed) => {
+        const imageRemoved = removed => {
           this.removed = removed
           this.removedImageModal = true
           notify('Image has been removed!')
@@ -141,7 +141,7 @@
           .catch(notify)
       },
       getImageHistory () {
-        const imageHistoryGot = (history) => {
+        const imageHistoryGot = history => {
           this.history = history
           this.imageHistoryModal = true
         }
@@ -154,7 +154,7 @@
         // TODO (fluency03)
       },
       tagImage () {
-        const imageTagged = (info) => {
+        const imageTagged = info => {
           this.inspectImage()
         }
 
@@ -164,7 +164,7 @@
       },
       getImage () {
         // TODO (fluency03): collaborate with openSaveDialog
-        const imagesGot = (stream) => {
+        const imagesGot = stream => {
           var imageId = this.value.Id.replace('sha256:', '')
           var fileName = `${imageId}.tar`
           var writeStream = fs.createWriteStream(fileName)
@@ -181,12 +181,12 @@
           .catch(notify)
       },
       inspectImage () {
-        const imageRefreshed = (data) => {
+        const imageRefreshed = data => {
           this.imageRepoTags = data.RepoTags
           this.$emit('input', data)
         }
 
-        const refreshErrored = (err) => {
+        const refreshErrored = err => {
           this.imageRepoTags = []
           this.$emit('input', err)
           notify(err)

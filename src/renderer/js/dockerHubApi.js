@@ -45,7 +45,7 @@ var dockerHubApi = {
         return reject(new Error('Both username and password must be passed to this function!'))
       }
 
-      this.makePostRequest('users/login/', {username, password}).then((info) => {
+      this.makePostRequest('users/login/', {username, password}).then(info => {
         if (!info.token) {
           return reject(new Error('Error logging into Docker Hub! No login token sent back!'))
         }
@@ -744,7 +744,7 @@ var dockerHubApi = {
   registrySettings () {
     return new Promise((resolve, reject) => {
       this.loggedInUser()
-        .then((user) => this.makeGetRequest(`users/${user.username}/registry-settings`))
+        .then(user => this.makeGetRequest(`users/${user.username}/registry-settings`))
         .then(resolve)
         .catch(reject)
     })
@@ -1108,7 +1108,7 @@ var dockerHubApi = {
    */
   makeDeleteRequest (path) {
     return new Promise((resolve, reject) => {
-      request(this.makeRequestParams('delete', path), (err) => {
+      request(this.makeRequestParams('delete', path), err => {
         if (err) {
           return reject(err)
         }

@@ -38,7 +38,7 @@
     },
     methods: {
       removeVolume () {
-        const volumeRemoved = (removed) => {
+        const volumeRemoved = removed => {
           notify('Volume has been removed!')
           this.$emit('removed')
         }
@@ -48,11 +48,11 @@
           .catch(notify)
       },
       inspectVolume () {
-        const volumeRefreshed = (data) => {
+        const volumeRefreshed = data => {
           this.$emit('input', data)
         }
 
-        const refreshErrored = (err) => {
+        const refreshErrored = err => {
           this.$emit('input', err)
           notify(err)
         }

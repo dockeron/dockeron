@@ -123,7 +123,7 @@
     },
     methods: {
       startContainer () {
-        const containerStarted = (data) => {
+        const containerStarted = data => {
           notify(`Container ${this.containerName} started!`)
           if (this.fullPanel) {
             this.inspectContainer()
@@ -137,7 +137,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       stopContainer () {
-        const containerStopped = (data) => {
+        const containerStopped = data => {
           notify(`Container ${this.containerName} stopped!`)
           if (this.fullPanel) {
             this.inspectContainer()
@@ -151,7 +151,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       pauseContainer () {
-        const containerPaused = (data) => {
+        const containerPaused = data => {
           notify(`Container ${this.containerName} paused!`)
           this.inspectContainer()
         }
@@ -161,7 +161,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       unpauseContainer () {
-        const containerUnpaused = (data) => {
+        const containerUnpaused = data => {
           notify(`Container ${this.containerName} unpaused!`)
           this.inspectContainer()
         }
@@ -171,7 +171,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       restartContainer () {
-        const containerRestarted = (data) => {
+        const containerRestarted = data => {
           notify(`Container ${this.containerName} restarted!`)
           this.inspectContainer()
         }
@@ -181,7 +181,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       killContainer () {
-        const containerKilled = (data) => {
+        const containerKilled = data => {
           notify(`Container ${this.containerName} killed!`)
           this.inspectContainer()
         }
@@ -195,11 +195,11 @@
           size: true
         }
 
-        const containerRefreshed = (data) => {
+        const containerRefreshed = data => {
           this.$emit('input', data)
         }
 
-        const refreshErrored = (err) => {
+        const refreshErrored = err => {
           this.$emit('input', err)
           notify(err)
         }
@@ -218,10 +218,10 @@
 
         this.$set(this.footLogs, 'runningLog', '')
 
-        const containerLogsGot = (data) => {
+        const containerLogsGot = data => {
           data.setEncoding('utf8')
 
-          data.on(STREAM_READABLE_EVENT_DATA, (logs) => {
+          data.on(STREAM_READABLE_EVENT_DATA, logs => {
             this.$set(this.footLogs, 'runningLog', this.footLogs.runningLog + logs)
           })
         }
@@ -237,7 +237,7 @@
 
         ipcRenderer.send(IPC_CHANNEL_OPEN_SAVE_DIALOG, fileName)
 
-        const containerExported = (stream) => {
+        const containerExported = stream => {
           var writeStream = fs.createWriteStream(fileName)
 
           stream.pipe(writeStream)
@@ -267,7 +267,7 @@
           name: this.containerNewName
         }
 
-        const containerRenamed = (data) => {
+        const containerRenamed = data => {
           notify(`Rename container to ${renameParams.name} successful!`)
           this.containerNewName = ''
           this.inspectContainer()
@@ -278,7 +278,7 @@
           .catch(errorAndRefresh.bind(this))
       },
       removeContainer () {
-        const containerRemoved = (data) => {
+        const containerRemoved = data => {
           notify('Container removed!')
           this.$router.push({
             name: 'containers-view'
@@ -294,7 +294,7 @@
           ps_args: this.psArgs
         }
 
-        const topProcessesGot = (data) => {
+        const topProcessesGot = data => {
           this.topResult = data
           this.topProcessesModal = true
           this.psArgs = '-ef'

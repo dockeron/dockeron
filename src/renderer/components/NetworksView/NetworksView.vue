@@ -69,12 +69,12 @@
         })
       },
       loadNetworks () {
-        const updateNetworks = (listResults) => {
+        const updateNetworks = listResults => {
           this.networks = listResults
           this.error = {}
         }
 
-        const updateErrored = (err) => {
+        const updateErrored = err => {
           this.networks = []
           this.error = err
           notify(err)

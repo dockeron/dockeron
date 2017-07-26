@@ -51,11 +51,11 @@
         // TODO (fluency03)
       },
       inspectNetwork () {
-        const networkRefreshed = (data) => {
+        const networkRefreshed = data => {
           this.$emit('input', data)
         }
 
-        const refreshErrored = (err) => {
+        const refreshErrored = err => {
           this.$emit('input', err)
           notify(err)
         }

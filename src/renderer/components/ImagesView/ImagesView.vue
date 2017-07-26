@@ -79,7 +79,7 @@
       pullImage () {
         this.$set(this.footLogs, 'pullLog', '')
 
-        const imagePulled = (stream) => {
+        const imagePulled = stream => {
           const onFinished = (err, output) => {
             this.$delete(this.footLogs, 'pullLog')
             if (err) {
@@ -89,7 +89,7 @@
             notify('New image is pulled!')
           }
 
-          const onProgress = (event) => {
+          const onProgress = event => {
             this.$set(this.footLogs, 'pullLog', JSON.stringify(event))
           }
 
@@ -111,12 +111,12 @@
           all: false
         }
 
-        const updateImages = (images) => {
+        const updateImages = images => {
           this.images = images
           this.error = {}
         }
 
-        const updateErrored = (err) => {
+        const updateErrored = err => {
           this.images = []
           this.error = err
           notify(err)
@@ -133,7 +133,7 @@
         return parseRepoTag(repoTag).tag
       },
       getTags (repoTags) {
-        return repoTags.map((repoTag) => parseRepoTag(repoTag).tag)
+        return repoTags.map(repoTag => parseRepoTag(repoTag).tag)
       },
       getDateTime (seconds) {
         return new Date(seconds * 1000).toLocaleString()

@@ -100,17 +100,17 @@
       submit () {
         var streams = null
 
-        const containerCreated = (container) => {
+        const containerCreated = container => {
           notify(`New container ID ${container.id} created from image ${this.imageName} !`)
           this.$emit('created', container)
         }
 
-        const containerStarted = (container) => {
+        const containerStarted = container => {
           notify(`New container ID ${container.id} started !`)
           this.$emit('started', container)
         }
 
-        const creationErrored = (err) => {
+        const creationErrored = err => {
           notify(err)
           this.$emit('failed', err)
         }

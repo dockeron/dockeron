@@ -4,13 +4,13 @@ import { ipcMain, dialog } from 'electron'
 import * as ElectronConstants from '../renderer/js/constants/ElectronConstants'
 
 export default function setIpcChannels () {
-  ipcMain.on(ElectronConstants.IPC_CHANNEL_OPEN_FILE_DIALOG, (event) => {
+  ipcMain.on(ElectronConstants.IPC_CHANNEL_OPEN_FILE_DIALOG, event => {
     dialog.showOpenDialog({
       properties: [
         'openFile',
         'openDirectory'
       ]
-    }, (files) => {
+    }, files => {
       if (files) {
         event.sender.send(ElectronConstants.IPC_CHANNEL_SELECTED_DIRECTORY, files)
       }
@@ -23,7 +23,7 @@ export default function setIpcChannels () {
       defaultPath: path
     }
 
-    dialog.showSaveDialog(options, (filename) => {
+    dialog.showSaveDialog(options, filename => {
       event.sender.send(ElectronConstants.IPC_CHANNEL_SAVED_FILE, filename)
     })
   })

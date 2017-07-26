@@ -40,7 +40,7 @@ module.exports = {
     'no-new-func': 2,
     'no-param-reassign': [2, { 'props': true }],
     'prefer-arrow-callback': 2,
-    'arrow-parens': [2, 'always'],
+    'arrow-parens': [2, 'as-needed'],
     'arrow-body-style': [2, 'as-needed'],
     // not assign to const
     'no-const-assign': 2
