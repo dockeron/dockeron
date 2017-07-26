@@ -31,3 +31,8 @@ build_script:
   - yarn build
 
 test: off
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: csZYt7bE97uJ7KA0bgT3QLUiBnEI9tza8UoQfZUb0Yevelnf8+0EVDaG8I6qFSAZDqpYmewHu0YLgiriEVMgBP7s3HAOmux1I0faLiUEV9U=

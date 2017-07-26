@@ -5,6 +5,10 @@
   "description": "A dockeron project",
   "license": "MIT",
   "main": "./dist/electron/main.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dockeron/dockeron.git"
+  },
   "contributors": [
     {
       "name": "Chang Liu",
@@ -141,6 +145,7 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "bugs": {
-    "url": "https://github.com/dockeron/dockeron/issues"
+    "url": "https://github.com/dockeron/dockeron/issues",
+    "email" : "fluency.03@gmail.com"
   }
 }
