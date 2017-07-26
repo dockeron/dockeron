@@ -4,6 +4,7 @@ const state = {
   token: ''
 }
 
+/* eslint no-param-reassign: ["error", { "props": false }] */
 const mutations = {
   [types.UPDATE_AUTH_TOKEN] (state, token) {
     state.token = token

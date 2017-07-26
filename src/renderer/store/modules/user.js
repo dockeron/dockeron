@@ -4,6 +4,7 @@ const state = {
   username: ''
 }
 
+/* eslint no-param-reassign: ["error", { "props": false }] */
 const mutations = {
   [types.UPDATE_USERNAME] (state, username) {
     state.username = username

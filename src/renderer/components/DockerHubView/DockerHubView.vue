@@ -58,6 +58,7 @@
         const officialReposGot = data => {
           notify(`Docker Hub: ${data.results.length} images loaded!`)
           this.searchedImages = data.results
+          /* eslint no-param-reassign: ["error", { "props": false }] */
           this.searchedImages.forEach(image => {
             image.is_official = true
           })
