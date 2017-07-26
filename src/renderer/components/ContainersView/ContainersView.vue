@@ -19,7 +19,7 @@
     </Modal>
     <br>
     <div v-if="hasFoundContainers">
-      <Card v-for="container in containers" class="container-card">
+      <Card v-for="container in containers" :key="container.Id" class="container-card">
         <p slot="title" class="container-card-title">
           {{container.Names[0]}}
           <Tag class="container-state-tag" :color="stateToColor[container.State]">
@@ -76,11 +76,11 @@
       }
     },
     watch: {
-      containers: function (newContainers) {
+      containers (newContainers) {
         this.hasFoundContainers = (
-          notNull(newContainers) &&
-          newContainers.length > 0
-        )
+        notNull(newContainers) &&
+        newContainers.length > 0
+      )
       }
     },
     methods: {
@@ -111,7 +111,7 @@
       inspectContainer (containerId) {
         this.$router.push({
           name: SINGLE_CONTAINER_VIEW_NAME,
-          params: { containerId: containerId }
+          params: { containerId }
         })
       },
       loadContainers () {
@@ -135,7 +135,7 @@
           .then(updateContainers)
           .catch(updateErrored)
       },
-      formatBytes: formatBytes
+      formatBytes
     },
     created () {
       this.loadContainers()

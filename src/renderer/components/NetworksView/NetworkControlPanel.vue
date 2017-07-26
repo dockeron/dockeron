@@ -36,7 +36,7 @@
       }
     },
     watch: {
-      networkId: function (newNetworkId) {
+      networkId (newNetworkId) {
         this.network = docker.getNetwork(newNetworkId)
       }
     },

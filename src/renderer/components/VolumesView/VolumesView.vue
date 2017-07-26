@@ -3,7 +3,7 @@
     <Button type="primary" icon="refresh" @click="refreshVolumes">Refresh</Button>
     <br>
     <div v-if="hasFoundVolumes">
-      <Card v-for="volume in volumes" class="volume-card">
+      <Card v-for="volume in volumes" :key="volume.Name" class="volume-card">
         <Poptip trigger="hover">
             {{volume.Name}}
           <div slot="content">
@@ -43,7 +43,7 @@
       }
     },
     watch: {
-      volumes: function (newVolumes) {
+      volumes (newVolumes) {
         this.hasFoundVolumes = notNull(newVolumes) && newVolumes.length > 0
       }
     },
@@ -57,7 +57,7 @@
       inspectVolume (volumeName) {
         this.$router.push({
           name: SINGLE_VOLUME_VIEW_NAME,
-          params: { volumeName: volumeName }
+          params: { volumeName }
         })
       },
       loadVolumes () {
@@ -76,7 +76,7 @@
           .then(updateVolumes)
           .catch(updateErrored)
       },
-      formatBytes: formatBytes
+      formatBytes
     },
     created () {
       this.loadVolumes()

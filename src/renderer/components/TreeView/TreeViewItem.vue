@@ -50,35 +50,35 @@
     name: 'tree-view-item',
     // TODO (fluency03): add filter for content search
     props: ['data', 'max-depth', 'current-depth', 'filter'],
-    data: function () {
+    data () {
       return {
         open: this.currentDepth < this.maxDepth
       }
     },
     methods: {
-      isOpen: function () {
+      isOpen () {
         return this.open
       },
-      toggleOpen: function () {
+      toggleOpen () {
         this.open = !this.open
       },
-      isObject: function (value) {
+      isObject (value) {
         return value.type === 'object'
       },
-      isArray: function (value) {
+      isArray (value) {
         return value.type === 'array'
       },
-      isValue: function (value) {
+      isValue (value) {
         return value.type === 'value'
       },
-      getKey: function (value) {
+      getKey (value) {
         if (_.isInteger(value.key)) {
           return value.key + ':'
         } else {
           return '"' + value.key + '":'
         }
       },
-      getValue: function (value) {
+      getValue (value) {
         if (_.isNumber(value.value)) {
           return value.value
         }
@@ -90,7 +90,7 @@
         }
         return value.value
       },
-      getValueType: function (value) {
+      getValueType (value) {
         var prefix = 'tree-view-item-value-'
 
         if (_.isNumber(value.value)) {
@@ -110,7 +110,7 @@
         }
         return prefix + 'unknown'
       },
-      isRootObject: function (value = this.data) {
+      isRootObject (value = this.data) {
         return value.isRoot
       }
     }

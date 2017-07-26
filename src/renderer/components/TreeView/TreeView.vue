@@ -20,23 +20,23 @@
     // TODO (fluency03): add filter for content search
     props: ['data', 'options', 'filter'],
     computed: {
-      allOptions: function () {
+      allOptions () {
         return _.extend({}, {
           rootObjectKey: 'root',
           maxDepth: 1
         }, (this.options || {}))
       },
-      parsedData: function () {
-        // Take the JSON data and transform
-        // it into the Tree View DSL
+      parsedData () {
+      // Take the JSON data and transform
+      // it into the Tree View DSL
 
-        // Strings or Integers should not be attempted to be split, so we generate
-        // a new object with the string/number as the value
+      // Strings or Integers should not be attempted to be split, so we generate
+      // a new object with the string/number as the value
         if (this.isValue(this.data)) {
           return this.transformValue(this.data, this.allOptions.rootObjectKey)
         }
 
-        // If it's an object or an array, transform as an object
+      // If it's an object or an array, transform as an object
         return this.transformObject(this.data, this.allOptions.rootObjectKey, true)
       }
     },
@@ -44,7 +44,7 @@
 
       // Transformer for the non-Collection types,
       // like String, Integer of Float
-      transformValue: function (valueToTransform, keyForValue) {
+      transformValue (valueToTransform, keyForValue) {
         return {
           key: keyForValue,
           type: 'value',
@@ -55,7 +55,7 @@
       // Since we use lodash, the _.map method will work on
       // both Objects and Arrays, returning either the Key as
       // a string or the Index as an integer
-      generateChildrenFromCollection: function (collection) {
+      generateChildrenFromCollection (collection) {
         return _.map(collection, (value, keyOrIndex) => {
           if (this.isObject(value)) {
             return this.transformObject(value, keyOrIndex)
@@ -70,7 +70,7 @@
       },
 
       // Transformer for the Array type
-      transformArray: function (arrayToTransform, keyForArray) {
+      transformArray (arrayToTransform, keyForArray) {
         return {
           key: keyForArray,
           type: 'array',
@@ -79,7 +79,7 @@
       },
 
       // Transformer for the Object type
-      transformObject: function (objectToTransform, keyForObject, isRootObject = false) {
+      transformObject (objectToTransform, keyForObject, isRootObject = false) {
         return {
           key: keyForObject,
           type: 'object',
@@ -89,15 +89,15 @@
       },
 
       // Helper Methods for value type detection
-      isObject: function (value) {
+      isObject (value) {
         return _.isPlainObject(value)
       },
 
-      isArray: function (value) {
+      isArray (value) {
         return _.isArray(value)
       },
 
-      isValue: function (value) {
+      isValue (value) {
         return !this.isObject(value) && !this.isArray(value)
       }
     }

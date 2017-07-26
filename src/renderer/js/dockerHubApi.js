@@ -38,7 +38,7 @@ var dockerHubApi = {
    * @param {String} password - the password for that Docker Hub account
    * @returns {Promise}
    */
-  login: function (username, password) {
+  login (username, password) {
     return new Promise(function (resolve, reject) {
       if (!username || !password) {
         return reject(new Error('Both username and password must be passed to this function!'))
@@ -60,7 +60,7 @@ var dockerHubApi = {
    *
    * @returns {Promise}
    */
-  loggedInUser: function () {
+  loggedInUser () {
     return new Promise(function (resolve, reject) {
       if (!loggedInToken) {
         return reject(new Error('No login token found! Please login() or setLoginToken() to continue!'))
@@ -74,7 +74,7 @@ var dockerHubApi = {
    *
    * @param {{enabled: Boolean, time: Number}} options - the options to set for the caching options
    */
-  setCacheOptions: function (options) {
+  setCacheOptions (options) {
     if (typeof options.enabled !== 'undefined') {
       cacheEnabled = options.enabled
     }
@@ -91,7 +91,7 @@ var dockerHubApi = {
    *
    * @param {String} token - the login token for Docker Hub
    */
-  setLoginToken: function (token) {
+  setLoginToken (token) {
     loggedInToken = token
   },
   /**
@@ -102,7 +102,7 @@ var dockerHubApi = {
    * @param {String} collaborator - the username of the collaborator to add
    * @returns {Promise}
    */
-  addCollaborator: function (username, name, collaborator) {
+  addCollaborator (username, name, collaborator) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -131,7 +131,7 @@ var dockerHubApi = {
    * @param {String} code - the code of the build to get the details for
    * @returns {Promise}
    */
-  buildDetails: function (username, name, code) {
+  buildDetails (username, name, code) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -159,7 +159,7 @@ var dockerHubApi = {
    * @param {{page: Number, perPage: Number}} [options] - the options for this call
    * @returns {Promise}
    */
-  buildHistory: function (username, name, options) {
+  buildHistory (username, name, options) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -186,7 +186,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get the comments for
    * @returns {Promise}
    */
-  buildLinks: function (username, name) {
+  buildLinks (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -209,7 +209,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get the comments for
    * @returns {Promise}
    */
-  buildSettings: function (username, name) {
+  buildSettings (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -232,7 +232,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get the comments for
    * @returns {Promise}
    */
-  buildTrigger: function (username, name) {
+  buildTrigger (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -255,7 +255,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get the comments for
    * @returns {Promise}
    */
-  buildTriggerHistory: function (username, name) {
+  buildTriggerHistory (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -278,7 +278,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get the collaborators for
    * @returns {Promise}
    */
-  collaborators: function (username, name) {
+  collaborators (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -302,7 +302,7 @@ var dockerHubApi = {
    * @param {{page: Number, perPage: Number}} [options] - the options for this call
    * @returns {Promise}
    */
-  comments: function (username, name, options) {
+  comments (username, name, options) {
     return new Promise(function (resolve, reject) {
               // If no name is passed in, then the user wants an official repository
       if (username && !name && !options) {
@@ -342,7 +342,7 @@ var dockerHubApi = {
    * @param {String} toRepo - the repo to link this automated build to
    * @returns {Promise}
    */
-  createBuildLink: function (username, name, toRepo) {
+  createBuildLink (username, name, toRepo) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -380,7 +380,7 @@ var dockerHubApi = {
    * @param {Object} details - the details of the build tag
    * @returns {Promise}
    */
-  createBuildTag: function (username, name, details) {
+  createBuildTag (username, name, details) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -419,7 +419,7 @@ var dockerHubApi = {
    * @param {Object} details - the details of the new automated build
    * @returns {Promise}
    */
-  createAutomatedBuild: function (username, name, details) {
+  createAutomatedBuild (username, name, details) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -465,7 +465,7 @@ var dockerHubApi = {
    * @param {Object} details - the details of the new repository
    * @returns {Promise}
    */
-  createRepository: function (username, name, details) {
+  createRepository (username, name, details) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -510,7 +510,7 @@ var dockerHubApi = {
    * @param {String} webhookName - the name of webhook to create
    * @returns {Promise}
    */
-  createWebhook: function (username, name, webhookName) {
+  createWebhook (username, name, webhookName) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -539,7 +539,7 @@ var dockerHubApi = {
    * @param {String} url - the url of the hook to create
    * @returns {Promise}
    */
-  createWebhookHook: function (username, name, webhookID, url) {
+  createWebhookHook (username, name, webhookID, url) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -571,7 +571,7 @@ var dockerHubApi = {
    * @param {Number} id - the id of the build link to delete
    * @returns {Promise}
    */
-  deleteBuildLink: function (username, name, id) {
+  deleteBuildLink (username, name, id) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -603,7 +603,7 @@ var dockerHubApi = {
    * @param {Number} id - the id of the build tag to delete
    * @returns {Promise}
    */
-  deleteBuildTag: function (username, name, id) {
+  deleteBuildTag (username, name, id) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -635,7 +635,7 @@ var dockerHubApi = {
    * @param {String} collaborator - the username of the collaborator to delete
    * @returns {Promise}
    */
-  deleteCollaborator: function (username, name, collaborator) {
+  deleteCollaborator (username, name, collaborator) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -663,7 +663,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to delete
    * @returns {Promise}
    */
-  deleteRepository: function (username, name) {
+  deleteRepository (username, name) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -687,7 +687,7 @@ var dockerHubApi = {
    * @param {String} tag - the tag to delete
    * @returns {Promise}
    */
-  deleteTag: function (username, name, tag) {
+  deleteTag (username, name, tag) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -715,7 +715,7 @@ var dockerHubApi = {
    * @param {Number} webhookID - the ID of webhook to delete
    * @returns {Promise}
    */
-  deleteWebhook: function (username, name, webhookID) {
+  deleteWebhook (username, name, webhookID) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -740,7 +740,7 @@ var dockerHubApi = {
    *
    * @returns {Promise}
    */
-  registrySettings: function () {
+  registrySettings () {
     return new Promise(function (resolve, reject) {
       this.loggedInUser().then(function (user) {
         return this.makeGetRequest(`users/${user.username}/registry-settings`)
@@ -754,7 +754,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository to get information about
    * @returns {Promise}
    */
-  repository: function (username, name) {
+  repository (username, name) {
           // If no name is passed in, then the user wants an official repository
     if (!username && !name) {
       name = ''
@@ -777,7 +777,7 @@ var dockerHubApi = {
    * @param {String} username - the username to get the repositories for
    * @returns {Promise}
    */
-  repositories: function (username) {
+  repositories (username) {
     return new Promise(function (resolve, reject) {
       if (!username) {
         return reject(new Error('Username must be provided!'))
@@ -796,7 +796,7 @@ var dockerHubApi = {
    * @param {{page: Number, perPage: Number}} [options] - the options for this call
    * @returns {Promise}
    */
-  repositoriesStarred: function (username, options) {
+  repositoriesStarred (username, options) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -821,7 +821,7 @@ var dockerHubApi = {
    * @param {Object} details - an object with a the new details of the build tag
    * @returns {Promise}
    */
-  setBuildTag: function (username, name, id, details) {
+  setBuildTag (username, name, id, details) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -863,7 +863,7 @@ var dockerHubApi = {
    * @param {Object} descriptions - an object with a full, short, or both properties
    * @returns {Promise}
    */
-  setRepositoryDescription: function (username, name, descriptions) {
+  setRepositoryDescription (username, name, descriptions) {
     return new Promise(function (resolve, reject) {
       if (!username || !name || !descriptions) {
         return reject(new Error('A username and repository name must be passed in as well as the data to set!'))
@@ -893,7 +893,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository
    * @returns {Promise}
    */
-  starRepository: function (username, name) {
+  starRepository (username, name) {
     return new Promise(function (resolve, reject) {
       if (username && !name) {
         name = username
@@ -919,7 +919,7 @@ var dockerHubApi = {
    * @param {{page: Number, perPage: Number}} [options] - the options for this call
    * @returns {Promise}
    */
-  tags: function (username, name, options) {
+  tags (username, name, options) {
           // If no name is passed in, then the user wants an official repository
     if (username && !name && !options) {
       name = username
@@ -953,7 +953,7 @@ var dockerHubApi = {
    * @param {Object} details - the details of the build tag
    * @returns {Promise}
    */
-  triggerBuild: function (username, name, details) {
+  triggerBuild (username, name, details) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))
@@ -987,7 +987,7 @@ var dockerHubApi = {
    * @param {String} name - the name of the repository
    * @returns {Promise}
    */
-  unstarRepository: function (username, name) {
+  unstarRepository (username, name) {
     return new Promise(function (resolve, reject) {
       if (username && !name) {
         name = username
@@ -1011,7 +1011,7 @@ var dockerHubApi = {
    * @param {String} username - the username to get information about
    * @returns {Promise}
    */
-  user: function (username) {
+  user (username) {
     return new Promise(function (resolve, reject) {
       if (!username) {
         return reject(new Error('Username must be provided!'))
@@ -1031,7 +1031,7 @@ var dockerHubApi = {
    * @param {{page: Number, perPage: Number}} [options] - the options for this call
    * @returns {Promise}
    */
-  webhooks: function (username, name, options) {
+  webhooks (username, name, options) {
     return new Promise(function (resolve, reject) {
       if (!username || typeof username !== 'string') {
         return reject(new Error('Username must be provided!'))

@@ -5,7 +5,7 @@
       <login-panel></login-panel>
     </div>
     <br><br>
-    <Card v-for="image in searchedImages" class="image-card">
+    <Card v-for="image in searchedImages" :key="image.name" class="image-card">
       <p slot="title" class="image-card-title">
         {{image.name}}
         <Tag class="image-star-count-tag" color="blue">{{image.star_count}}</Tag>

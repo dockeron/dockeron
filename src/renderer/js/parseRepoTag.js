@@ -33,7 +33,7 @@ function parseRepoTag (input) {
   if (tag.indexOf('/') === -1) {
     return {
       repository: input.slice(0, separatorPos),
-      tag: tag
+      tag
     }
   }
 

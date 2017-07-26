@@ -29,7 +29,7 @@
       }
     },
     watch: {
-      containerData: function (newContainerData) {
+      containerData (newContainerData) {
         try {
           this.status = newContainerData.State.Status
         } catch (e) {

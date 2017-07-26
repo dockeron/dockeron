@@ -10,7 +10,7 @@
     </div>
     <br><br>
     <div v-if="hasFoundImages">
-      <Card v-for="image in images" class="image-card">
+      <Card v-for="image in images" :key="image.Id" class="image-card">
         <p slot="title" class="image-card-title">
           <Tooltip placement="right">
             {{getImageName(image.RepoTags[0])}}
@@ -65,7 +65,7 @@
       }
     },
     watch: {
-      images: function (newImages) {
+      images (newImages) {
         this.hasFoundImages = notNull(newImages) && newImages.length > 0
       }
     },
@@ -103,7 +103,7 @@
       inspectImage (imageId) {
         this.$router.push({
           name: SINGLE_IMAGE_VIEW_NAME,
-          params: { imageId: imageId }
+          params: { imageId }
         })
       },
       loadImages () {
@@ -140,7 +140,7 @@
       getDateTime (seconds) {
         return new Date(seconds * 1000).toLocaleString()
       },
-      formatBytes: formatBytes
+      formatBytes
     },
     created () {
       this.loadImages()

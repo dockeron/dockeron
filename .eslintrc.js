@@ -23,7 +23,11 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // no console
-    'no-console': 1
+    'no-console': 1,
+    'no-new-object': 1,
+    "object-shorthand": ["error", "always"],
+    // not assign to const
+    'no-const-assign': 1
     // no var, use let and const
     // 'no-var': 1
   }

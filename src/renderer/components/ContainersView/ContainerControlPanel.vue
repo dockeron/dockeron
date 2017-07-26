@@ -117,7 +117,7 @@
       }
     },
     watch: {
-      containerId: function (newContainerId) {
+      containerId (newContainerId) {
         this.container = docker.getContainer(newContainerId)
       }
     },

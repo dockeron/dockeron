@@ -81,7 +81,7 @@
       }
     },
     watch: {
-      value: function (newValue) {
+      value (newValue) {
         this.imageName = newValue
       }
     },

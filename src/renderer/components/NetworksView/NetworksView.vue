@@ -3,7 +3,7 @@
     <Button type="primary" icon="refresh" @click="refreshNetworks">Refresh</Button>
     <br>
     <div v-if="hasFoundNetworks">
-      <Card v-for="network in networks" class="network-card">
+      <Card v-for="network in networks" :key="network.Id" class="network-card">
         <p slot="title" class="network-card-title">
           {{network.Name}}
           <Tag class="network-state-tag">
@@ -51,7 +51,7 @@
       }
     },
     watch: {
-      networks: function (newNetworks) {
+      networks (newNetworks) {
         this.hasFoundNetworks = notNull(newNetworks) && newNetworks.length > 0
       }
     },
@@ -65,7 +65,7 @@
       inspectNetwork (networkId) {
         this.$router.push({
           name: SINGLE_NETWORK_VIEW_NAME,
-          params: { networkId: networkId }
+          params: { networkId }
         })
       },
       loadNetworks () {

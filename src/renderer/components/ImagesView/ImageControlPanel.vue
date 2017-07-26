@@ -109,10 +109,10 @@
       }
     },
     watch: {
-      imageId: function (newImageId) {
+      imageId (newImageId) {
         this.image = docker.getImage(newImageId)
       },
-      imageRepoTags: function (newRepoTags) {
+      imageRepoTags (newRepoTags) {
         this.selectedImage = newRepoTags[0]
       }
     },

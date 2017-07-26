@@ -47,7 +47,7 @@
       }
     },
     watch: {
-      value: function (newValue) {
+      value (newValue) {
         this.defaultSettings.Image = newValue
       }
     },

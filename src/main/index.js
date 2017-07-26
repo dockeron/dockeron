@@ -25,7 +25,7 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     height: 600,
-    // useContentSize: true,
+    // transparent: true,
     titleBarStyle: 'hidden',
     width: 1000
   })

@@ -32,7 +32,7 @@
       }
     },
     watch: {
-      volumeName: function (newVolumeName) {
+      volumeName (newVolumeName) {
         this.volume = docker.getVolume(newVolumeName)
       }
     },

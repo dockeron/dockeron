@@ -75,10 +75,10 @@
       'add-new-node': AddNewNode
     },
     watch: {
-      value: function (newValue) {
+      value (newValue) {
         this.internalValue = newValue
       },
-      internalValue: function (newValue) {
+      internalValue (newValue) {
         this.$emit('input', newValue)
       }
     },
