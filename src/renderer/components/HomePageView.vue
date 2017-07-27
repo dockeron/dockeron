@@ -60,7 +60,7 @@
       <tree-view :data="version"></tree-view>
     </Modal>
     <div class="layout-copy">
-      &copy; Dockeron, {{copyYear}}
+      &copy; Dockeron, 2017
     </div>
   </div>
 </template>
@@ -85,11 +85,6 @@
         showInfo: false,
         showVersion: false,
         route: Route
-      }
-    },
-    computed: {
-      copyYear () {
-        return new Date().getFullYear()
       }
     },
     methods: {
