@@ -10,6 +10,15 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import locale from 'iview/src/locale/lang/en-US'
 
+router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start()
+  next()
+})
+
+router.afterEach((to, from, next) => {
+  iView.LoadingBar.finish()
+})
+
 // (node) warning: possible EventEmitter memory leak detected. 11 error listeners added.
 require('events').EventEmitter.defaultMaxListeners = Infinity
 

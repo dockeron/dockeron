@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="foot-logs">
-      <span class="log" v-for="log in value">{{log}}</span>
+      <p class="log" v-for="log in value">{{log}}</p>
     </div>
   </div>
 </template>
