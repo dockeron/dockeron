@@ -1,4 +1,5 @@
-# Dockeron
+
+![](./docs/Dockeron.png)
 
 [![Build Status](https://travis-ci.org/dockeron/dockeron.svg?branch=master)](https://travis-ci.org/dockeron/dockeron)
 [![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://ci.appveyor.com/project/fluency03/dockeron)
@@ -16,7 +17,7 @@ A dockeron project, built on Electron + Vue.js for Docker.
   - Docker Engine API: [dockerode](https://github.com/apocas/dockerode).
   - UI components: [iView](https://github.com/iview/iview)
 
-*I am only using Mac version, which means that the Windows and Linux versions are to be tested.* 
+*I am only using Mac version, which means that the Windows and Linux versions are to be tested.*
 
 *Notice that, this project is still under active development, many functionalities or features are not implemented yet, and some parts are still buggy.*
 
