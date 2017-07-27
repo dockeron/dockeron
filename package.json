@@ -1,7 +1,11 @@
 {
   "name": "dockeron",
   "version": "0.1.0",
-  "author": "Chang Liu <fluency.03@gmail.com>",
+  "author": {
+    "name": "Chang Liu",
+    "email": "fluency.03@gmail.com",
+    "url": "fluency03.com"
+  },
   "description": "A dockeron project",
   "license": "MIT",
   "main": "./dist/electron/main.js",
