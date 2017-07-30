@@ -1,26 +1,16 @@
-/*
- * Docker Hub API - https://github.com/RyanTheAllmighty/Docker-Hub-API
- * Copyright (C) 2015 RyanTheAllmighty
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 'use strict'
 
 import request from 'request'
+// import axios from 'axios'
+import urljoin from 'url-join'
 
-let apiVersion = 2
+let apiVersion = 'v2'
+let host = 'https://hub.docker.com/'
+
+// const A = axios.create({
+//   baseURL: host + apiVersion,
+//   timeout: 1000
+// })
 
 let cache = {}
 let cacheEnabled = true
@@ -28,7 +18,6 @@ let cacheTimeSeconds = 300
 
 let loggedInToken = null
 
-/* eslint no-param-reassign: 'off' */
 export default {
   /**
    * This logs into Docker Hub with the given username and password.
@@ -45,7 +34,7 @@ export default {
         return reject(new Error('Both username and password must be passed to this function!'))
       }
 
-      this.makePostRequest('users/login/', {username, password}).then(info => {
+      this.post('users/login/', {username, password}).then(info => {
         if (!info.token) {
           return reject(new Error('Error logging into Docker Hub! No login token sent back!'))
         }
@@ -56,6 +45,7 @@ export default {
       }).catch(reject)
     })
   },
+
   /**
    * This gets information about the current logged in user.
    *
@@ -67,9 +57,10 @@ export default {
         return reject(new Error('No login token found! Please login() or setLoginToken() to continue!'))
       }
 
-      this.makeGetRequest('user/').then(resolve).catch(reject)
+      this.get('user/').then(resolve).catch(reject)
     })
   },
+
   /**
    * This will set the caching options.
    *
@@ -84,9 +75,10 @@ export default {
       cacheTimeSeconds = options.time
     }
 
-          // Clear the cache
+    // Clear the cache
     cache = {}
   },
+
   /**
    * This sets the login token for authenticated Docker Hub requests.
    *
@@ -95,6 +87,7 @@ export default {
   setLoginToken (token) {
     loggedInToken = token
   },
+
   /**
    * Adds a collaborator to the given repository.
    *
@@ -117,13 +110,11 @@ export default {
         return reject(new Error('Collaborator username must be provided!'))
       }
 
-              // Make sure the username/collaborator is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-      collaborator = collaborator.toLowerCase()
-
-      this.makePostRequest(`repositories/${username}/${name}/collaborators/`, {user: collaborator}).then(resolve).catch(reject)
+      // Make sure the username/collaborator is all lowercase as per Docker Hub requirements
+      this.post(`repositories/${username.toLowerCase()}/${name}/collaborators/`, {user: collaborator.toLowerCase()}).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the details for a given build of a repository.
    *
@@ -146,12 +137,11 @@ export default {
         return reject(new Error('Repository code must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/buildhistory/${code}`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/buildhistory/${code}`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Get the history of all the builds done for a given repository.
    *
@@ -170,16 +160,16 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-      if (!options) {
-        options = {page: 1, perPage: 100}
+      let opt = options
+      if (!opt) {
+        opt = {page: 1, perPage: 100}
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/buildhistory?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/buildhistory?page_size=${opt.perPage || 100}&page=${opt.page || 1}`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the build links for a given repository.
    *
@@ -197,12 +187,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/links`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/links`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the build settings for a given repository.
    *
@@ -220,12 +209,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/autobuild`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/autobuild`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the build trigger for a given repository.
    *
@@ -243,12 +231,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/buildtrigger`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/buildtrigger`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the build trigger history for a given repository.
    *
@@ -266,12 +253,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/buildtrigger/history`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/buildtrigger/history`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the collaborators for a repository.
    *
@@ -289,12 +275,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/collaborators`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/collaborators`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the comments for a repository.
    *
@@ -305,36 +290,40 @@ export default {
    */
   comments (username, name, options) {
     return new Promise((resolve, reject) => {
-              // If no name is passed in, then the user wants an official repository
-      if (username && !name && !options) {
-        name = username
-        username = 'library'
-        options = {page: 1, perPage: 100}
-      } else if (username && name && !options) {
-        if (name instanceof Object) {
-          options = name
-          name = username
-          username = 'library'
+      // If no name is passed in, then the user wants an official repository
+      let user = username
+      let nam = name
+      let opt = options
+      if (user && !nam && !opt) {
+        nam = user
+        user = 'library'
+        opt = {page: 1, perPage: 100}
+      } else if (user && nam && !opt) {
+        if (nam instanceof Object) {
+          opt = nam
+          nam = user
+          user = 'library'
         } else {
-          options = {page: 1, perPage: 100}
+          opt = {page: 1, perPage: 100}
         }
       }
 
-              // If username is '_' then we're trying to get an official repository
-      if (username === '_') {
-        username = 'library'
+      // If user is '_' then we're trying to get an official repository
+      if (user === '_') {
+        user = 'library'
       }
 
-      if (!options) {
-        options = {page: 1, perPage: 100}
+      if (!opt) {
+        opt = {page: 1, perPage: 100}
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the user is all lowercase as per Docker Hub requirements
+      user = user.toLowerCase()
 
-      this.makeGetRequest(`repositories/${username}/${name}/comments?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
+      this.get(`repositories/${user}/${nam}/comments?page_size=${opt.perPage || 100}&page=${opt.page || 1}`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates a build link for a given repository to the given repository.
    *
@@ -357,22 +346,22 @@ export default {
         return reject(new Error('Repo to link to must be provided!'))
       }
 
-              // Check to see if the user provided a username for the toRepo
-      if (toRepo.indexOf('/') === -1) {
-        toRepo = `library/${toRepo}`
+      let repo = toRepo
+      // Check to see if the user provided a username for the to_repo
+      if (repo.indexOf('/') === -1) {
+        repo = `library/${repo}`
       }
 
-              // If to-repo has '_/' then we're trying to get an official repository
-      if (toRepo.substr(0, 2) === '_/') {
-        toRepo = `library/${toRepo.substr(2)}`
+      // If to-repo has '_/' then we're trying to get an official repository
+      if (repo.substr(0, 2) === '_/') {
+        repo = `library/${repo.substr(2)}`
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makePostRequest(`repositories/${username}/${name}/links`, {toRepo}).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.post(`repositories/${username.toLowerCase()}/${name}/links`, {to_repo: repo}).then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates a build tag for a given repository.
    *
@@ -395,13 +384,13 @@ export default {
         return reject(new Error('Tag details must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      let user = username.toLowerCase()
 
-              // Build our object to post
+      // Build our object to post
       let obj = {
         isNew: true,
-        namespace: username,
+        namespace: user,
         repoName: name,
         name: details.name || 'latest',
         dockerfile_location: details.dockerfile_location || '/',
@@ -409,9 +398,10 @@ export default {
         source_name: details.source_name || 'master'
       }
 
-      this.makePostRequest(`repositories/${username}/${name}/autobuild/tags`, obj).then(resolve).catch(reject)
+      this.post(`repositories/${user}/${name}/autobuild/tags`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates an automated build.
    *
@@ -434,14 +424,14 @@ export default {
         return reject(new Error('Details must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      let user = username.toLowerCase()
 
       let obj = {
         name,
-        namespace: username,
+        namespace: user,
         active: true,
-        dockerhub_repo_name: `${username}/${name}`,
+        dockerhub_repo_name: `${user}/${name}`,
         provider: details.provider,
         vcs_repo_name: details.vcs_repo_name,
         is_private: false
@@ -455,9 +445,10 @@ export default {
         obj.description = details.description
       }
 
-      return this.makePostRequest(`repositories/${username}/${name}/autobuild/`, obj).then(resolve).catch(reject)
+      return this.post(`repositories/${user}/${name}/autobuild/`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates a repository.
    *
@@ -480,12 +471,11 @@ export default {
         return reject(new Error('Details must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
 
       let obj = {
         name,
-        namespace: username
+        namespace: username.toLowerCase()
       }
 
       if (typeof details.is_private === 'boolean') {
@@ -500,9 +490,10 @@ export default {
         obj.full_description = details.full_description
       }
 
-      return this.makePostRequest(`repositories/`, obj).then(resolve).catch(reject)
+      return this.post(`repositories/`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates a webhook for the given username and repository.
    *
@@ -525,12 +516,11 @@ export default {
         return reject(new Error('Webhook name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      return this.makePostRequest(`repositories/${username}/${name}/webhooks/`, {name: webhookName}).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      return this.post(`repositories/${username.toLowerCase()}/${name}/webhooks/`, {name: webhookName}).then(resolve).catch(reject)
     })
   },
+
   /**
    * Creates a hook for an existing webhook.
    *
@@ -558,12 +548,11 @@ export default {
         return reject(new Error('URL must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      return this.makePostRequest(`repositories/${username}/${name}/webhooks/${webhookID}/hooks/`, {hook_url: url}).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      return this.post(`repositories/${username.toLowerCase()}/${name}/webhooks/${webhookID}/hooks/`, {hook_url: url}).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a build link for a given repository.
    *
@@ -590,12 +579,11 @@ export default {
         return reject(new Error('Build link id must be a number greater than 0!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeDeleteRequest(`repositories/${username}/${name}/links/${id}`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.delete(`repositories/${username.toLowerCase()}/${name}/links/${id}`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a build tag for a given repository.
    *
@@ -622,12 +610,11 @@ export default {
         return reject(new Error('Build link id must be a number greater than 0!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeDeleteRequest(`repositories/${username}/${name}/autobuild/tags/${id}`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.delete(`repositories/${username.toLowerCase()}/${name}/autobuild/tags/${id}`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a build tag for a given repository.
    *
@@ -650,13 +637,11 @@ export default {
         return reject(new Error('Collaborator\'s username must be provided!'))
       }
 
-              // Make sure the username and collaborator is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-      collaborator = collaborator.toLowerCase()
-
-      this.makeDeleteRequest(`repositories/${username}/${name}/collaborators/${collaborator}`).then(resolve).catch(reject)
+      // Make sure the username and collaborator is all lowercase as per Docker Hub requirements
+      this.delete(`repositories/${username.toLowerCase()}/${name}/collaborators/${collaborator.toLowerCase()}`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a repository.
    *
@@ -674,12 +659,11 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      return this.makeDeleteRequest(`repositories/${username}/${name}/`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      return this.delete(`repositories/${username.toLowerCase()}/${name}/`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a tag for the given username and repository.
    *
@@ -702,12 +686,11 @@ export default {
         return reject(new Error('Tag must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      return this.makeDeleteRequest(`repositories/${username}/${name}/tags/${tag}/`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      return this.delete(`repositories/${username.toLowerCase()}/${name}/tags/${tag}/`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Deletes a webhook for the given username and repository.
    *
@@ -730,12 +713,11 @@ export default {
         return reject(new Error('Webhook ID must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      return this.makeDeleteRequest(`repositories/${username}/${name}/webhooks/${webhookID}/`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      return this.delete(`repositories/${username.toLowerCase()}/${name}/webhooks/${webhookID}/`).then(resolve).catch(reject)
     })
   },
+
   /**
    * This gets the registry settings for the current logged in user containing information about the number of private repositories used/available.
    *
@@ -744,11 +726,12 @@ export default {
   registrySettings () {
     return new Promise((resolve, reject) => {
       this.loggedInUser()
-        .then(user => this.makeGetRequest(`users/${user.username}/registry-settings`))
+        .then(user => this.get(`users/${user.username}/registry-settings`))
         .then(resolve)
         .catch(reject)
     })
   },
+
   /**
    * Gets the details about a repository.
    *
@@ -757,22 +740,25 @@ export default {
    * @returns {Promise}
    */
   repository (username, name) {
-          // If no name is passed in, then the user wants an official repository
-    if (!username && !name) {
-      name = ''
-      username = 'library'
+    // If no name is passed in, then the user wants an official repository
+    let user = username
+    let nam = name
+    if (!user && !nam) {
+      nam = ''
+      user = 'library'
     }
 
-          // If username is '_' then we're trying to get an official repository
-    if (username === '_') {
-      username = 'library'
+    // If username is '_' then we're trying to get an official repository
+    if (user === '_') {
+      user = 'library'
     }
 
-          // Make sure the username is all lowercase as per Docker Hub requirements
-    username = username.toLowerCase()
+    // Make sure the username is all lowercase as per Docker Hub requirements
+    user = user.toLowerCase()
 
-    return this.makeGetRequest(`repositories/${username}/${name}`)
+    return this.get(`repositories/${user}/${nam}`)
   },
+
   /**
    * Gets the repositories for a user.
    *
@@ -785,12 +771,11 @@ export default {
         return reject(new Error('Username must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`users/${username}/repositories`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`users/${username.toLowerCase()}/repositories`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the starred repositories for a user.
    *
@@ -804,16 +789,16 @@ export default {
         return reject(new Error('Username must be provided!'))
       }
 
-      if (!options) {
-        options = {page: 1, perPage: 100}
+      let opt = options
+      if (!opt) {
+        opt = {page: 1, perPage: 100}
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`users/${username}/repositories/starred?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`users/${username.toLowerCase()}/repositories/starred?page_size=${opt.perPage || 100}&page=${opt.page || 1}`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * This sets the details of a build tag for a given users repository.
    *
@@ -845,7 +830,7 @@ export default {
         return reject(new Error('Tag details must be provided!'))
       }
 
-              // Build our object to post
+          // Build our object to post
       let obj = {
         id,
         name: details.name || 'latest',
@@ -854,9 +839,10 @@ export default {
         source_name: details.source_name || 'master'
       }
 
-      return this.makePutRequest(`repositories/${username}/${name}/autobuild/tags/${id}`, obj).then(resolve).catch(reject)
+      return this.put(`repositories/${username}/${name}/autobuild/tags/${id}`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * This sets the description (short, full, or both) for a given users repository.
    *
@@ -885,9 +871,10 @@ export default {
         obj.description = descriptions.short
       }
 
-      return this.makePatchRequest(`repositories/${username}/${name}`, obj).then(resolve).catch(reject)
+      return this.patch(`repositories/${username}/${name}`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * This stars a repository for the logged in user.
    *
@@ -897,22 +884,25 @@ export default {
    */
   starRepository (username, name) {
     return new Promise((resolve, reject) => {
-      if (username && !name) {
-        name = username
-        username = 'library'
+      let user = username
+      let nam = name
+      if (user && !nam) {
+        nam = user
+        user = 'library'
       }
 
-              // If username is '_' then we're trying to get an official repository
-      if (username === '_') {
-        username = 'library'
+      // If username is '_' then we're trying to get an official repository
+      if (user === '_') {
+        user = 'library'
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      user = user.toLowerCase()
 
-      return this.makePostRequest(`repositories/${username}/${name}/stars/`, {}).then(resolve).catch(reject)
+      return this.post(`repositories/${user}/${nam}/stars/`, {}).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the tags for a repository.
    *
@@ -922,31 +912,35 @@ export default {
    * @returns {Promise}
    */
   tags (username, name, options) {
-          // If no name is passed in, then the user wants an official repository
-    if (username && !name && !options) {
-      name = username
-      username = 'library'
-      options = {page: 1, perPage: 100}
-    } else if (username && name && !options) {
-      if (name instanceof Object) {
-        options = name
-        name = username
-        username = 'library'
+    // If no name is passed in, then the user wants an official repository
+    let user = username
+    let nam = name
+    let opt = options
+    if (user && !nam && !opt) {
+      nam = user
+      user = 'library'
+      opt = {page: 1, perPage: 100}
+    } else if (user && nam && !opt) {
+      if (nam instanceof Object) {
+        opt = nam
+        nam = user
+        user = 'library'
       } else {
-        options = {page: 1, perPage: 100}
+        opt = {page: 1, perPage: 100}
       }
     }
 
-          // If username is '_' then we're trying to get an official repository
-    if (username === '_') {
-      username = 'library'
+      // If username is '_' then we're trying to get an official repository
+    if (user === '_') {
+      user = 'library'
     }
 
-          // Make sure the username is all lowercase as per Docker Hub requirements
-    username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
+    user = user.toLowerCase()
 
-    return this.makeGetRequest(`repositories/${username}/${name}/tags?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results')
+    return this.get(`repositories/${user}/${nam}/tags?page_size=${opt.perPage || 100}&page=${opt.page || 1}`, 'results')
   },
+
   /**
    * Creates a build tag for a given repository.
    *
@@ -969,19 +963,18 @@ export default {
         return reject(new Error('Build details must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-              // Build our object to post
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      // Build our object to post
       let obj = {
         dockerfile_location: details.dockerfile_location || '/',
         source_type: details.source_type || 'Branch',
         source_name: details.source_name || 'master'
       }
 
-      this.makePostRequest(`repositories/${username}/${name}/autobuild/trigger-build`, obj).then(resolve).catch(reject)
+      this.post(`repositories/${username.toLowerCase()}/${name}/autobuild/trigger-build`, obj).then(resolve).catch(reject)
     })
   },
+
   /**
    * This unstars a repository for the logged in user.
    *
@@ -991,22 +984,25 @@ export default {
    */
   unstarRepository (username, name) {
     return new Promise((resolve, reject) => {
-      if (username && !name) {
-        name = username
-        username = 'library'
+      let user = username
+      let nam = name
+      if (user && !nam) {
+        nam = user
+        user = 'library'
       }
 
-              // If username is '_' then we're trying to get an official repository
-      if (username === '_') {
-        username = 'library'
+      // If user is '_' then we're trying to get an official repository
+      if (user === '_') {
+        user = 'library'
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      user = user.toLowerCase()
 
-      return this.makeDeleteRequest(`repositories/${username}/${name}/stars/`).then(resolve).catch(reject)
+      return this.delete(`repositories/${user}/${nam}/stars/`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the details about a user.
    *
@@ -1019,12 +1015,11 @@ export default {
         return reject(new Error('Username must be provided!'))
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`users/${username}`).then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`users/${username.toLowerCase()}`).then(resolve).catch(reject)
     })
   },
+
   /**
    * Gets the webhooks for a repository you own.
    *
@@ -1043,16 +1038,16 @@ export default {
         return reject(new Error('Repository name must be provided!'))
       }
 
-      if (!options) {
-        options = {page: 1, perPage: 100}
+      let opt = options
+      if (!opt) {
+        opt = {page: 1, perPage: 100}
       }
 
-              // Make sure the username is all lowercase as per Docker Hub requirements
-      username = username.toLowerCase()
-
-      this.makeGetRequest(`repositories/${username}/${name}/repositories/webhooks?page_size=${options.perPage || 100}&page=${options.page || 1}`, 'results').then(resolve).catch(reject)
+      // Make sure the username is all lowercase as per Docker Hub requirements
+      this.get(`repositories/${username.toLowerCase()}/${name}/webhooks?page_size=${opt.perPage || 100}&page=${opt.page || 1}`, 'results').then(resolve).catch(reject)
     })
   },
+
   /**
    * Makes a raw get request to the Docker Hub API.
    *
@@ -1060,9 +1055,9 @@ export default {
    * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
    * @returns {Promise}
    */
-  makeGetRequest (path, extract) {
+  get (path, extract) {
     return new Promise((resolve, reject) => {
-      let params = this.makeRequestParams('get', path)
+      let params = this.requestParams('get', path)
 
       if (cacheEnabled && cache.hasOwnProperty(params.url)) {
         if (Date.now() >= cache[params.url].expires) {
@@ -1077,12 +1072,12 @@ export default {
           return reject(err)
         }
 
-                  // If the body has a detail property, it's only because there's an error I've found
+              // If the body has a detail property, it's only because there's an error I've found
         if (body.detail) {
           return reject(new Error(body.detail))
         }
 
-                  // If the body has a error property, then it's errored out
+              // If the body has a error property, then it's errored out
         if (body.error) {
           return reject(new Error(body.error))
         }
@@ -1099,6 +1094,7 @@ export default {
       })
     })
   },
+
   /**
    * Makes a raw delete request to the Docker Hub API.
    *
@@ -1106,9 +1102,9 @@ export default {
    * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
    * @returns {Promise}
    */
-  makeDeleteRequest (path) {
+  delete (path) {
     return new Promise((resolve, reject) => {
-      request(this.makeRequestParams('delete', path), err => {
+      request(this.requestParams('delete', path), err => {
         if (err) {
           return reject(err)
         }
@@ -1117,31 +1113,32 @@ export default {
       })
     })
   },
-      /**
-       * Makes a raw patch request to the Docker Hub API.
-       *
-       * @param {String} path - the path to fetch
-       * @param {Object} data - the data to send
-       * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
-       * @returns {Promise}
-       */
-  makePatchRequest (path, data, extract) {
+
+  /**
+   * Makes a raw patch request to the Docker Hub API.
+   *
+   * @param {String} path - the path to fetch
+   * @param {Object} data - the data to send
+   * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
+   * @returns {Promise}
+   */
+  patch (path, data, extract) {
     return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all PATCH requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('patch', path, data), (err, res, body) => {
+      request(this.requestParams('patch', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
 
-                  // If the body has a detail property, it's only because there's an error I've found
+        // If the body has a detail property, it's only because there's an error I've found
         if (body.detail) {
           return reject(new Error(body.detail))
         }
 
-                  // If the body has a error property, then it's errored out
+        // If the body has a error property, then it's errored out
         if (body.error) {
           return reject(new Error(body.error))
         }
@@ -1154,6 +1151,7 @@ export default {
       })
     })
   },
+
   /**
    * Makes a raw post request to the Docker Hub API.
    *
@@ -1162,28 +1160,28 @@ export default {
    * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
    * @returns {Promise}
    */
-  makePostRequest (path, data, extract) {
+  post (path, data, extract) {
     return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all POST requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('post', path, data), (err, res, body) => {
+      request(this.requestParams('post', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
 
-                  // Some api calls don't return any data
+        // Some api calls don't return any data
         if (!body) {
           return resolve()
         }
 
-                  // If the body has a detail property, it's only because there's an error I've found
+        // If the body has a detail property, it's only because there's an error I've found
         if (body.detail) {
           return reject(new Error(body.detail))
         }
 
-                  // If the body has a error property, then it's errored out
+        // If the body has a error property, then it's errored out
         if (body.error) {
           return reject(new Error(body.error))
         }
@@ -1196,6 +1194,7 @@ export default {
       })
     })
   },
+
   /**
    * Makes a raw put request to the Docker Hub API.
    *
@@ -1204,28 +1203,28 @@ export default {
    * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
    * @returns {Promise}
    */
-  makePutRequest (path, data, extract) {
+  put (path, data, extract) {
     return new Promise((resolve, reject) => {
       if (!data || typeof data !== 'object') {
         return reject(new Error('Data must be passed to all PUT requests in the form of an object!'))
       }
 
-      request(this.makeRequestParams('put', path, data), (err, res, body) => {
+      request(this.requestParams('put', path, data), (err, res, body) => {
         if (err) {
           return reject(err)
         }
 
-                  // Some api calls don't return any data
+        // Some api calls don't return any data
         if (!body) {
           return resolve()
         }
 
-                  // If the body has a detail property, it's only because there's an error I've found
+        // If the body has a detail property, it's only because there's an error I've found
         if (body.detail) {
           return reject(new Error(body.detail))
         }
 
-                  // If the body has a error property, then it's errored out
+        // If the body has a error property, then it's errored out
         if (body.error) {
           return reject(new Error(body.error))
         }
@@ -1238,6 +1237,7 @@ export default {
       })
     })
   },
+
   /**
    * Generates and error checks a request object.
    *
@@ -1246,26 +1246,20 @@ export default {
    * @param {Object} [data] - the data to send
    * @returns {Object}
    */
-  makeRequestParams (method, path, data) {
-          // Normalize the path so it doesn't start with a slash
-    if (path.substr(0, 1) === '/') {
-      path = path.substr(1)
-    }
-
-          // Also add a slash to the end of the path unless there is a ? in the path
-    if (path.substr(-1) !== '/' && path.indexOf('?') === -1) {
-      path = `${path}/`
-    }
-
-    let url = `https://hub.docker.com/v${apiVersion}/${path}`
+  requestParams (method, path, data) {
+    let url = urljoin(host, apiVersion, path)
 
     let headers = {}
-
     if (loggedInToken) {
       headers.Authorization = `JWT ${loggedInToken}`
     }
 
-    let params = {url, method, json: true, headers}
+    let params = {
+      method,
+      url,
+      json: true,
+      headers
+    }
 
     if (data) {
       params.body = data
@@ -1274,5 +1268,3 @@ export default {
     return params
   }
 }
-
-// export default DockerHubApi
