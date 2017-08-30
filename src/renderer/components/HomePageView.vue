@@ -77,8 +77,7 @@
         version: {},
         ping: '',
         showInfo: false,
-        showVersion: false,
-        route: Route
+        showVersion: false
       }
     },
     methods: {
@@ -156,9 +155,6 @@
         docker.ping()
           .then(updateNetwork)
           .catch(notify)
-      },
-      pathFromRoot (subPath) {
-        return Route.HOME_PAGE_PATH + subPath
       }
     },
     created () {
