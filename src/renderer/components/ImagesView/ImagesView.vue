@@ -5,10 +5,10 @@
     <Modal v-model="imagePullModal" title="Pull Image" @on-ok="pullImage" @on-cancel="repoTag = ''">
       <Input v-model="repoTag" placeholder="Image Name (and Tag)"></Input>
     </Modal>
-    <div class="docker-hub-panel">
+    <!-- <div class="docker-hub-panel">
       <login-panel></login-panel>
-    </div>
-    <br><br>
+    </div> -->
+    <!-- <br><br> -->
     <div v-if="hasFoundImages">
       <Card v-for="image in images" :key="image.Id" class="image-card">
         <p slot="title" class="image-card-title">
@@ -20,7 +20,7 @@
           </Tooltip>
         </p>
         <p>
-          Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
+          Tags: <Tag v-for="tag in getTags(image.RepoTags)" :key="tag">{{tag}}</Tag>
         </p>
         <p>Size: {{formatBytes(image.Size)}}</p>
         <p>Created: {{getDateTime(image.Created)}}</p>

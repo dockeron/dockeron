@@ -37,6 +37,33 @@ let loggedInToken = null
 
 export default {
   /**
+   * This logs into Docker Hub with the given username and password.
+   *
+   * You may choose to bypass this by providing a login token directly via the setLoginToken(token) method.
+   *
+   * @param {String} username - the username of your Docker Hub account
+   * @param {String} password - the password for that Docker Hub account
+   * @returns {Promise}
+   */
+  login (username, password) {
+    return new Promise((resolve, reject) => {
+      if (!username || !password) {
+        return reject(new Error('Both username and password must be passed to this function!'))
+      }
+
+      this.post('users/login/', {username, password}).then(info => {
+        if (!info.token) {
+          return reject(new Error('Error logging into Docker Hub! No login token sent back!'))
+        }
+
+        loggedInToken = info.token
+
+        return resolve(info)
+      }).catch(reject)
+    })
+  },
+
+  /**
    * Gets the details about a repository.
    *
    * @param {String} [username] - the username of the repository to get information about. If left out or '_' is provided then it will query the official Docker repository with the given name
@@ -99,6 +126,49 @@ export default {
 
         if (cacheEnabled) {
           cache[params.url] = {expires: (Date.now() + (cacheTimeSeconds * 1000)), data: body}
+        }
+
+        if (extract && body.hasOwnProperty(extract)) {
+          return resolve(body[extract])
+        }
+
+        return resolve(body)
+      })
+    })
+  },
+
+  /**
+   * Makes a raw post request to the Docker Hub API.
+   *
+   * @param {String} path - the path to fetch
+   * @param {Object} data - the data to send
+   * @param {String} [extract] - the name of the property in the resulting JSON to extract. If left blank it will return the entire JSON
+   * @returns {Promise}
+   */
+  post (path, data, extract) {
+    return new Promise((resolve, reject) => {
+      if (!data || typeof data !== 'object') {
+        return reject(new Error('Data must be passed to all POST requests in the form of an object!'))
+      }
+
+      request(this.requestParams('post', path, data), (err, res, body) => {
+        if (err) {
+          return reject(err)
+        }
+
+        // Some api calls don't return any data
+        if (!body) {
+          return resolve()
+        }
+
+        // If the body has a detail property, it's only because there's an error I've found
+        if (body.detail) {
+          return reject(new Error(body.detail))
+        }
+
+        // If the body has a error property, then it's errored out
+        if (body.error) {
+          return reject(new Error(body.error))
         }
 
         if (extract && body.hasOwnProperty(extract)) {

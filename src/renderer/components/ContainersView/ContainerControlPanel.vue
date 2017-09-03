@@ -52,7 +52,7 @@
         </container-update-form>
       </Modal>
     </div>
-    <foot-logs-view v-model="footLogs"></foot-logs-view>
+    <!-- <foot-logs-view v-model="footLogs" @clear="clearLogs"></foot-logs-view> -->
   </div>
 </template>
 
@@ -117,7 +117,9 @@
         topResult: {},
         containerNewName: '',
         container: {},
-        footLogs: {},
+        footLogs: {
+          runningLog: ''
+        },
         psArgsModal: false,
         psArgs: '',
         removeContainerModal: false,
@@ -224,9 +226,10 @@
       getContainerLogs () {
         // TODO (fluency03) : more options to get the logs
         const logOpts = {
+          follow: true,
           stdout: true,
-          stderr: true,
-          tail: 20
+          stderr: true
+          // tail: 20
         }
 
         this.$set(this.footLogs, 'runningLog', '')
@@ -235,6 +238,8 @@
           data.setEncoding('utf8')
 
           data.on(STREAM_READABLE_EVENT_DATA, logs => {
+            console.log('---- \n')
+            console.log(logs)
             this.$set(this.footLogs, 'runningLog', this.footLogs.runningLog + logs)
           })
         }
@@ -242,6 +247,9 @@
         this.container.logs(logOpts)
           .then(containerLogsGot)
           .catch(notify)
+      },
+      clearLogs () {
+        this.$set(this.footLogs, 'runningLog', '')
       },
       exportContainer () {
         var containerName = this.value.Name.replace('/', '')

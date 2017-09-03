@@ -1,4 +1,5 @@
-<!-- https://github.com/arvidkahl/vue-json-tree-view -->
+<!-- All Credits of the TreeView and TreeViewItem go to: https://github.com/arvidkahl -->
+<!-- Source: https://github.com/arvidkahl/vue-json-tree-view -->
 
 <template>
   <div class="tree-view-item">

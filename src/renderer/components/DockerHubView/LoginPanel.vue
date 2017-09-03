@@ -1,33 +1,26 @@
 <template>
-  <div v-if="token" class="logout">
-    <Poptip trigger="hover" placement="bottom">
+  <div class="login">
+    <div v-if="token">
       <Tag type="dot" color="green">{{credentials.username}}</Tag>
-      <div slot="content">
-        <Button @click="logout" icon="logout">Logout</Button>
-      </div>
-    </Poptip>
-  </div>
-  <div v-else class="login">
-    <Poptip placement="bottom-end">
-      <Button class="login-button" icon="person">Login</Button>
-      <div slot="content">
-        <Form :model="credentials">
-          <Form-item prop="username">
-            <Input type="text" v-model="credentials.username" placeholder="Username">
-              <Icon type="ios-person-outline" slot="prepend"></Icon>
-            </Input>
-          </Form-item>
-          <Form-item prop="password">
-            <Input type="password" v-model="credentials.password" placeholder="Password">
-              <Icon type="ios-locked-outline" slot="prepend"></Icon>
-            </Input>
-          </Form-item>
-          <Form-item>
-            <Button class="go-button" type="primary" @click="login">Go</Button>
-          </Form-item>
-        </Form>
-      </div>
-    </Poptip>
+      <Button @click="logout" icon="logout" size="small">Logout</Button>
+    </div>
+    <div v-else>
+      <Button class="login-button" icon="person" size="small" @click="loginModal=true">Login</Button>
+    </div>
+    <Modal class="login-modal" v-model="loginModal" title="Login to Docker Hub" @on-ok="login">
+      <Form :model="credentials" inline>
+        <Form-item prop="username">
+          <Input type="text" v-model="credentials.username" placeholder="Username">
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
+        </Form-item>
+        <Form-item prop="password">
+          <Input type="password" v-model="credentials.password" placeholder="Password">
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+        </Form-item>
+      </Form>
+    </Modal>
   </div>
 </template>
 
@@ -40,6 +33,7 @@
   export default {
     data () {
       return {
+        loginModal: false,
         credentials: {
           username: '',
           password: ''
@@ -50,6 +44,7 @@
     methods: {
       login () {
         this.$store.dispatch(VUEX_ACTION_LOGIN, this.credentials)
+        this.loginModal = false
       },
       logout () {
         this.$store.dispatch(VUEX_ACTION_LOGOUT)
@@ -75,12 +70,4 @@
     float: right;
   }
 
-  .logout {
-    display: inline-block;
-    float: right;
-  }
-
-  .go-button {
-    float: right;
-  }
 </style>

@@ -3,28 +3,22 @@
     <div class="layout-menu">
       <Menu mode="horizontal" active-name="menu-containers" @on-select="onMenuSelect">
         <Menu-item name="menu-containers">
-          <Icon type="cube"></Icon>
-          <router-link :to="pathFromRoot(route.CONTAINERS_VIEW_PATH)">Containers</router-link>
+          <Icon type="cube"></Icon>Containers
         </Menu-item>
         <Menu-item name="menu-images">
-          <Icon type="beer"></Icon>
-          <router-link :to="pathFromRoot(route.IMAGES_VIEW_PATH)">Images</router-link>
+          <Icon type="beer"></Icon>Images
         </Menu-item>
         <Menu-item name="menu-volumes">
-          <Icon type="help-buoy"></Icon>
-          <router-link :to="pathFromRoot(route.VOLUMES_VIEW_PATH)">Volumes</router-link>
+          <Icon type="help-buoy"></Icon>Volumes
         </Menu-item>
         <Menu-item name="menu-networks">
-          <Icon type="link"></Icon>
-          <router-link :to="pathFromRoot(route.NETWORKS_VIEW_PATH)">Networks</router-link>
+          <Icon type="link"></Icon>Networks
         </Menu-item>
         <Menu-item name="menu-plugins">
-          <Icon type="gear-b"></Icon>
-          <router-link :to="pathFromRoot(route.PLUGINS_VIEW_PATH)">Plugins</router-link>
+          <Icon type="gear-b"></Icon>Plugins
         </Menu-item>
         <Menu-item name="menu-docker-hub">
-          <Icon type="stats-bars"></Icon>
-          <router-link :to="pathFromRoot(route.DOCKER_HUB_VIEW_PATH)">Docker Hub</router-link>
+          <Icon type="stats-bars"></Icon>Docker Hub
         </Menu-item>
         <Submenu name="menu-settings">
           <template slot="title">
@@ -62,20 +56,24 @@
     <div class="layout-copy">
       &copy; Dockeron, 2017
     </div>
+    <status-bar></status-bar>
   </div>
 </template>
 
 <script>
   import TreeView from './TreeView/TreeView'
+  import StatusBar from './StatusBar'
 
   import docker from '../js/docker'
   import notify from '../js/notify'
   import * as Route from '../js/constants/RouteConstants'
+  import { VUEX_ACTION_PUSH_EVENT } from '../js/constants/VuexConstants'
 
   export default {
     name: 'home-page',
     components: {
-      TreeView
+      TreeView,
+      StatusBar
     },
     data () {
       return {
@@ -89,7 +87,38 @@
     },
     methods: {
       onMenuSelect (selectedMenuName) {
+        console.log(selectedMenuName)
         switch (selectedMenuName) {
+          case 'menu-containers':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.CONTAINERS_VIEW_PATH
+            })
+            break
+          case 'menu-images':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.IMAGES_VIEW_PATH
+            })
+            break
+          case 'menu-volumes':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.VOLUMES_VIEW_PATH
+            })
+            break
+          case 'menu-networks':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.NETWORKS_VIEW_PATH
+            })
+            break
+          case 'menu-plugins':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.PLUGINS_VIEW_PATH
+            })
+            break
+          case 'menu-docker-hub':
+            this.$router.push({
+              path: Route.HOME_PAGE_PATH + Route.DOCKER_HUB_VIEW_PATH
+            })
+            break
           case 'menu-settings-info':
             this.showInfo = true
             break
@@ -101,6 +130,7 @@
             notify(`The network is ${this.ping} !`)
             break
           default:
+            console.log('default')
             break
         }
       },
@@ -139,6 +169,16 @@
       this.loadInfo()
       this.loadVersion()
       this.loadPing()
+
+      docker.getEvents()
+        .then(events => {
+          events.setEncoding('utf8')
+
+          events.on('data', data => {
+            this.$store.dispatch(VUEX_ACTION_PUSH_EVENT, data)
+          })
+        })
+        .catch(notify)
     }
   }
 </script>

@@ -47,7 +47,7 @@
         defaultSettings: {
           Image: this.value,
           name: '',
-          Tty: false
+          Tty: true
         },
         importedSettings: {},
         advancedSettings: {}
