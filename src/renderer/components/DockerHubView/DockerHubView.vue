@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div class="docker-hub-panel">
+    <div class="search-panel">
       <search-panel v-model="searchedImages"></search-panel>
-      <login-panel></login-panel>
     </div>
-    <br><br>
     <Card v-for="image in searchedImages" :key="image.name" class="image-card">
       <p slot="title" class="image-card-title">
         {{image.name}}
@@ -100,12 +98,6 @@
 </script>
 
 <style scoped>
-  .docker-hub-panel {
-    display: inline-block;
-    float: right;
-    width: 350px;
-  }
-
   .image-card {
     width: 300px;
     display: inline-block;

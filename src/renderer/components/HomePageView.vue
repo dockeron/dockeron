@@ -56,20 +56,28 @@
     <div class="layout-copy">
       &copy; Dockeron, 2017
     </div>
+    <status-bar></status-bar>
   </div>
 </template>
 
 <script>
   import TreeView from './TreeView/TreeView'
+  import StatusBar from './StatusBar'
 
   import docker from '../js/docker'
   import notify from '../js/notify'
   import * as Route from '../js/constants/RouteConstants'
+  import {
+    VUEX_ACTION_PUSH_EVENT,
+    VUEX_ACTION_UPDATE_INFO,
+    VUEX_ACTION_UPDATE_VERSION
+  } from '../js/constants/VuexConstants'
 
   export default {
     name: 'home-page',
     components: {
-      TreeView
+      TreeView,
+      StatusBar
     },
     data () {
       return {
@@ -132,6 +140,7 @@
       loadInfo () {
         const updateInfo = info => {
           this.info = info
+          this.$store.dispatch(VUEX_ACTION_UPDATE_INFO, info)
         }
 
         docker.info()
@@ -141,6 +150,7 @@
       loadVersion () {
         const updateVersion = version => {
           this.version = version
+          this.$store.dispatch(VUEX_ACTION_UPDATE_VERSION, version)
         }
 
         docker.version()
@@ -158,9 +168,25 @@
       }
     },
     created () {
+      this.$store.watch(state => state.info.info, newInfo => {
+        this.info = newInfo
+      })
+      this.$store.watch(state => state.version.version, newVersion => {
+        this.version = newVersion
+      })
       this.loadInfo()
       this.loadVersion()
       this.loadPing()
+
+      docker.getEvents()
+        .then(events => {
+          events.setEncoding('utf8')
+
+          events.on('data', data => {
+            this.$store.dispatch(VUEX_ACTION_PUSH_EVENT, data)
+          })
+        })
+        .catch(notify)
     }
   }
 </script>
