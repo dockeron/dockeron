@@ -30,3 +30,11 @@ export const logout = function ({ state, commit }) {
 export const pushEvent = function ({ commit }, event) {
   commit(types.UPDATE_EVENT, JSON.parse(event))
 }
+
+export const updateInfo = function ({ commit }, info) {
+  commit(types.UPDATE_INFO, info)
+}
+
+export const updateVersion = function ({ commit }, version) {
+  commit(types.UPDATE_VERSION, version)
+}

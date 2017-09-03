@@ -32,7 +32,7 @@
     <div v-else>
       <pre>{{error}}</pre>
     </div>
-    <foot-logs-view v-model="footLogs"></foot-logs-view>
+    <!-- <foot-logs-view v-model="footLogs"></foot-logs-view> -->
   </div>
 </template>
 
