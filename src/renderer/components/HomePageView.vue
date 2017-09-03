@@ -174,9 +174,7 @@
           events.setEncoding('utf8')
 
           events.on('data', data => {
-            let event = JSON.parse(data)
-            console.log(event)
-            this.$store.commit('UPDATE_EVENT', event)
+            this.$store.commit('UPDATE_EVENT', JSON.parse(data))
           })
         })
         .catch(notify)

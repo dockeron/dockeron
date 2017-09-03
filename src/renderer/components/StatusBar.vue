@@ -1,9 +1,17 @@
 <template>
   <div class="status-bar">
-    <Tag>{{event.Action}}</Tag>
-    <Tag>{{event.Type}}</Tag>
-    <Tag>{{event.from}}</Tag>
-    <Tag>{{new Date(event.time * 1000)}}</Tag>
+    <Poptip trigger="hover" placement="top-start">
+      <Button size="small">Events</Button>
+      <div slot="content">
+        <div v-for="event in events" >
+          <Tag v-if="event.time">{{new Date(event.time * 1000)}}</Tag>
+          <Tag v-if="event.scope">{{event.scope}}</Tag>
+          <Tag v-if="event.Type">{{event.Type}}</Tag>
+          <Tag v-if="event.Action">{{event.Action}}</Tag>
+          <Tag v-if="event.from">{{event.Actor.Attributes.name}}</Tag>
+        </div>
+      </div>
+    </Poptip>
     <login-panel></login-panel>
   </div>
 </template>
@@ -25,18 +33,18 @@
     },
     data () {
       return {
-        event: {}
+        events: []
       }
     },
     methods: {
       refresh () {
-        this.event = this.$store.state.status.event
+        this.events = this.$store.state.status.events
       }
     },
     created () {
       this.refresh()
-      this.$store.watch(state => state.status.event, newEvent => {
-        this.event = newEvent
+      this.$store.watch(state => state.status.events, newEvents => {
+        this.events = newEvents
       })
     }
   }
@@ -65,18 +73,13 @@
     transition: height 1s;
   }
 
-  .status-bar:hover {
+  /*.status-bar:hover {
     height: 20%;
-  }
+  }*/
 
   .refresh-button {
     position: absolute;
     right: 0px;
     /*top: 2px;*/
-  }
-
-  .log {
-    white-space: pre-wrap;
-    display: block;
   }
 </style>

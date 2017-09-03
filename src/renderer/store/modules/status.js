@@ -1,7 +1,7 @@
 import * as types from '../mutation-types'
 
 const state = {
-  event: {},
+  events: [],
   images: [],
   containers: []
 }
@@ -9,10 +9,11 @@ const state = {
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const mutations = {
   [types.UPDATE_EVENT] (state, event) {
-    state.event = event
-  },
-  [types.REMOVE_EVENT] (state) {
-    state.event = {}
+    while (state.events.length > 30) {
+      state.events.shift()
+    }
+
+    state.events.push(event)
   }
 }
 
