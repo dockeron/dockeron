@@ -56,11 +56,13 @@
     <div class="layout-copy">
       &copy; Dockeron, 2017
     </div>
+    <status-bar></status-bar>
   </div>
 </template>
 
 <script>
   import TreeView from './TreeView/TreeView'
+  import StatusBar from './StatusBar'
 
   import docker from '../js/docker'
   import notify from '../js/notify'
@@ -69,7 +71,8 @@
   export default {
     name: 'home-page',
     components: {
-      TreeView
+      TreeView,
+      StatusBar
     },
     data () {
       return {
@@ -165,6 +168,18 @@
       this.loadInfo()
       this.loadVersion()
       this.loadPing()
+
+      docker.getEvents()
+        .then(events => {
+          events.setEncoding('utf8')
+
+          events.on('data', data => {
+            let event = JSON.parse(data)
+            console.log(event)
+            this.$store.commit('UPDATE_EVENT', event)
+          })
+        })
+        .catch(notify)
     }
   }
 </script>
