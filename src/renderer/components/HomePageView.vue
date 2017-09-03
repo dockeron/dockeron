@@ -67,7 +67,11 @@
   import docker from '../js/docker'
   import notify from '../js/notify'
   import * as Route from '../js/constants/RouteConstants'
-  import { VUEX_ACTION_PUSH_EVENT } from '../js/constants/VuexConstants'
+  import {
+    VUEX_ACTION_PUSH_EVENT,
+    VUEX_ACTION_UPDATE_INFO,
+    VUEX_ACTION_UPDATE_VERSION
+  } from '../js/constants/VuexConstants'
 
   export default {
     name: 'home-page',
@@ -137,6 +141,7 @@
       loadInfo () {
         const updateInfo = info => {
           this.info = info
+          this.$store.dispatch(VUEX_ACTION_UPDATE_INFO, info)
         }
 
         docker.info()
@@ -146,6 +151,7 @@
       loadVersion () {
         const updateVersion = version => {
           this.version = version
+          this.$store.dispatch(VUEX_ACTION_UPDATE_VERSION, version)
         }
 
         docker.version()
@@ -166,6 +172,12 @@
       }
     },
     created () {
+      this.$store.watch(state => state.info.info, newInfo => {
+        this.info = newInfo
+      })
+      this.$store.watch(state => state.version.version, newVersion => {
+        this.version = newVersion
+      })
       this.loadInfo()
       this.loadVersion()
       this.loadPing()
