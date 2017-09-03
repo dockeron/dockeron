@@ -34,7 +34,7 @@
           <span slot="close">False</span>
         </i-switch>
       </Modal>
-      <Button type="success" @click="psArgsModal = true">Top</Button>
+      <Button type="success" @click="psArgsModal=true">Top</Button>
       <Modal v-model="psArgsModal" title="ps arguments" @on-ok="listTopProcesses">
         <Input class="args-input" v-model="psArgs" placeholder="-ef">
           <span slot="prepend">ps</span>
@@ -44,6 +44,13 @@
         <tree-view :data="topResult"></tree-view>
       </Modal>
       <Button type="info" @click="exportContainer">Export</Button>
+      <Button type="warning" @click="containerUpdateModal=true">Update</Button>
+      <Modal v-model="containerUpdateModal" title="Update Container"
+          @on-ok="confirmUpdate" @on-cancel="resetUpdate">
+        <container-update-form ref="containerUpdateForm"
+          :container-id="containerId" @created="restartContainer">
+        </container-update-form>
+      </Modal>
     </div>
     <foot-logs-view v-model="footLogs"></foot-logs-view>
   </div>
@@ -52,6 +59,7 @@
 <script>
   import TreeView from '../TreeView/TreeView'
   import FootLogsView from '../FootLogsView'
+  import ContainerUpdateForm from './ContainerUpdateForm'
 
   import fs from 'fs'
   import { ipcRenderer } from 'electron'
@@ -77,7 +85,8 @@
   export default {
     components: {
       TreeView,
-      FootLogsView
+      FootLogsView,
+      ContainerUpdateForm
     },
     props: {
       containerId: {
@@ -116,7 +125,8 @@
           v: false,
           force: false,
           link: false
-        }
+        },
+        containerUpdateModal: false
       }
     },
     watch: {
@@ -309,6 +319,12 @@
       },
       reload () {
         this.$emit('reload')
+      },
+      confirmUpdate () {
+        this.$refs.containerUpdateForm.submit()
+      },
+      resetUpdate () {
+        this.$refs.containerUpdateForm.reset()
       }
     },
     created () {
