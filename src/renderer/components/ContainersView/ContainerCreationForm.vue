@@ -7,6 +7,12 @@
       <Form-item label="Name">
         <Input v-model="defaultSettings.name" placeholder="New name of your container"></Input>
       </Form-item>
+      <Form-item label="Tty">
+        <i-switch v-model="defaultSettings.Tty" size="large">
+          <span slot="open">true</span>
+          <span slot="close">false</span>
+        </i-switch>
+      </Form-item>
     </Form>
     <Button class="import-button" type="primary" @click="openFileDialog">
       Import from JSON
@@ -40,7 +46,8 @@
       return {
         defaultSettings: {
           Image: this.value,
-          name: ''
+          name: '',
+          Tty: false
         },
         importedSettings: {},
         advancedSettings: {}
