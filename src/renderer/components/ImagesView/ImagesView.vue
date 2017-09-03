@@ -20,7 +20,7 @@
           </Tooltip>
         </p>
         <p>
-          Tags: <Tag v-for="tag in getTags(image.RepoTags)">{{tag}}</Tag>
+          Tags: <Tag v-for="tag in getTags(image.RepoTags)" :key="tag">{{tag}}</Tag>
         </p>
         <p>Size: {{formatBytes(image.Size)}}</p>
         <p>Created: {{getDateTime(image.Created)}}</p>
