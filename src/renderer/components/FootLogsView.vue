@@ -2,6 +2,7 @@
   <div>
     <div id="foot-logs">
       <p class="log" v-for="log in value">{{log}}</p>
+      <Button class="clear-button" type="text" shape="circle" icon="refresh" size="small" @click="clearLogs"></Button>
     </div>
   </div>
 </template>
@@ -14,6 +15,11 @@
         default () {
           return {}
         }
+      }
+    },
+    methods: {
+      clearLogs () {
+        this.$emit('clear')
       }
     }
   }
@@ -44,6 +50,12 @@
 
   #foot-logs:hover {
     height: 50%;
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 0px;
+    /*top: 2px;*/
   }
 
   .log {
