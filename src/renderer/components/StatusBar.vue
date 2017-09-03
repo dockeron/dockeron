@@ -38,12 +38,12 @@
     },
     methods: {
       refresh () {
-        this.events = this.$store.state.status.events
+        this.events = this.$store.events
       }
     },
     created () {
       this.refresh()
-      this.$store.watch(state => state.status.events, newEvents => {
+      this.$store.watch(state => state.events.events, newEvents => {
         this.events = newEvents
       })
     }

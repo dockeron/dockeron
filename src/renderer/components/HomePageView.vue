@@ -67,6 +67,7 @@
   import docker from '../js/docker'
   import notify from '../js/notify'
   import * as Route from '../js/constants/RouteConstants'
+  import { VUEX_ACTION_PUSH_EVENT } from '../js/constants/VuexConstants'
 
   export default {
     name: 'home-page',
@@ -174,7 +175,7 @@
           events.setEncoding('utf8')
 
           events.on('data', data => {
-            this.$store.commit('UPDATE_EVENT', JSON.parse(data))
+            this.$store.dispatch(VUEX_ACTION_PUSH_EVENT, data)
           })
         })
         .catch(notify)

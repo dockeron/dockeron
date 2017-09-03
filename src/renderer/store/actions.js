@@ -26,3 +26,7 @@ export const logout = function ({ state, commit }) {
   commit(types.REMOVE_AUTH_TOKEN)
   commit(types.REMOVE_USERNAME)
 }
+
+export const pushEvent = function ({ commit }, event) {
+  commit(types.UPDATE_EVENT, JSON.parse(event))
+}
