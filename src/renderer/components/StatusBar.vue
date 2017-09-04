@@ -1,11 +1,12 @@
 <template>
   <div class="status-bar">
-    <Button class="status-item" type="text" shape="circle" icon="refresh" size="small" @click="refresh"></Button>
+    <Button class="status-item" type="text" icon="chevron-up" size="small"></Button>
+    <Button class="status-item" type="text" icon="refresh" size="small" @click="refresh"></Button>
     <Poptip class="status-item" trigger="hover" placement="top-end">
       <Button type="text" size="small" icon="clipboard"></Button>
       <div slot="content">
         <div v-for="event in events" >
-          <Tag v-if="event.time">{{new Date(event.time * 1000)}}</Tag>
+          <Tag v-if="event.time">{{timeFromEpic(event.time)}}</Tag>
           <Tag v-if="event.scope">{{event.scope}}</Tag>
           <Tag v-if="event.Type">{{event.Type}}</Tag>
           <Tag v-if="event.Action">{{event.Action}}</Tag>
@@ -61,6 +62,9 @@
       refresh () {
         updateInfo(this)
         updateVersion(this)
+      },
+      timeFromEpic (time) {
+        return new Date(time * 1000).toISOString()
       }
     },
     created () {
