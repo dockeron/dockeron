@@ -1,7 +1,7 @@
 <template>
   <Poptip placement="bottom">
     Search:
-    <Input class="search-input" icon="ios-search" v-model="term" @on-click="search"></Input>
+    <Input class="search-input" icon="ios-search" v-model="term" @on-click="search" @on-enter="search"></Input>
     <div slot="content">
       Limit:
       <Input-number v-model="limit"></Input-number>
