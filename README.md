@@ -8,6 +8,7 @@
 [![Version npm](https://img.shields.io/npm/v/dockeron.svg)](https://www.npmjs.com/package/dockeron)
 [![Downloads npm](https://img.shields.io/npm/dt/dockeron.svg)](https://www.npmjs.com/package/dockeron)
 [![MIT license](https://img.shields.io/npm/l/dockeron.svg)](https://opensource.org/licenses/MIT)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/dockeron-project)
 [![GitHub stars](https://img.shields.io/github/stars/dockeron/dockeron.svg?style=social&label=Star)](https://github.com/dockeron/dockeron)
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
