@@ -92,9 +92,19 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 
 #### Local development
 
+Make sure you have Node.js installed (node@^6.5.0 or higher is recommended).
+
+- Clone the repo to your machine (or fork it to your github account then clone from there)
 ```
 git clone git@github.com:dockeron/dockeron.git
 cd dockeron
+```
+
+- Make your branch from `develop`
+
+- Install all dependencies then `npm run dev`
+
+```
 npm install
 npm run dev
 ```
