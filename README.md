@@ -22,7 +22,7 @@ A dockeron project, built on Electron + Vue.js for Docker.
 
 *Notice that, this project is still under active development, many functionalities or features are not implemented yet, and some parts are still buggy.*
 
-*Since this is my first front-end project, there might be some bad practices. This is why I would really appriciate the help from you and the community.*
+*Since this is my first front-end project, there might be some bad practices BUT I want to make Dockeron better. This is why I would really appriciate the help from you and the community.*
 
 Welcome PR and [issues](https://github.com/dockeron/dockeron/issues/new).
 
