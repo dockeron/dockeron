@@ -15,18 +15,14 @@ The following is a set of guidelines for contributing to [Dockeron](https://gith
 [How Can I Contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
-  * [Your First Code Contribution](#your-first-code-contribution)
+  * [Code Contribution](#your-first-code-contribution)
   * [Pull Requests](#pull-requests)
 
 [Styleguides](#styleguides)
   * [Git Commit Messages](#git-commit-messages)
   * [JavaScript Styleguide](#javascript-styleguide)
-  * [CoffeeScript Styleguide](#coffeescript-styleguide)
-  * [Specs Styleguide](#specs-styleguide)
-  * [Documentation Styleguide](#documentation-styleguide)
 
-[Additional Notes](#additional-notes)
-  * [Issue and Pull Request Labels](#issue-and-pull-request-labels)
+[Issue and Pull Request Labels](#issue-and-pull-request-labels)
 
 ## Code of Conduct
 
