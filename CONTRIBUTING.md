@@ -15,7 +15,7 @@ The following is a set of guidelines for contributing to [Dockeron](https://gith
 [How Can I Contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
-  * [Code Contribution](#your-first-code-contribution)
+  * [Code Contribution](#code-contribution)
   * [Pull Requests](#pull-requests)
 
 [Styleguides](#styleguides)
@@ -31,7 +31,7 @@ This project and everyone participating in it is governed by the [Code of Conduc
 ## Channels
 
 * [Join the Dockeron Gitter Channels](https://gitter.im/dockeron-project)
-    * Use the `#general` channel for general questions or discussion about Atom
+    * Use the `#general` channel for general questions or discussion about Dockeron
     * Use the `#development` channel for questions, discussion and suggestions about code and development
     * Use the `#ui` channel for questions and discussion about Dockeron UI
     * There are many other channels available, check the channel list
