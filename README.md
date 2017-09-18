@@ -55,4 +55,11 @@ npm run dev
 ![](./docs/dockeron-screenshot6.png)
 
 
+## Alternatives
+
+- [Docker Station](https://dockstation.io/)
+- [Kitematic](https://kitematic.com/)
+- [Weave Scope](https://github.com/weaveworks/scope) (Web Application)
+
+
 *This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue).*
