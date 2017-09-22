@@ -71,6 +71,7 @@ npm run dev
 - [Docker Station](https://dockstation.io/)
 - [Kitematic](https://kitematic.com/)
 - [Weave Scope](https://github.com/weaveworks/scope) (Web Application)
+- [Portainer](https://github.com/portainer/portainer) (Web Application)
 
 
 *This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue).*
