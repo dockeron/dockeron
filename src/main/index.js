@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 
 import { app, BrowserWindow } from 'electron'
 import setIPCChannels from './setIPCChannels'
@@ -32,8 +32,13 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 600,
     // transparent: true,
-    titleBarStyle: 'hidden',
-    width: 1000
+    titleBarStyle: 'hiddenInset',
+    width: 1000,
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag: true,
+      webSecurity: false
+    },
   })
 
   mainWindow.loadURL(winURL)

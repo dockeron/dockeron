@@ -54,7 +54,7 @@
       <tree-view :data="version"></tree-view>
     </Modal>
     <div class="layout-copy">
-      &copy; Dockeron, 2017
+      &copy; dockeron, 2020
     </div>
     <status-bar></status-bar>
   </div>
