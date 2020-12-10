@@ -79,9 +79,9 @@
     watch: {
       containers (newContainers) {
         this.hasFoundContainers = (
-        notNull(newContainers) &&
+          notNull(newContainers) &&
         newContainers.length > 0
-      )
+        )
       }
     },
     methods: {

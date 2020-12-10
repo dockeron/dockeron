@@ -3,3 +3,7 @@ test/unit/*.js
 test/e2e/*.js
 tasks/
 .electron-vue/
+dist/**
+build/*.js
+*.js
+*.vue

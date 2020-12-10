@@ -114,12 +114,12 @@ export default {
           return reject(err)
         }
 
-              // If the body has a detail property, it's only because there's an error I've found
+        // If the body has a detail property, it's only because there's an error I've found
         if (body.detail) {
           return reject(new Error(body.detail))
         }
 
-              // If the body has a error property, then it's errored out
+        // If the body has a error property, then it's errored out
         if (body.error) {
           return reject(new Error(body.error))
         }

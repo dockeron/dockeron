@@ -37,7 +37,7 @@
           return this.transformValue(this.data, this.allOptions.rootObjectKey)
         }
 
-      // If it's an object or an array, transform as an object
+        // If it's an object or an array, transform as an object
         return this.transformObject(this.data, this.allOptions.rootObjectKey, true)
       }
     },

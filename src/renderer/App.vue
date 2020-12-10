@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'dockeron'
+    name: 'App'
   }
 </script>
 

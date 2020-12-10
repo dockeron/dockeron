@@ -5,8 +5,8 @@ process.env.BABEL_ENV = 'main'
 const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
-
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const MinifyPlugin = require("babel-minify-webpack-plugin")
+// const BabiliWebpackPlugin = require('babili-webpack-plugin')
 
 let mainConfig = {
   entry: {
@@ -52,6 +52,11 @@ let mainConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
+    alias: {
+      '@': path.join(__dirname, '../src/main'),
+      'vue$': 'vue/dist/vue.esm.js',
+      '@shared': path.join(__dirname, '../src/shared')
+    },
     extensions: ['.js', '.json', '.node']
   },
   target: 'electron-main'
@@ -73,10 +78,11 @@ if (process.env.NODE_ENV !== 'production') {
  */
 if (process.env.NODE_ENV === 'production') {
   mainConfig.plugins.push(
-    new BabiliWebpackPlugin({
-      removeConsole: true,
-      removeDebugger: true
-    }),
+    new MinifyPlugin(),
+    // new BabiliWebpackPlugin({
+    //   removeConsole: true,
+    //   removeDebugger: true
+    // }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     })
